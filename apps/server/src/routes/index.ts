@@ -10,12 +10,10 @@ const routes = (app: any) => {
   });
 
   //A baixo as rotas
-  app.use(
-    express.json(),
-    userRoutes,
-    taskRoutes
-    //Ex: userRoutes,
-  );
+  app
+  .use(express.json())
+  .use("/user", userRoutes)
+  .use("/task", taskRoutes);
 };
 
 export default routes;
