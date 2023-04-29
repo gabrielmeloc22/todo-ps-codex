@@ -1,6 +1,7 @@
 import User from './User';
 import Collection from './Collection';
 
+
 interface ITaskDTO {
     title: String;
     description?: String;
@@ -25,5 +26,6 @@ class Task {
         this.User = User;
         this.Collection = Collection;
     }
-
 }
+
+export default Task;
