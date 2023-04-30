@@ -3,18 +3,18 @@ import Collection from "./Collection";
 
 
 interface IUserDTO {
-    email: string;
-    password: string;
-    name?: string;
+    email: String;
+    password: String;
+    name: String;
     tasks?: Task[];
     collection?: Collection[];
 }
 
 class User {
 
-    email: string;
-    password: string;
-    name?: string;
+    email: String;
+    password: String;
+    name: String;
     tasks?: Task[];
     collection?: Collection[];
 
