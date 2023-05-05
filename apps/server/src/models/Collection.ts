@@ -7,8 +7,8 @@ interface ICollectionDTO {
     updatedAt?: Date;
     title: String;
     color: String;
-    author?: User;
-    authorId?: String;
+    author: User;
+    authorId: String;
     tasks?: Task[];
 }
 class Collection {
@@ -17,8 +17,8 @@ class Collection {
     updatedAt?: Date;
     title: String;
     color: String;
-    author?: User; 
-    authorId?: String;
+    author: User; 
+    authorId: String;
     tasks?: Task[];
 
     constructor({createdAt,updatedAt ,title, color, author, authorId, tasks}: ICollectionDTO) {

@@ -6,7 +6,7 @@ interface ITaskDTO {
     title: String;
     description?: String;
     completed: Boolean;
-    User?: User;
+    User: User;
     Collection?: Collection;  
 }
 
@@ -15,7 +15,7 @@ class Task {
     title: String;
     description?: String;
     completed: Boolean;
-    User?: User;
+    User: User;
     Collection?: Collection;
 
 
