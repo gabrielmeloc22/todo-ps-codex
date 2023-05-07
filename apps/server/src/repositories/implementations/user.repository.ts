@@ -1,5 +1,5 @@
 import IUserRepository from "../interfaces/user.repository.interface";
-import prisma from "../../prismaClient";
+import prisma from "../../middleware/prisma/client";
 import { User } from "@prisma/client";
 
 
