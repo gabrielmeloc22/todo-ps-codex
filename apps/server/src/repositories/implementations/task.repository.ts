@@ -1,37 +1,35 @@
 import ITaskRepository  from "../interfaces/task.repository.interface";
-import { Task } from "@prisma/client";
 import prisma from "../../middleware/prisma/client";
+import TaskModel  from "../../models/Task";
+import { Task } from "@prisma/client";
 
 
-class TaskRepository implements ITaskRepository {
+class taskRepository implements ITaskRepository {
     
-        private static instance: TaskRepository;
+        private static instance: taskRepository;
     
         private constructor() { }
     
-        public static getInstance(): TaskRepository { 
-            if (!TaskRepository.instance) { 
-                TaskRepository.instance = new TaskRepository();
+        public static getInstance(): taskRepository { 
+            if (!taskRepository.instance) { 
+                taskRepository.instance = new taskRepository();
             }
-            return TaskRepository.instance;
+            return taskRepository.instance;
         }
     
         async getTaskById(id: string): Promise<Task | null> {
-            const task = await prisma.task.findUnique({
+            const outputTask = await prisma.task.findUnique({
                 where: {
                     id: id
                 }
             });
-            return task;
+            return outputTask;
         }
 
-        async createTask({id, createdAt, updatedAt, title, content, status, authorId, collectionId}: Task): Promise<Task> {
+        async createTask({title, content, status, authorId, collectionId}: TaskModel ): Promise<Task> {
             
             const newTask = await prisma.task.create({
                 data: {
-                    id,
-                    createdAt,
-                    updatedAt,
                     title,
                     content,
                     status,
@@ -42,29 +40,30 @@ class TaskRepository implements ITaskRepository {
             return newTask;
         }
 
-        //async updateTask(task: Task, idx: string): Promise<Task> {
-        //    const updatedTask = await prisma.task.update({
-        //        where: {
-        //            id: idx
-        //        },
-        //        data: {
-        //            title: task.title,
-        //            description: task.description,
-        //            status: task.completed,
-        //            userId: task.userId,
-        //        }
-        //    });
-        //    return updatedTask;
-        //}
-//
-        //async deleteTask(id: string): Promise<Task> {
-        //    const task = await prisma.task.delete({
-        //        where: {
-        //            id: id
-        //        }
-        //    });
-        //    return task;
-        //}
+        async updateTask({id, title, content, status, collectionId}: Task, idx: string): Promise<Task> {
+            const updatedTask = await prisma.task.update({
+                where: {
+                    id: idx
+                },
+                data: {
+                    id,
+                    title,
+                    content,
+                    status,
+                    collectionId
+                }
+            });
+            return updatedTask;
+        }
+
+        async deleteTask(id: string): Promise<Task> {
+            const task = await prisma.task.delete({
+                where: {
+                    id: id
+                }
+            });
+            return task;
+        }
 }
 
-export default TaskRepository;
+export default taskRepository;
