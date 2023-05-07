@@ -1,5 +1,7 @@
 import IUserRepository from "../interfaces/user.repository.interface";
-import User from "../../models/User";
+import { prisma } from "../../server";
+import { User } from "@prisma/client";
+
 
 class userRepository implements IUserRepository {
 
@@ -14,19 +16,48 @@ class userRepository implements IUserRepository {
         return userRepository.instance;
     }
 
-    getUserById(id: number): Promise<User> {
-        throw new Error("Method not implemented.");
+    async getUserById(id: string): Promise<User | null> {
+       const outputUser = await prisma.user.findUnique({
+            where: {
+                id: id
+            },
+        });
+
+        return outputUser;
     }
-    getUserByEmail(email: string): Promise<User> {
-        throw new Error("Method not implemented.");
+
+    async getUserByEmail(email: string): Promise<User | null> {
+        const outputUser = await prisma.user.findUnique({
+            where: {
+                email: email
+            },
+        });
+        
+        return outputUser;
     }
+
     createUser(user: User): Promise<User> {
         throw new Error("Method not implemented.");
     }
+
     updateUser(user: User): Promise<User> {
         throw new Error("Method not implemented.");
     }
-    deleteUser(id: number): Promise<User> {
-        throw new Error("Method not implemented.");
+    
+    async deleteUser(id: string): Promise<User | null > {
+        const user = await this.getUserById(id);
+
+        if (user != null) {
+            await prisma.user.delete({
+                where: {
+                    id: id
+                },
+            });
+
+            return user;
+        }
+
+        return null;
     }
+
 }
