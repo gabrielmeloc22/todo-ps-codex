@@ -1,5 +1,5 @@
 import IUserRepository from "../interfaces/user.repository.interface";
-import { prisma } from "../../server";
+import prisma from "../../prismaClient";
 import { User } from "@prisma/client";
 
 
@@ -32,12 +32,19 @@ class userRepository implements IUserRepository {
                 email: email
             },
         });
-        
+
         return outputUser;
     }
 
-    createUser(user: User): Promise<User> {
-        throw new Error("Method not implemented.");
+    async createUser(user: User): Promise<User> {
+        const newUser =  prisma.user.create({
+            data: {
+                email: user.email,
+                password: user.password,
+                name: user.name,
+            },
+        });
+        return newUser;
     }
 
     updateUser(user: User): Promise<User> {
@@ -46,7 +53,6 @@ class userRepository implements IUserRepository {
     
     async deleteUser(id: string): Promise<User | null > {
         const user = await this.getUserById(id);
-
         if (user != null) {
             await prisma.user.delete({
                 where: {
@@ -59,5 +65,6 @@ class userRepository implements IUserRepository {
 
         return null;
     }
-
 }
+
+export default userRepository
