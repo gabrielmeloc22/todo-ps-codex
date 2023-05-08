@@ -1,11 +1,14 @@
-import TaskRepository from "../../../repositories/implementations/task.repository";
+import ITaskRepository from "../../../repositories/interfaces/task.repository.interface";
 
 class getTaskUseCase {
 
-    constructor() { }
+    constructor(private taskRepository: ITaskRepository) { }
 
-    async execute(id: String) {
-        throw new Error("Method not implemented.");
+    async execute(id: string) {
+        
+        const task = await this.taskRepository.getTaskById(id);
+
+        return task;
     }
 
 }

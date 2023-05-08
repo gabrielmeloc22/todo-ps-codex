@@ -1,32 +1,69 @@
 import ITaskRepository  from "../interfaces/task.repository.interface";
-import Task from "../../models/Task";
+import prisma from "../../middleware/prisma/client";
+import TaskModel  from "../../models/Task";
+import { Task } from "@prisma/client";
 
 
-class TaskRepository implements ITaskRepository {
+class taskRepository implements ITaskRepository {
     
-        private static instance: TaskRepository;
+        private static instance: taskRepository;
     
         private constructor() { }
     
-        public static getInstance(): TaskRepository { 
-            if (!TaskRepository.instance) { 
-                TaskRepository.instance = new TaskRepository();
+        public static getInstance(): taskRepository { 
+            if (!taskRepository.instance) { 
+                taskRepository.instance = new taskRepository();
             }
-            return TaskRepository.instance;
+            return taskRepository.instance;
         }
     
-        getTaskById(id: number): Promise<Task> {
-            throw new Error("Method not implemented.");
+        async getTaskById(id: string): Promise<Task | null> {
+            const outputTask = await prisma.task.findUnique({
+                where: {
+                    id: id
+                }
+            });
+            return outputTask;
         }
-        createTask(task: Task): Promise<Task> {
-            throw new Error("Method not implemented.");
+
+        async createTask({title, content, status, authorId, collectionId}: TaskModel ): Promise<Task> {
+            
+            const newTask = await prisma.task.create({
+                data: {
+                    title,
+                    content,
+                    status,
+                    authorId,
+                    collectionId
+                }
+            });
+            return newTask;
         }
-        updateTask(task: Task): Promise<Task> {
-            throw new Error("Method not implemented.");
+
+        async updateTask({id, title, content, status, collectionId}: Task, idx: string): Promise<Task> {
+            const updatedTask = await prisma.task.update({
+                where: {
+                    id: idx
+                },
+                data: {
+                    id,
+                    title,
+                    content,
+                    status,
+                    collectionId
+                }
+            });
+            return updatedTask;
         }
-        deleteTask(id: number): Promise<Task> {
-            throw new Error("Method not implemented.");
+
+        async deleteTask(id: string): Promise<Task> {
+            const task = await prisma.task.delete({
+                where: {
+                    id: id
+                }
+            });
+            return task;
         }
 }
 
-export default TaskRepository;
+export default taskRepository;

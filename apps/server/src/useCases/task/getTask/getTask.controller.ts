@@ -13,3 +13,5 @@ class getTaskController {
             return response.status(200).json(task); 
     }   
 }
+
+export default getTaskController;
