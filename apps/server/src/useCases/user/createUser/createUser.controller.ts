@@ -3,13 +3,28 @@ import createUserUseCase from "./createUser.useCase"
 
 class createUserController {
 
-    constructor(private createUserUseCase: createUserUseCase) { }
+    private static instance: createUserController;
+
+    private constructor(private createUserUseCase: createUserUseCase) { }
+
+
+    public static getInstance(): createUserController {
+        if (!createUserController.instance) {
+            createUserController.instance = new createUserController(createUserUseCase.getInstance());
+        }
+        return createUserController.instance;
+    }
 
     async handle(request: Request, response: Response): Promise<Response> {
-            const { data } = request.body;
-
-            const user = await this.createUserUseCase.execute(data);
-
+            const { email, password, name } = request.body;
+        
+            const user = await this.createUserUseCase.execute(
+                {
+                    email: email,
+                    password: password,
+                    name: name,
+                }
+            )
             return response.status(200).json(user); 
     }   
 }

@@ -3,7 +3,7 @@ CREATE TABLE "User" (
     "id" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "name" TEXT,
+    "name" TEXT NOT NULL,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -15,8 +15,8 @@ CREATE TABLE "Task" (
     "updatedAt" TIMESTAMP(3),
     "title" TEXT NOT NULL,
     "content" TEXT,
-    "completed" BOOLEAN NOT NULL DEFAULT false,
-    "authorId" TEXT,
+    "status" BOOLEAN NOT NULL DEFAULT false,
+    "authorId" TEXT NOT NULL,
     "collectionId" TEXT,
 
     CONSTRAINT "Task_pkey" PRIMARY KEY ("id")
@@ -29,7 +29,7 @@ CREATE TABLE "Collection" (
     "updatedAt" TIMESTAMP(3),
     "title" TEXT NOT NULL,
     "color" TEXT NOT NULL,
-    "authorId" TEXT,
+    "authorId" TEXT NOT NULL,
 
     CONSTRAINT "Collection_pkey" PRIMARY KEY ("id")
 );
@@ -38,10 +38,10 @@ CREATE TABLE "Collection" (
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- AddForeignKey
-ALTER TABLE "Task" ADD CONSTRAINT "Task_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Task" ADD CONSTRAINT "Task_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Task" ADD CONSTRAINT "Task_collectionId_fkey" FOREIGN KEY ("collectionId") REFERENCES "Collection"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Collection" ADD CONSTRAINT "Collection_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Collection" ADD CONSTRAINT "Collection_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

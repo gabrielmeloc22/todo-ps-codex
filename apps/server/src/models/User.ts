@@ -3,28 +3,27 @@ import Collection from "./Collection";
 
 
 interface IUserDTO {
-    email: String;
-    password: String;
-    name: String;
-    tasks?: Task[];
+    email: string;
+    password: string;
+    name: string;
+    tasks: Task[];
     collection?: Collection[];
 }
 
 class User {
 
-    email: String;
-    password: String;
-    name: String;
+    email: string;
+    password: string;
+    name: string;
     tasks?: Task[];
     collection?: Collection[];
 
-    constructor ({email, password, name, tasks, collection}: IUserDTO) {
+    constructor ({email, password, name}: IUserDTO) {
         this.email = email;
         this.password = password;
         this.name = name;
-        this.tasks = tasks;
-        this.collection = collection;
     }
+
 }
 
 export default User;
