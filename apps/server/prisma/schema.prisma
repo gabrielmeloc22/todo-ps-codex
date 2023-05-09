@@ -22,9 +22,9 @@ model Task {
   updatedAt    DateTime?   @updatedAt
   title        String
   content      String?
-  completed    Boolean     @default(false)
-  author       User?       @relation(fields: [authorId], references: [id])
-  authorId     String?
+  status       Boolean     @default(false)
+  author       User        @relation(fields: [authorId], references: [id])
+  authorId     String
   collection   Collection? @relation(fields: [collectionId], references: [id])
   collectionId String?
 }
@@ -35,7 +35,7 @@ model Collection {
   updatedAt DateTime? @updatedAt
   title     String
   color     String
-  author    User?     @relation(fields: [authorId], references: [id])
-  authorId  String?
+  author    User      @relation(fields: [authorId], references: [id])
+  authorId  String
   tasks     Task[]
 }

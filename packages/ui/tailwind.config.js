@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   presets: [require("tailwind-config/tailwind.config")],
+  plugins: [require("tailwindcss-animate")],
 };

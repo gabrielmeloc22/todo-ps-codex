@@ -3,28 +3,28 @@ import Collection from './Collection';
 
 
 interface ITaskDTO {
-    title: String;
-    description?: String;
-    completed: Boolean;
-    User?: User;
-    Collection?: Collection;  
+    title: string;
+    content: string | null;
+    status: boolean ;
+    authorId: string;
+    collectionId: string | null; 
 }
 
 class Task {
     
-    title: String;
-    description?: String;
-    completed: Boolean;
-    User?: User;
-    Collection?: Collection;
+    title: string;
+    content: string | null;
+    status: boolean ;
+    authorId: string;
+    collectionId: string | null; 
 
 
-    constructor ({title, description, completed, User, Collection}: ITaskDTO) {
+    constructor ({title, content, status, authorId, collectionId}: ITaskDTO) {
         this.title = title;
-        this.description = description;
-        this.completed = completed;
-        this.User = User;
-        this.Collection = Collection;
+        this.content = content;
+        this.status = status;
+        this.authorId = authorId;
+        this.collectionId = collectionId;
     }
 }
 
