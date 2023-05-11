@@ -18,8 +18,11 @@
     "paths": {
       "@/*": ["./src/*"],
       "@ui/*": ["../../packages/ui/src/*"]
-    }
-  },
-  "include": ["src", "next-env.d.ts"],
-  "exclude": ["node_modules"]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  }
 }
