@@ -6,7 +6,7 @@ class createTaskController {
     constructor(private createTaskUseCase: CreateTaskUseCase) {}
 
     async handle(request: Request, response: Response): Promise<Response> {
-        const { title, authorId, content, status, collectionId}: Task = request.body;
+        const { title, authorId, content, status, collectionId }: Task = request.body;
         
         const task = await this.createTaskUseCase.execute(
             {
