@@ -36,6 +36,6 @@ model Collection {
   title     String
   color     String
   author    User      @relation(fields: [authorId], references: [id])
-  authorId  String    @unique
+  authorId  String
   tasks     Task[]
 }
