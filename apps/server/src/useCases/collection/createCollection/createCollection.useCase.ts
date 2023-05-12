@@ -5,12 +5,12 @@ class createCollectionUseCase {
     constructor(private collectionRepository: ICollectionRepository) {}
 
 
-    async execute({title, color, authorId, author, createdAt}: Collection) {
+    async execute({title, color, authorId, tasks}: Collection) {
         const collection = await this.collectionRepository.createCollection({
             title,
             color,
             authorId,
-            author
+            tasks
         });
         return collection;
     }
