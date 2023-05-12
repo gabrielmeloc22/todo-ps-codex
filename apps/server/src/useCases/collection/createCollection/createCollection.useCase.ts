@@ -1,7 +1,7 @@
 import Collection from "../../../models/Collection";
 import ICollectionRepository from "../../../repositories/interfaces/collection.repository.interface";
 
-class createCollectionUseCase {
+class CreateCollectionUseCase {
     constructor(private collectionRepository: ICollectionRepository) {}
 
 
@@ -16,4 +16,4 @@ class createCollectionUseCase {
     }
 }
 
-export default createCollectionUseCase;
+export default CreateCollectionUseCase;
