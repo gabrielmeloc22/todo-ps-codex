@@ -38,10 +38,10 @@ class CollectionRepository implements ICollectionRepository {
         return newCollection;
     }
 
-    async updateCollection(collection: Collection, authorId: string): Promise<Collection> {
+    async updateCollection(collection: Collection, id: string): Promise<Collection> {
         const updateCollection = await prisma.collection.update({
             where: {
-                authorId: authorId,
+                id: id,
             },
             data: {
                 title: collection.title,

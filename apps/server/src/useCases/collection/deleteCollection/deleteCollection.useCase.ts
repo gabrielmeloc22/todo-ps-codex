@@ -15,10 +15,8 @@ class DeleteCollectionUseCase {
     }
 
 
-    async execute(authorId: string) {
-        const collection = await this.collectionRepository.deleteCollection(
-            authorId,
-            );
+    async execute(id: string) {
+        const collection = this.collectionRepository.deleteCollection(id);
         return collection;
     }
 }

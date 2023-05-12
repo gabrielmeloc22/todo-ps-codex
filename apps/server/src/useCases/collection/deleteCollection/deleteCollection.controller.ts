@@ -16,13 +16,11 @@ class DeleteCollectionController {
     }
 
     async handle(request: Request, response: Response): Promise<Response> {
-        const { title, color, authorId, tasks }: Collection = request.body;
+        const { id } = request.params;
+        console.log(id);
+        const collection = await this.deleteCollectionUseCase.execute(id);
 
-        const collection = await this.deleteCollectionUseCase.execute(
-            authorId
-        );
-
-        return response.status(200).json(collection);
+        return response.status(201).json(collection);
     }
 }
 
