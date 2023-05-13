@@ -1,16 +1,16 @@
 import { Router } from "express";
 import createTask from "../useCases/task/createTask";
 import getTaskById from "../useCases/task/getTask";
+import { ensureAuthenticated } from "../middleware/ensureAuthenticated";
 
 const router = Router();
 
 router
-.post("/", (req, res) => {
-    const task = createTask.handle(req, res);
-})
-.get("/:id", (req, res) => {
-    const task = getTaskById.handle(req, res);
-    res.status(200).json(task);
-})
+  .post("/", ensureAuthenticated, (request, response) => {
+    return createTask.handle(request, response);
+  })
+  .get("/:id", ensureAuthenticated, (request, response) => {
+    return getTaskById.handle(request, response);
+  });
 
 export default router;
