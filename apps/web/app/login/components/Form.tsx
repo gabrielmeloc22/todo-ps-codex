@@ -21,7 +21,7 @@ export function Form() {
   } = useForm<LoginValidationSchema>({ resolver: zodResolver(loginValidationSchema) });
 
   const onSubmit: SubmitHandler<LoginValidationSchema> = (data, e) => {
-    e.preventDefault();
+    e?.preventDefault();
     console.log(data);
   };
 
