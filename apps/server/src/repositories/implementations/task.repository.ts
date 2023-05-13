@@ -26,6 +26,15 @@ class taskRepository implements ITaskRepository {
             return outputTask;
         }
 
+        async getAllTasks(authorId: string) {
+            const allTasks = await prisma.task.findMany({
+                where: {
+                    authorId: authorId
+                }
+            })
+            return allTasks;
+        }
+
         async createTask({title, content, status, authorId, collectionId}: TaskModel ): Promise<Task> {
             
             const newTask = await prisma.task.create({

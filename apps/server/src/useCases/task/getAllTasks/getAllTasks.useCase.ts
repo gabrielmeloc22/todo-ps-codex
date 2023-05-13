@@ -1,4 +1,7 @@
 import TaskRepository from "../../../repositories/implementations/task.repository";
+import ITaskRepository from "../../../repositories/interfaces/task.repository.interface";
+import Task from "../../../models/Task";
+
 
 class GetAllTasksUseCase {
     private static instance: GetAllTasksUseCase
@@ -12,8 +15,10 @@ class GetAllTasksUseCase {
         return this.instance;
       }
 
-    execute() {
-        
+    async execute(authorId: string) {
+        const allTasks: Task[] = await this.taskRepository.getAllTasks(authorId);
+
+        return allTasks;
     }
 }
 

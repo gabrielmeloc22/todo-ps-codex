@@ -16,14 +16,13 @@ class CreateCollectionController {
     }
 
     async handle(request: Request, response: Response): Promise<Response> {
-        const { title, color, authorId, tasks }: Collection = request.body;
+        const { title, color, authorId }: Collection = request.body;
 
         const collection = await this.createCollectionUseCase.execute(
             {
                 title: title,
                 color: color,
                 authorId: authorId,
-                tasks: tasks
             }
         );
 
