@@ -4,7 +4,6 @@ import createTask from "../useCases/task/createTask";
 import getTaskById from "../useCases/task/getTask";
 import getAllTasks from "../useCases/task/getAllTasks";
 
-
 const router = Router();
 
 router

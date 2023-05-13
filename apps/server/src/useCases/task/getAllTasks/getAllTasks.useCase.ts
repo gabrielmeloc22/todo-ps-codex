@@ -2,7 +2,6 @@ import TaskRepository from "../../../repositories/implementations/task.repositor
 import ITaskRepository from "../../../repositories/interfaces/task.repository.interface";
 import Task from "../../../models/Task";
 
-
 class GetAllTasksUseCase {
     private static instance: GetAllTasksUseCase
 

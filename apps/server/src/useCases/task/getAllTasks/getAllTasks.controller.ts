@@ -13,7 +13,6 @@ class GetAllTasksController {
         return this.instance;
       }
     
-
     async handle(request: Request, response: Response) {
         const { authorId } = request.params;
 
