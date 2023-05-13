@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import DeleteCollectionUseCase from './deleteCollection.useCase';
-import Collection from '../../../models/Collection';
 
 class DeleteCollectionController {
     private static instance: DeleteCollectionController;

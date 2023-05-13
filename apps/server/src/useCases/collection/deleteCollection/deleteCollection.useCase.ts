@@ -1,4 +1,3 @@
-import Collection from "../../../models/Collection";
 import CollectionRepository from "../../../repositories/implementations/collection.repository";
 import ICollectionRepository from "../../../repositories/interfaces/collection.repository.interface";
 
