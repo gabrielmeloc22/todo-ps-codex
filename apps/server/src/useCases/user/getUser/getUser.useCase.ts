@@ -9,7 +9,6 @@ class getUserUseCase {
         const user = this.userRepository.getUserById(id);
         return user;
     }
-
 }
 
 export default getUserUseCase;
