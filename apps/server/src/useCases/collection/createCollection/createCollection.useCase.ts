@@ -20,7 +20,6 @@ class CreateCollectionUseCase {
             title,
             color,
             authorId,
-            tasks
         });
         return collection;
     }
