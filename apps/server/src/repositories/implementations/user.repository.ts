@@ -37,7 +37,7 @@ class userRepository implements IUserRepository {
     }
 
     async createUser(user: User): Promise<User> {
-        const newUser =  prisma.user.create({
+        const newUser = prisma.user.create({
             data: {
                 email: user.email,
                 password: user.password,
@@ -67,6 +67,7 @@ class userRepository implements IUserRepository {
                 id: id
             },
         });
+        
         return user;
     }
 }
