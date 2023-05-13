@@ -19,6 +19,7 @@ class GetAllTasksController {
         const allTasks = await this.getAllTasksUseCase.execute(authorId);
 
         return response.status(200).json(allTasks)
+
     }
 
 }
