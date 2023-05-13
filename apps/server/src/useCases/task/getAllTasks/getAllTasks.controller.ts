@@ -13,12 +13,14 @@ class GetAllTasksController {
         return this.instance;
       }
     
+
     async handle(request: Request, response: Response) {
         const { authorId } = request.params;
 
         const allTasks = await this.getAllTasksUseCase.execute(authorId);
 
         return response.status(200).json(allTasks)
+
     }
 
 }
