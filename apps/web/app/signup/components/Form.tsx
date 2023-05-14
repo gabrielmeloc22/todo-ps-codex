@@ -9,7 +9,7 @@ import { useCreateUserMutation } from "../lib/useCreateUserMutation";
 const createAccountValidation = z
   .object({
     firstName: z.string().nonempty({ message: "Nome é obrigatório" }),
-    lastName: z.string().optional(),
+    lastName: z.string().nonempty({ message: "Sobrenome é obrigatório" }),
     email: z
       .string()
       .nonempty({ message: "Por favor, insira seu e-mail" })
@@ -39,10 +39,11 @@ export function Form() {
 
   const onSubmit: SubmitHandler<CreateAccountValidation> = (data, e) => {
     e?.preventDefault();
-    const { email, password, firstName: name } = data;
+    const { email, password, firstName: name, lastName } = data;
     mutate({
       email,
       name,
+      lastName,
       password,
     });
   };
