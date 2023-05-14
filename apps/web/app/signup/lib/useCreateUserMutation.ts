@@ -15,6 +15,7 @@ type UserMutationData = {
 type CreateUserMutationVariables = {
   email: string;
   name: string;
+  lastName: string;
   password: string;
 };
 
