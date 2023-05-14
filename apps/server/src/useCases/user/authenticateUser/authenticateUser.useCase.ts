@@ -41,15 +41,19 @@ class AuthenticateUserUseCase {
   }
 
   public async execute({ email, password }: Pick<User, "email" | "password">) {
+
     const User = await this.userAlreadyExists(email);
     await this.passwordMatch(User, password);
+
     
     const token = sign({}, this.getToken(), {
       subject: User.id,
       expiresIn: "5d",
     });
+
     const {password: _, ...user } = User;
     return { token, user };
+
   }
 }
 
