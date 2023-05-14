@@ -20,4 +20,4 @@ class DeleteTaskUseCase {
     }
 }
 
-export default DeleteTaskUseCase
+export default DeleteTaskUseCase;
