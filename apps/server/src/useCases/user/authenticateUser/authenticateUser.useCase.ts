@@ -48,8 +48,8 @@ class AuthenticateUserUseCase {
       subject: user.id,
       expiresIn: "5d",
     });
-
-    return { token, user };
+    const {password: _, ...userWoPassword } = user;
+    return { token, userWoPassword };
   }
 }
 
