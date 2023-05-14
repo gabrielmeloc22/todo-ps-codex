@@ -16,7 +16,7 @@ class DeleteUserUseCase {
 
     async execute(id: string) {
         const user = this.userRepository.deleteUser(id);
-        return user
+        return user;
     }
 }
 
