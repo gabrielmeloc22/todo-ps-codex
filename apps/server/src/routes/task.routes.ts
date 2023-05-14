@@ -1,4 +1,4 @@
-import { Router, response } from "express";
+import { Router } from "express";
 import { ensureAuthenticated } from "../middleware/ensureAuthenticated";
 import createTask from "../useCases/task/createTask";
 import getTaskById from "../useCases/task/getTask";
