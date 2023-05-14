@@ -1,6 +1,7 @@
 import { Router } from "express";
 import createUser from "../useCases/user/createUser";
 import getUser from "../useCases/user/getUser";
+import deleteUser from "../useCases/user/deleteUser"
 import authenticateUser from "../useCases/user/authenticateUser";
 import { ensureAuthenticated } from "../middleware/ensureAuthenticated";
 
@@ -15,6 +16,9 @@ router
   })
   .post("/login", (request, response) => {
     return authenticateUser.handle(request, response);
+  })
+  .delete("/:id", (request, response) => {
+    return deleteUser.handle(request, response);
   });
 
 export default router;
