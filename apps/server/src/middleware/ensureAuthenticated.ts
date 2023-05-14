@@ -3,7 +3,7 @@ import { verify } from "jsonwebtoken";
 
 const getToken = () => {
     const TOKEN = process.env.ACCESS_TOKEN_SECRET;
-    return TOKEN!;
+    return TOKEN;
 }
 
 const verifyTokenExists = (request: Request, response: Response, next: NextFunction) => {
