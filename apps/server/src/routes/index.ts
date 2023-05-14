@@ -4,6 +4,7 @@ import taskRoutes from "./task.routes";
 import collectioRoutes from "./collection.routes";
 import cors from 'cors';
 
+
 const routes = (app: any) => {
   //Teste de rota base
   app.route("/").get((req: Request, res: Response) => {
