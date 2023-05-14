@@ -7,7 +7,7 @@ import { cn } from "@ui/lib/utils";
 import { forwardRef } from "react";
 
 const labelVariants = cva(
-  "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
+  "text-sm font-medium leading-none cursor-pointer peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
   {
     variants: {
       variant: {
@@ -32,7 +32,7 @@ const Label = forwardRef<React.ElementRef<typeof LabelPrimitive.Root>, LabelProp
     <LabelPrimitive.Root ref={ref} className={cn(labelVariants({ variant }), className)} {...props}>
       {children}
       {variant === "error" && errorMessage && (
-        <p role="alert" className="text-sm mt-2">
+        <p role="alert" className="text-sm mt-2 max-w-[16em]">
           {errorMessage}
         </p>
       )}

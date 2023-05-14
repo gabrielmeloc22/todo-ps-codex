@@ -14,7 +14,7 @@ export default function LoginPage() {
         </h1>
       </div>
       <div className="flex flex-1 md:flex-grow-[4] flex-col justify-center gap-10 mb-14">
-        <h2 className="text-xl font-semibold">Olá! Entre ou cria uma conta</h2>
+        <h2 className="text-xl font-semibold">Olá! Entre ou crie uma conta</h2>
         <Form />
       </div>
     </main>
