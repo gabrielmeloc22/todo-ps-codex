@@ -1,7 +1,6 @@
 import { MutationFunction, useMutation } from "@tanstack/react-query";
-import { api } from "../../../services/axios";
 import { setCookie } from "cookies-next";
-import { useRouter } from "next/navigation";
+import { api } from "../../../services/axios";
 
 type UserLoginRes = {
   token: string;
@@ -18,6 +17,14 @@ type UserLoginVariables = {
   password: string;
 };
 
+type UserLoginErrors = {
+  response: {
+    data: {
+      message: string;
+    };
+  };
+};
+
 const loginUser: MutationFunction<UserLoginRes, UserLoginVariables> = async (variables) => {
   const { data } = await api.post("user/login", variables);
   return data;
@@ -29,13 +36,14 @@ const setUserCookies = (token: string, id: string) => {
 };
 
 export function userUserLoginMutation() {
-  const router = useRouter();
-
-  const mutation = useMutation({
+  const mutation = useMutation<UserLoginRes, UserLoginErrors, UserLoginVariables>({
     mutationFn: loginUser,
     onSuccess: (data) => {
       setUserCookies(data.token, data.user.id);
-      router.push("dashboard");
+      window.location.reload();
+    },
+    onError: (data) => {
+      return data;
     },
   });
 

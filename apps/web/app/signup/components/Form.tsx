@@ -35,7 +35,7 @@ export function Form() {
     formState: { errors },
   } = useForm<CreateAccountValidation>({ resolver: zodResolver(createAccountValidation) });
 
-  const { mutate, isLoading, isError } = useCreateUserMutation();
+  const { mutate, isLoading, isError, error } = useCreateUserMutation();
 
   const onSubmit: SubmitHandler<CreateAccountValidation> = (data, e) => {
     e?.preventDefault();
@@ -58,13 +58,13 @@ export function Form() {
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col gap-6 sm:items-stretch items-center [&>*]:justify-center"
     >
-      <h2 className="text-xl font-semibold">Criar uma nova conta</h2>
+      <h2 className="text-xl font-semibold mb-4">Criar uma nova conta</h2>
       <div className="flex flex-wrap gap-6">
         <Label htmlFor="firstName" {...setErrorProps(errors.firstName)}>
           <p className="font-normal mb-2">Nome</p>
           <Input id="firstName" placeholder="nome" {...register("firstName")} />
         </Label>
-        <Label htmlFor="lastName">
+        <Label htmlFor="lastName" {...setErrorProps(errors.lastName)}>
           <p className="font-normal mb-2">Sobrenome</p>
           <Input id="lastName" placeholder="sobrenome" {...register("lastName")} />
         </Label>
@@ -97,10 +97,19 @@ export function Form() {
           />
         </Label>
       </div>
-      {isError && <p className="text-red-400">E-mail já cadastrado!</p>}
-      <Button loading={isLoading} type="submit">
-        Criar conta
-      </Button>
+      <div>
+        <Button loading={isLoading} type="submit">
+          Criar conta
+        </Button>
+        {isError && (
+          <p
+            role="alert"
+            className="absolute mt-4 text-sm text-red-400 duration-300 animate-in fade-in-10 slide-in-from-bottom-10 ease-[cubic-bezier(0.17,0.67,0.22,1.05)]"
+          >
+            {error.response.data.message}
+          </p>
+        )}
+      </div>
     </form>
   );
 }

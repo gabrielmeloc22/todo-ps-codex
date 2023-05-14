@@ -21,7 +21,7 @@ export function Form() {
     formState: { errors },
   } = useForm<LoginValidationSchema>({ resolver: zodResolver(loginValidationSchema) });
 
-  const { mutate } = userUserLoginMutation();
+  const { mutate, isLoading, isError, error } = userUserLoginMutation();
 
   const onSubmit: SubmitHandler<LoginValidationSchema> = (data, e) => {
     e?.preventDefault();
@@ -46,13 +46,25 @@ export function Form() {
         <p className="font-normal mb-2">Senha</p>
         <Input id="password-input" type="password" placeholder="senha" {...register("password")} />
       </Label>
-      <div className="flex gap-5">
-        <NextLink href="/signup">
-          <Button variant="outline" type="button">
-            Criar conta
+      <div className="h-full">
+        <div className="flex gap-5">
+          <NextLink href="/signup">
+            <Button variant="outline" type="button">
+              Criar conta
+            </Button>
+          </NextLink>
+          <Button loading={isLoading} type="submit">
+            Entrar
           </Button>
-        </NextLink>
-        <Button type="submit">Entrar</Button>
+        </div>
+        {isError && (
+          <p
+            role="alert"
+            className="absolute mt-4 text-sm text-red-400 duration-300 animate-in fade-in-10 slide-in-from-bottom-10 ease-[cubic-bezier(0.17,0.67,0.22,1.05)]"
+          >
+            {error.response.data.message}
+          </p>
+        )}
       </div>
     </form>
   );

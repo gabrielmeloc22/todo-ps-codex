@@ -20,8 +20,11 @@ type CreateUserMutationVariables = {
 };
 
 type CreateUserReqError = {
-  error: string;
-  message: string;
+  response: {
+    data: {
+      message: string;
+    };
+  };
 };
 
 const createUser: MutationFunction<UserMutationData> = async (variables) => {
