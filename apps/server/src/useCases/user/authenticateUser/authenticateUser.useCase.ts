@@ -37,12 +37,13 @@ class AuthenticateUserUseCase {
 
   private getToken() {
     const TOKEN = process.env.ACCESS_TOKEN_SECRET;
-    return TOKEN!;
+    return TOKEN;
   }
 
   public async execute({ email, password }: Pick<User, "email" | "password">) {
     const user = await this.userAlreadyExists(email);
-    this.passwordMatch(user, password);
+    await this.passwordMatch(user, password);
+
     
     const token = sign({}, this.getToken(), {
       subject: user.id,
