@@ -2,11 +2,12 @@ import { Router } from "express";
 import createUser from "../useCases/user/createUser";
 import getUser from "../useCases/user/getUser";
 import authenticateUser from "../useCases/user/authenticateUser";
+import { ensureAuthenticated } from "../middleware/ensureAuthenticated";
 
 const router = Router();
 
 router
-  .get("/:id", (request, response) => {
+  .get("/:id", ensureAuthenticated,(request, response) => {
     return getUser.handle(request, response);
   })
   .post("/", (request, response) => {
