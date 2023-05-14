@@ -16,13 +16,14 @@ class createUserController {
     }
 
     async handle(request: Request, response: Response): Promise<Response> {
-            const { email, password, name } = request.body;
+            const { email, password, name, lastName } = request.body;
         
             const user = await this.createUserUseCase.execute(
                 {
                     email: email,
                     password: password,
                     name: name,
+                    lastName: lastName,
                 }
             )
             return response.status(200).json(user); 

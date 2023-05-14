@@ -42,6 +42,7 @@ class userRepository implements IUserRepository {
                 email: user.email,
                 password: user.password,
                 name: user.name,
+                lastName: user.lastName,
             },
         });
         return newUser;

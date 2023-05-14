@@ -2,6 +2,8 @@ import express, { Request, Response } from "express";
 import userRoutes from "./user.routes";
 import taskRoutes from "./task.routes";
 import collectioRoutes from "./collection.routes";
+import cors from 'cors';
+
 
 const routes = (app: any) => {
   //Teste de rota base
@@ -11,6 +13,7 @@ const routes = (app: any) => {
 
   //A baixo as rotas
   app
+  .use(cors())
   .use(express.json())
   .use("/user", userRoutes)
   .use("/task", taskRoutes)
