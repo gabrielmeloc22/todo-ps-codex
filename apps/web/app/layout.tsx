@@ -1,4 +1,5 @@
 import "@ui/styles/globals.css";
+import { Providers } from "./providers";
 interface RootLayoutProps {
   children: React.ReactNode;
 }
@@ -14,7 +15,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
           rel="stylesheet"
         />
       </head>
-      <body className="h-screen">{children}</body>
+      <body className="h-screen">
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }
