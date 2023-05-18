@@ -29,7 +29,10 @@ export function Form() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col justify-center gap-8">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col justify-center gap-8 max-sm:items-center"
+    >
       <Label
         htmlFor="email-input"
         variant={errors.email ? "error" : "default"}
