@@ -1,8 +1,8 @@
 import ITaskRepository  from "../interfaces/task.repository.interface";
 import prisma from "../../middleware/prisma/client";
-import TaskModel  from "../../models/Task";
 import { Task } from "@prisma/client";
 
+type TaskInput = Omit<Task, "id" | "createdAt" | "updatedAt">;
 
 class taskRepository implements ITaskRepository {
     
@@ -35,7 +35,7 @@ class taskRepository implements ITaskRepository {
             return allTasks;
         }
 
-        async createTask({title, content, status, authorId, collectionId}: TaskModel ): Promise<Task> {
+        async createTask({title, content, completionDate ,status, authorId, collectionId }: TaskInput): Promise<Task> {
             
             const newTask = await prisma.task.create({
                 data: {
@@ -43,13 +43,14 @@ class taskRepository implements ITaskRepository {
                     content,
                     status,
                     authorId,
-                    collectionId
+                    collectionId,
+                    completionDate,
                 }
             });
             return newTask;
         }
 
-        async updateTask({id, title, content, status, collectionId}: Task, idx: string): Promise<Task> {
+        async updateTask({id, title, content, completionDate , status, collectionId}: Task, idx: string): Promise<Task> {
             const updatedTask = await prisma.task.update({
                 where: {
                     id: idx
@@ -58,6 +59,7 @@ class taskRepository implements ITaskRepository {
                     id,
                     title,
                     content,
+                    completionDate,
                     status,
                     collectionId
                 }
