@@ -16,7 +16,7 @@ class createUserController {
     }
 
     async handle(request: Request, response: Response): Promise<Response> {
-            const { email, password, name, lastName } = request.body;
+            const { email, password, name, lastName, age, gender } = request.body;
         
             const user = await this.createUserUseCase.execute(
                 {
@@ -24,6 +24,8 @@ class createUserController {
                     password: password,
                     name: name,
                     lastName: lastName,
+                    age: age,
+                    gender: gender,
                 }
             )
             return response.status(200).json(user); 

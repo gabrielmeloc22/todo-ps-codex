@@ -43,6 +43,8 @@ class userRepository implements IUserRepository {
                 password: user.password,
                 name: user.name,
                 lastName: user.lastName,
+                age: user.age,
+                gender: user.gender,  
             },
         });
         return newUser;
@@ -57,6 +59,9 @@ class userRepository implements IUserRepository {
                 email: user.email,
                 password: user.password,
                 name: user.name,
+                lastName: user.lastName,
+                age: user.age,
+                gender: user.gender,
             },
         });
         return updatedUser;
