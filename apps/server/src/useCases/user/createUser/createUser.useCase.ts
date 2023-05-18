@@ -16,7 +16,7 @@ class createUserUseCase {
     return createUserUseCase.instance;
   }
 
-  async execute({ email, password, name, lastName }: User) {
+  async execute({ email, password, age, gender, name, lastName }: User) {
     await this.invalidEntries.userAlreadyExists(email);
 
     const salt = genSaltSync(10)
@@ -27,6 +27,8 @@ class createUserUseCase {
       password: hashedPassword,
       name: name,
       lastName: lastName,
+      age: age,
+      gender: gender,
     });
 
     return result;

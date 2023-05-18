@@ -11,6 +11,8 @@ model User {
   id          String       @id @default(cuid())
   email       String       @unique
   password    String
+  gender      String
+  age         Int
   name        String
   lastName    String
   tasks       Task[]
@@ -18,16 +20,17 @@ model User {
 }
 
 model Task {
-  id           String      @id @default(cuid())
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime?   @updatedAt
-  title        String
-  content      String?
-  status       Boolean     @default(false)
-  author       User        @relation(fields: [authorId], references: [id])
-  authorId     String
-  collection   Collection? @relation(fields: [collectionId], references: [id])
-  collectionId String?
+  id             String      @id @default(cuid())
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime?   @updatedAt
+  completionDate DateTime    @default(now())
+  title          String
+  content        String?
+  status         Boolean     @default(false)
+  author         User        @relation(fields: [authorId], references: [id])
+  authorId       String
+  collection     Collection? @relation(fields: [collectionId], references: [id])
+  collectionId   String?
 }
 
 model Collection {
