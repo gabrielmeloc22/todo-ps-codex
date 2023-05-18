@@ -7,13 +7,14 @@ class createTaskController {
 
     
     async handle(request: Request, response: Response): Promise<Response> {
-        const { title, authorId, content, status, collectionId }: Task = request.body;
+        const { title, authorId, completionDate, content, status, collectionId }: Task = request.body;
         
         const task = await this.createTaskUseCase.execute(
             {
                 title: title,
                 authorId: authorId,
                 content: content,
+                completionDate: completionDate,
                 status: status,
                 collectionId: collectionId
             }
