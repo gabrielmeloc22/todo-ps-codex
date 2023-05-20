@@ -11,8 +11,8 @@ model User {
   id          String       @id @default(cuid())
   email       String       @unique
   password    String
-  gender      String
-  age         Int
+  gender      String?
+  age         Int?
   name        String
   lastName    String
   tasks       Task[]
@@ -23,7 +23,7 @@ model Task {
   id             String      @id @default(cuid())
   createdAt      DateTime    @default(now())
   updatedAt      DateTime?   @updatedAt
-  completionDate DateTime    @default(now())
+  completionDate DateTime?
   title          String
   content        String?
   status         Boolean     @default(false)
