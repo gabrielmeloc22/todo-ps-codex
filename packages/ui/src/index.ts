@@ -14,3 +14,4 @@ export {
 export { TextArea } from "@ui/components/TextArea";
 export { Popover } from "@ui/components/Popover";
 export { Calendar } from "@ui/components/Calendar";
+export { DatePicker } from "@ui/components/DatePicker";
