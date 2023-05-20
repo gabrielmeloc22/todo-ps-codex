@@ -1,8 +1,10 @@
 import IUserRepository from "../../../repositories/interfaces/user.repository.interface";
 import userRepository from "../../../repositories/implementations/user.repository";
-import User from "../../../models/User";
+import { User } from "@prisma/client";
 import { genSaltSync, hashSync } from "bcrypt";
 import InvalidEntries from "../../../middleware/invalidEntries";
+
+type UserInput = Omit<User, "id">;
 
 class createUserUseCase {
   private static instance: createUserUseCase;
@@ -16,19 +18,19 @@ class createUserUseCase {
     return createUserUseCase.instance;
   }
 
-  async execute({ email, password, age, gender, name, lastName }: User) {
+  async execute({ email, password, age, gender, name, lastName }: UserInput) {
     await this.invalidEntries.userAlreadyExists(email);
 
     const salt = genSaltSync(10)
     const hashedPassword = hashSync(password, salt);
 
     const result = this.userRepository.createUser({
-      email: email,
+      email,
       password: hashedPassword,
-      name: name,
-      lastName: lastName,
-      age: age,
-      gender: gender,
+      name,
+      lastName,
+      age,
+      gender,
     });
 
     return result;

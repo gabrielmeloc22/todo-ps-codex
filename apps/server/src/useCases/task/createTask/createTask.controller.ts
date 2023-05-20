@@ -1,22 +1,24 @@
 import { Request, Response } from 'express';
 import CreateTaskUseCase from './createTask.useCase';
-import Task from "../../../models/Task";
+import { Task } from '@prisma/client';
+
+type TaskInput = Omit<Task, "id" | "createdAt" | "updatedAt" > & { completionDate: Date & string };
 
 class createTaskController {
     constructor(private createTaskUseCase: CreateTaskUseCase) {}
 
     
     async handle(request: Request, response: Response): Promise<Response> {
-        const { title, authorId, completionDate, content, status, collectionId }: Task = request.body;
+        const { title, authorId, completionDate, content, status, collectionId }: TaskInput = request.body;
         
         const task = await this.createTaskUseCase.execute(
             {
-                title: title,
-                authorId: authorId,
-                content: content,
-                completionDate: completionDate,
-                status: status,
-                collectionId: collectionId
+                title,
+                authorId,
+                content,
+                completionDate,
+                status,
+                collectionId,
             }
         );
 

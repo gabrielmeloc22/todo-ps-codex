@@ -1,5 +1,4 @@
-import User from "../../../models/User";
-import { User as user } from "@prisma/client";
+import { User } from "@prisma/client";
 import prisma from "../../../middleware/prisma/client";
 import { compare } from "bcrypt";
 import { sign } from "jsonwebtoken";
@@ -17,22 +16,23 @@ class AuthenticateUserUseCase {
     return this.instance;
   }
 
-  private async userAlreadyExists(email: string): Promise<user> {
-    const user = await prisma.user.findFirst({ where: { email } });
+  private async UserAlreadyExists(email: string): Promise<User> {
+    const User = await prisma.user.findFirst({ where: { email } });
 
-    if (!user) {
+    if (!User) {
       throw new Error("Email or password incorrect");
     }
 
-    return user;
+    return User;
   }
 
-  private async passwordMatch(user: User, password: string) {
-    const passwordMatch = await compare(password, user.password);
+  private async passwordMatch(User: User, password: string) {
+    const passwordMatch = await compare(password, User.password);
 
     if (!passwordMatch) {
       throw new Error("Email or password incorrect");
     }
+
   }
 
   private getToken() {
@@ -42,17 +42,20 @@ class AuthenticateUserUseCase {
 
   public async execute({ email, password }: Pick<User, "email" | "password">) {
 
-    const User = await this.userAlreadyExists(email);
-    await this.passwordMatch(User, password);
+    const user = await this.UserAlreadyExists(email);
+    await this.passwordMatch(user, password);
 
-    
-    const token = sign({}, this.getToken(), {
-      subject: User.id,
-      expiresIn: "5d",
-    });
+    const token = sign(
+      {
+      UserId: user.id,
+      },
+      this.getToken(),
+      {
+      expiresIn: '5d' 
+      });
 
-    const {password: _, ...user } = User;
-    return { token, user };
+    const {password: _, ...User } = user;
+    return { token, User };
 
   }
 }
