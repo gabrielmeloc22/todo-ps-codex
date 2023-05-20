@@ -1,6 +1,5 @@
 import TaskRepository from "../../../repositories/implementations/task.repository";
-import ITaskRepository from "../../../repositories/interfaces/task.repository.interface";
-import Task from "../../../models/Task";
+import { Task } from '@prisma/client'
 
 class GetAllTasksUseCase {
     private static instance: GetAllTasksUseCase

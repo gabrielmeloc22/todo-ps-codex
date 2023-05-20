@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import createCollectionUseCase from './createCollection.useCase';
-import Collection from '../../../models/Collection';
+import { Collection } from '@prisma/client';
 
 class CreateCollectionController {
     private static instance: CreateCollectionController;
