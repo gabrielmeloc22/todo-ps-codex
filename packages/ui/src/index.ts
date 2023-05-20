@@ -11,3 +11,4 @@ export {
   DialogTitle,
   DialogTrigger,
 } from "@ui/components/Dialog";
+export { TextArea } from "@ui/components/TextArea";
