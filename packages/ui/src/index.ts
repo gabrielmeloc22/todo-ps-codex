@@ -13,3 +13,4 @@ export {
 } from "@ui/components/Dialog";
 export { TextArea } from "@ui/components/TextArea";
 export { Popover } from "@ui/components/Popover";
+export { Calendar } from "@ui/components/Calendar";
