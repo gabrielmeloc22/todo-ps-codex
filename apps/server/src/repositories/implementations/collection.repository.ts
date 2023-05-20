@@ -2,6 +2,7 @@ import ICollectionRepository from "../interfaces/collection.repository.interface
 import prisma from "../../middleware/prisma/client"
 import { Collection } from "@prisma/client";
 
+type CollectionInput = Omit<Collection, "id" | "createdAt" | "updatedAt">;
 
 class CollectionRepository implements ICollectionRepository {
 
@@ -26,7 +27,7 @@ class CollectionRepository implements ICollectionRepository {
         return outputCollection;
     }
 
-    async createCollection(collection: Collection): Promise<Collection> {
+    async createCollection(collection: CollectionInput): Promise<Collection> {
         const newCollection = prisma.collection.create({
             data: {
                 title: collection.title,

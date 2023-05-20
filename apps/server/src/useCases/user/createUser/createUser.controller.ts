@@ -1,12 +1,14 @@
 import { Request, Response } from "express";
 import createUserUseCase from "./createUser.useCase"
+import { User } from "@prisma/client";
+
+type UserInput = Omit<User, "id">;
 
 class createUserController {
 
     private static instance: createUserController;
 
     private constructor(private createUserUseCase: createUserUseCase) { }
-
 
     public static getInstance(): createUserController {
         if (!createUserController.instance) {
@@ -16,19 +18,19 @@ class createUserController {
     }
 
     async handle(request: Request, response: Response): Promise<Response> {
-            const { email, password, name, lastName, age, gender } = request.body;
+            const { email, password, name, lastName, age, gender }: UserInput = request.body;
         
             const user = await this.createUserUseCase.execute(
                 {
-                    email: email,
-                    password: password,
-                    name: name,
-                    lastName: lastName,
-                    age: age,
-                    gender: gender,
+                    email,
+                    password,
+                    name,
+                    lastName,
+                    age,
+                    gender,
                 }
             )
-            return response.status(200).json(user); 
+            return response.status(201).json(user); 
     }   
 }
 

@@ -2,18 +2,19 @@ import IUserRepository from "../interfaces/user.repository.interface";
 import prisma from "../../middleware/prisma/client";
 import { User } from "@prisma/client";
 
+type UserInput = Omit<User, "id">;
 
-class userRepository implements IUserRepository {
+class UserRepository implements IUserRepository {
 
-    private static instance: userRepository;
+    private static instance: UserRepository;
 
     private constructor() { }
 
-    public static getInstance(): userRepository { 
-        if (!userRepository.instance) { 
-            userRepository.instance = new userRepository();
+    public static getInstance(): UserRepository { 
+        if (!UserRepository.instance) { 
+            UserRepository.instance = new UserRepository();
         }
-        return userRepository.instance;
+        return UserRepository.instance;
     }
 
     async getUserById(id: string): Promise<User | null> {
@@ -36,7 +37,7 @@ class userRepository implements IUserRepository {
         return outputUser;
     }
 
-    async createUser(user: User): Promise<User> {
+    async createUser(user: UserInput): Promise<User> {
         const newUser = prisma.user.create({
             data: {
                 email: user.email,
@@ -78,4 +79,4 @@ class userRepository implements IUserRepository {
     }
 }
 
-export default userRepository
+export default UserRepository

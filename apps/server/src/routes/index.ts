@@ -1,4 +1,5 @@
 import express, { Request, Response } from "express";
+import { ensureAuthenticated } from "../middleware/ensureAuthenticated";
 import userRoutes from "./user.routes";
 import taskRoutes from "./task.routes";
 import collectioRoutes from "./collection.routes";
@@ -16,6 +17,7 @@ const routes = (app: any) => {
   .use(cors())
   .use(express.json())
   .use("/user", userRoutes)
+  .use(ensureAuthenticated)
   .use("/task", taskRoutes)
   .use("/collection", collectioRoutes)
 };

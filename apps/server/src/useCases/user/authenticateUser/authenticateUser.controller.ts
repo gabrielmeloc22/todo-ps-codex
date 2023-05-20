@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import AuthenticateUserUseCase from "./authenticateUser.useCase";
-import User from "../../../models/User";
 
 class AuthenticateUserController {
   private static instance: AuthenticateUserController;

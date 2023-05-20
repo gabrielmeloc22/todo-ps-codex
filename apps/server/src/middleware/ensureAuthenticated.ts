@@ -1,12 +1,13 @@
 import { NextFunction, Request, Response } from "express";
 import { verify } from "jsonwebtoken";
+import prisma from "./prisma/client";
 
 const getToken = () => {
     const TOKEN = process.env.ACCESS_TOKEN_SECRET;
     return TOKEN;
 }
 
-const verifyTokenExists = (request: Request, response: Response, next: NextFunction) => {
+const verifyTokenExists = (request: Request) => {
     const authToken = request.headers.authorization;
 
     if(!authToken) {
@@ -16,11 +17,18 @@ const verifyTokenExists = (request: Request, response: Response, next: NextFunct
     return authToken;
 }
 
-export function ensureAuthenticated(request: Request, response: Response, next: NextFunction) {
-    const authToken = verifyTokenExists(request,response,next);
+export async function ensureAuthenticated(request: Request, response: Response, next: NextFunction) {
+    const authToken = verifyTokenExists(request);
 
     const token = authToken.split(" ")[1];
 
-    verify(token, getToken());
-    return next()
+    const {userId} = verify(token, getToken()) as { userId: string };
+
+    const authorId = request.params.authorId || request.body.authorId;
+
+    if (authorId !== userId) {
+      throw new Error("Invalid user id");
+    }
+
+    next();
 }

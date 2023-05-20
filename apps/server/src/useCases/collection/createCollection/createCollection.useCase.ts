@@ -1,6 +1,8 @@
-import Collection from "../../../models/Collection";
+import { Collection } from "@prisma/client";
 import CollectionRepository from "../../../repositories/implementations/collection.repository";
 import ICollectionRepository from "../../../repositories/interfaces/collection.repository.interface";
+
+type CollectionInput = Omit<Collection, "id" | "createdAt" | "updatedAt">;
 
 class CreateCollectionUseCase {
     constructor(private collectionRepository: ICollectionRepository) {}
@@ -15,7 +17,7 @@ class CreateCollectionUseCase {
     }
 
 
-    async execute({title, color, authorId, tasks}: Collection) {
+    async execute({title, color, authorId}: CollectionInput) {
         const collection = await this.collectionRepository.createCollection({
             title,
             color,
