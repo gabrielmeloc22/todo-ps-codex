@@ -7,13 +7,13 @@ import deleteColleciton from '../useCases/collection/deleteCollection'
 const router = Router();
 
 router
-.post('/', ensureAuthenticated ,(req, res) => {
+.post('/' ,(req, res) => {
     return createCollection.handle(req,res);
 })
-.get('/', ensureAuthenticated, (req, res) => {
+.get('/', (req, res) => {
     return getCollection.handle(req, res);
 })
-.delete('/',ensureAuthenticated, (req, res) => {
+.delete('/', (req, res) => {
     return deleteColleciton.handle(req,res)
 })
 
