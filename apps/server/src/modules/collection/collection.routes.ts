@@ -1,19 +1,23 @@
-import { Router } from 'express';
+import { Router, response } from 'express';
 import createCollection from './controllers/create';
 import getCollection from './controllers/get';
 import deleteColleciton from './controllers/delete';
+import updateCollection from './controllers/update'
 
 const router = Router();
 
 router
-.post('/' ,(req, res) => {
-    return createCollection.handle(req,res);
+.post('/' ,(request, response) => {
+    return createCollection.handle(request, response);
 })
-.get('/', (req, res) => {
-    return getCollection.handle(req, res);
+.get('/', (request, response) => {
+    return getCollection.handle(request, response);
 })
-.delete('/', (req, res) => {
-    return deleteColleciton.handle(req,res)
+.put('/:id', (request, response)=> {
+    return updateCollection.handle(request, response);
+})
+.delete('/', (request, response) => {
+    return deleteColleciton.handle(request, response)
 })
 
 export default router;
