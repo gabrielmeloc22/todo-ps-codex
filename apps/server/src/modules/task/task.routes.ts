@@ -1,8 +1,9 @@
-import { Router } from "express";
+import { Router, response } from "express";
 import createTask from "./controllers/create";
 import getTaskById from "./controllers/get";
 import getAllTasks from "./controllers/getAll";
 import deleteTask from "./controllers/delete";
+import updateTask from "./controllers/update"
 
 const router = Router();
 
@@ -15,6 +16,9 @@ router
   })
   .get("/all/:authorId", (request, response) => {
     return getAllTasks.handle(request, response);
+  })
+  .put("/:id", (request, response) => {
+    return updateTask.handle(request, response)
   })
   .delete("/:id", (request, response) => {
     return deleteTask.handle(request, response);
