@@ -1,8 +1,8 @@
 import express, { Request, Response } from "express";
 import { ensureAuthenticated } from "../middleware/ensureAuthenticated";
-import userRoutes from "./user.routes";
-import taskRoutes from "./task.routes";
-import collectioRoutes from "./collection.routes";
+import userRoutes from "../modules/user/routes";
+import taskRoutes from "../modules/task/task.routes";
+import collectioRoutes from "../modules/collection/collection.routes";
 import cors from 'cors';
 
 
@@ -20,6 +20,7 @@ const routes = (app: any) => {
   .use(ensureAuthenticated)
   .use("/task", taskRoutes)
   .use("/collection", collectioRoutes)
+  
 };
 
 export default routes;
