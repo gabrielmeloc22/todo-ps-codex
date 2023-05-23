@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { api } from "../../services/axios";
+import { api } from "../services/axios";
 import { useRouter } from "next/navigation";
 import { getCookie } from "cookies-next";
 
@@ -33,23 +33,20 @@ export function AuthContextProvider({ children }: AuthContextProps) {
     const authToken = getCookie("auth_token");
     const userId = getCookie("user_id");
 
-    if (authToken && userId) {
-      api.defaults.headers.Authorization = `bearer ${authToken}`;
+    if (!authToken || !userId) return router.push("login");
 
-      api
-        .get<GetUserRes>(`user/${userId}`)
-        .then(({ data }) => {
-          const { email, id, lastName, name } = data;
+    api.defaults.headers.Authorization = `bearer ${authToken}`;
+    api
+      .get<GetUserRes>(`user/${userId}`)
+      .then(({ data }) => {
+        const { email, id, lastName, name } = data;
+        setUser({ email, id, lastName, name });
 
-          setUser({ email, id, lastName, name });
-          router.push("dashboard");
-        })
-        .catch(() => {
-          router.push("login");
-        });
-    } else {
-      router.push("login");
-    }
+        return router.push("dashboard");
+      })
+      .catch(() => {
+        router.push("login");
+      });
   }, []);
 
   return <AuthContext.Provider value={user as AuthContextData}>{children}</AuthContext.Provider>;

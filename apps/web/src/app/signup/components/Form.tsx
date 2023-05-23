@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FieldError, SubmitHandler, useForm } from "react-hook-form";
 import { Button, Input, Label } from "ui";
 import { string, z } from "zod";
-import { useCreateUserMutation } from "../lib/useCreateUserMutation";
+import { useCreateUserMutation } from "../../../../hooks/useCreateUserMutation";
 
 const createAccountValidation = z
   .object({

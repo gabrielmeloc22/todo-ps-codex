@@ -1,6 +1,6 @@
 import { MutationFunction, useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { api } from "../../../services/axios";
+import { api } from "../src/services/axios";
 
 type UserMutationData = {
   token: string;
@@ -35,13 +35,10 @@ const createUser: MutationFunction<UserMutationData> = async (variables) => {
 export function useCreateUserMutation() {
   const router = useRouter();
 
-  const mutation = useMutation<UserMutationData, CreateUserReqError, CreateUserMutationVariables>({
+  return useMutation<UserMutationData, CreateUserReqError, CreateUserMutationVariables>({
     mutationFn: createUser,
     onSuccess: () => {
       router.push("login");
     },
-    mutationKey: ["user"],
   });
-
-  return mutation;
 }
