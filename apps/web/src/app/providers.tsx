@@ -1,8 +1,8 @@
 "use client";
 
 import { QueryClientProvider } from "@tanstack/react-query";
-import { queryClient } from "../services/ReactQuery";
 import { ReactNode } from "react";
+import { queryClient } from "../services/ReactQuery";
 import { AuthContextProvider } from "../context/auth";
 
 interface ProvidersProps {

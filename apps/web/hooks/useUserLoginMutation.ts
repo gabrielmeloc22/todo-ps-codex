@@ -1,15 +1,12 @@
 import { MutationFunction, useMutation } from "@tanstack/react-query";
 import { setCookie } from "cookies-next";
-import { api } from "../../../services/axios";
+import { api } from "../src/services/axios";
+import { useRouter } from "next/navigation";
+import { AxiosError } from "axios";
 
-type UserLoginRes = {
+export type UserLoginRes = {
   token: string;
-  user: {
-    id: string;
-    name: string;
-    lastName: string;
-    email: string;
-  };
+  User: User;
 };
 
 type UserLoginVariables = {
@@ -17,12 +14,13 @@ type UserLoginVariables = {
   password: string;
 };
 
-type UserLoginErrors = {
-  response: {
-    data: {
-      message: string;
-    };
-  };
+type UserLoginErrors = AxiosError;
+
+export type User = {
+  id: string;
+  name: string;
+  lastName: string;
+  email: string;
 };
 
 const loginUser: MutationFunction<UserLoginRes, UserLoginVariables> = async (variables) => {
@@ -36,16 +34,13 @@ const setUserCookies = (token: string, id: string) => {
 };
 
 export function userUserLoginMutation() {
-  const mutation = useMutation<UserLoginRes, UserLoginErrors, UserLoginVariables>({
+  const router = useRouter();
+
+  return useMutation<UserLoginRes, UserLoginErrors, UserLoginVariables>({
     mutationFn: loginUser,
-    onSuccess: (data) => {
-      setUserCookies(data.token, data.user.id);
-      window.location.reload();
-    },
-    onError: (data) => {
-      return data;
+    onSuccess: ({ User, token }) => {
+      setUserCookies(token, User.id);
+      router.push("dashboard");
     },
   });
-
-  return mutation;
 }
