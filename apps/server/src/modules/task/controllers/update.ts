@@ -4,10 +4,10 @@ import UpdateTaskUseCase from "../useCases/update";
 class UpdateTaskController {
 
     static async handle(request: Request, response: Response) {
-        const { taskId } = request.params;
-        const { fieldName, fieldData } = request.body;
+        const { id } = request.params;
+        const data = request.body;
 
-        const updateTask = await UpdateTaskUseCase.execute(taskId, fieldName, fieldData);
+        const updateTask = await UpdateTaskUseCase.execute(id, data);
 
         return response.status(200).json(updateTask);
         
