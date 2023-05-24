@@ -1,13 +1,17 @@
 import { Request, Response } from "express";
 import UpdateUserUseCase from "../useCases/update";
+import CheckUser from "../../../utils/checkUser";
 
 class UpdateUserController {
 
     static async handle(request: Request, response: Response) {
-        const { id } = request.params;
+        const { userId } = request.params;
         const data = request.body;
+        const tokenUserId = request.headers.userId as string;
 
-        const updatedUser = await UpdateUserUseCase.excute(id, data );
+        CheckUser.check(tokenUserId, userId);
+
+        const updatedUser = await UpdateUserUseCase.excute(userId, data);
 
         return response.status(200).json(updatedUser);
 

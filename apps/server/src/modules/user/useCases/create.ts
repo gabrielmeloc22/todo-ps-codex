@@ -1,6 +1,6 @@
 import { User } from "@prisma/client";
 import { genSaltSync, hashSync } from "bcrypt";
-import InvalidEntries from "../../../middleware/invalidEntries";
+import InvalidEntries from "../../../utils/invalidEntries";
 import CreateUserRepository from "../repositories/create";
 
 type UserInput = Omit<User, "id">;
