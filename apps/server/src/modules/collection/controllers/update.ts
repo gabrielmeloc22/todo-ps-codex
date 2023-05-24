@@ -3,10 +3,10 @@ import UpdateCollectionUsecase from "../useCases/update";
 
 class UpdateCollectionController {
     static async handle(request: Request, response: Response) {
-        const { collectionId } = request.params;
-        const { fieldName, fieldData } = request.body;
+        const { id } = request.params;
+        const data = request.body;
 
-        const updateCollection = await UpdateCollectionUsecase.execute(collectionId, fieldName, fieldData);
+        const updateCollection = await UpdateCollectionUsecase.execute(id, data);
 
         return response.status(200).json(updateCollection);
 
