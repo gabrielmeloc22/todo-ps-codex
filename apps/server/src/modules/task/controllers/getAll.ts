@@ -7,7 +7,11 @@ class GetAllTasksController {
     static async handle(request: Request, response: Response) {
         const { authorId } = request.params;
 
+        console.log(authorId)
+
         const tokenUserId = request.headers.userId as string;
+
+        console.log(tokenUserId)
 
         CheckUser.check(tokenUserId, authorId);
 
