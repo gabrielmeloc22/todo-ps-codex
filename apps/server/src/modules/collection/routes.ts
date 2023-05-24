@@ -1,4 +1,4 @@
-import { Router, response } from 'express';
+import { Router } from 'express';
 import createCollection from './controllers/create';
 import getCollection from './controllers/get';
 import deleteColleciton from './controllers/delete';
@@ -10,13 +10,13 @@ router
 .post('/' ,(request, response) => {
     return createCollection.handle(request, response);
 })
-.get('/', (request, response) => {
+.get('/:authorId/:collectionId', (request, response) => {
     return getCollection.handle(request, response);
 })
-.put('/:id', (request, response)=> {
+.put('/:authorId/:collectionId/', (request, response)=> {
     return updateCollection.handle(request, response);
 })
-.delete('/', (request, response) => {
+.delete('/:authorId/:collectionId', (request, response) => {
     return deleteColleciton.handle(request, response)
 })
 
