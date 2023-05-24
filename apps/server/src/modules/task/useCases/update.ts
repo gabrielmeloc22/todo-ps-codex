@@ -1,10 +1,10 @@
-import { Task } from "@prisma/client";
+import { Task, Prisma } from "@prisma/client";
 import UpdateTaskRepository from "../repositories/update";
 
 class UpdateTaskUseCase {
-    static async execute(id: string, fieldName: string, fieldData: string | Date | Boolean) {
+    static async execute(id: string, data: Prisma.TaskUpdateInput) {
 
-        const updateTask: Task = await UpdateTaskRepository.update(id, fieldName, fieldData)
+        const updateTask: Task = await UpdateTaskRepository.update(id, data);
         return updateTask;
 
     }

@@ -1,16 +1,14 @@
-import { Task } from "@prisma/client";
+import { Task, Prisma } from "@prisma/client";
 import prisma from "../../../middleware/prisma/client";
 
 class UpdateTaskRepository {
 
-    static async update(idx: string, fieldName: string, fieldData: string | Date | Boolean): Promise<Task> {
+    static async update(id: string, data: Prisma.TaskUpdateInput): Promise<Task> {
         const updateTask = await prisma.task.update({
             where: {
-                id: idx
+                id,
             },
-            data: {
-                [fieldName]: fieldData
-            },
+            data,
         });
         return updateTask;
     }
