@@ -14,7 +14,7 @@ router
   .get("/:authorId/:taskId", (request, response) => {
     return getTaskById.handle(request, response);
   })
-  .get("/all/:authorId", (request, response) => {
+  .get("/:authorId", (request, response) => {
     return getAllTasks.handle(request, response);
   })
   .put("/:authorId/:taskId", (request, response) => {
