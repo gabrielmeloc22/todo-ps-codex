@@ -1,9 +1,10 @@
 import { Request, Response, NextFunction } from "express";
 import "express-async-errors";
+import HttpError from "../utils/HttpError";
 
 const asyncErrors = (app: any) => {
-  app.use((error: Error, request: Request, response: Response, next: NextFunction) => {
-    response.status(500).json({
+  app.use((error: HttpError, request: Request, response: Response, next: NextFunction) => {
+    response.status(error.status || 500).json({
       status: "Error",
       message: error.message,
     });
