@@ -10,7 +10,7 @@ import authenticateUser from "./controllers/authenticate";
 const router = Router();
 
 router
-  .get("/:id", ensureAuthenticated,(request, response) => {
+  .get("/:userId", ensureAuthenticated,(request, response) => {
     return getUser.handle(request, response);
   })
   .post("/", (request, response) => {
@@ -19,10 +19,10 @@ router
   .post("/login", (request, response) => {
     return authenticateUser.handle(request, response);
   })
-  .put("/:id", (request, response) => {
+  .put("/:userId", (request, response) => {
     return updateUser.handle(request, response);
   })
-  .delete("/:id", (request, response) => {
+  .delete("/:userId", ensureAuthenticated, (request, response) => {
     return deleteUser.handle(request, response);
   });
 
