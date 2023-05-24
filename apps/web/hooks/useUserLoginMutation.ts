@@ -1,8 +1,9 @@
 import { MutationFunction, useMutation } from "@tanstack/react-query";
-import { setCookie } from "cookies-next";
-import { api } from "../src/services/axios";
-import { useRouter } from "next/navigation";
 import { AxiosError } from "axios";
+import { setCookie } from "cookies-next";
+import { useRouter } from "next/navigation";
+import { api } from "../src/services/axios";
+import { ReqErrorRes, User } from "../types";
 
 export type UserLoginRes = {
   token: string;
@@ -14,14 +15,7 @@ type UserLoginVariables = {
   password: string;
 };
 
-type UserLoginErrors = AxiosError;
-
-export type User = {
-  id: string;
-  name: string;
-  lastName: string;
-  email: string;
-};
+type UserLoginErrors = AxiosError<ReqErrorRes>;
 
 const loginUser: MutationFunction<UserLoginRes, UserLoginVariables> = async (variables) => {
   const { data } = await api.post("user/login", variables);

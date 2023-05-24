@@ -2,8 +2,8 @@
 
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactNode } from "react";
-import { queryClient } from "../services/ReactQuery";
-import { AuthContextProvider } from "../context/auth";
+import { Auth } from "../../components/Auth";
+import { queryClient } from "../services/reactQuery";
 
 interface ProvidersProps {
   children: ReactNode;
@@ -12,7 +12,7 @@ interface ProvidersProps {
 export function Providers({ children }: ProvidersProps) {
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthContextProvider>{children}</AuthContextProvider>
+      <Auth>{children}</Auth>
     </QueryClientProvider>
   );
 }

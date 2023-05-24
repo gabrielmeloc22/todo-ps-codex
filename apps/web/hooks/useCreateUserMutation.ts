@@ -1,15 +1,12 @@
 import { MutationFunction, useMutation } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { api } from "../src/services/axios";
+import { ReqErrorRes, User } from "../types";
 
 type UserMutationData = {
   token: string;
-  user: {
-    id: string;
-    email: string;
-    password: string;
-    name: string;
-  };
+  user: User;
 };
 
 type CreateUserMutationVariables = {
@@ -19,13 +16,7 @@ type CreateUserMutationVariables = {
   password: string;
 };
 
-type CreateUserReqError = {
-  response: {
-    data: {
-      message: string;
-    };
-  };
-};
+type CreateUserReqError = AxiosError<ReqErrorRes>;
 
 const createUser: MutationFunction<UserMutationData> = async (variables) => {
   const { data } = await api.post<UserMutationData>("user", variables);
