@@ -4,10 +4,10 @@ import UpdateUserUseCase from "../useCases/update";
 class UpdateUserController {
 
     static async handle(request: Request, response: Response) {
-        const { userId } = request.params;
-        const { fieldName, fieldData } = request.body;
+        const { id } = request.params;
+        const data = request.body;
 
-        const updatedUser = await UpdateUserUseCase.excute(userId, fieldName, fieldData);
+        const updatedUser = await UpdateUserUseCase.excute(id, data );
 
         return response.status(200).json(updatedUser);
 

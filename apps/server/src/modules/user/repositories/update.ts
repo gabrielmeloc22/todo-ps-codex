@@ -1,15 +1,13 @@
-import { User } from "@prisma/client";
+import { User, Prisma } from "@prisma/client";
 import prisma from "../../../middleware/prisma/client";
 
 class UpdateUserRepository {
-    static async update(idx: string, fieldName: string, fieldData: string | number): Promise<User> {
+    static async update(id: string, data: Prisma.UserUpdateInput): Promise<User> {
         const updatedUser = await prisma.user.update({ 
             where: {
-                id: idx
+                id,
             },
-            data: {
-                [fieldName]: fieldData
-            },
+            data,
         });
         return updatedUser;
     }

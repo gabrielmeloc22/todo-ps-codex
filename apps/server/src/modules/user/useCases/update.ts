@@ -1,10 +1,10 @@
-import { User } from "@prisma/client"
+import { User, Prisma } from "@prisma/client"
 import UpdateUserRepository from "../repositories/update"
 
 class UpdateUserUseCase {
-    static async excute(id: string, fieldName: string, fieldData: string | number) {
+    static async excute(id: string, data: Prisma.UserUpdateInput) {
 
-        const updatedUser: User = await UpdateUserRepository.update(id, fieldName, fieldData)
+        const updatedUser: User = await UpdateUserRepository.update(id, data)
         return updatedUser;
 
     }
