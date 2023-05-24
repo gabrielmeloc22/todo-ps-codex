@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules --respawn src/server.ts",
+    "dev": "prisma migrate dev && ts-node-dev --inspect --transpile-only --ignore-watch node_modules --respawn src/server.ts",
     "build": "tsc"
   },
   "dependencies": {
