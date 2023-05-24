@@ -1,4 +1,5 @@
 import prisma from "../../../middleware/prisma/client";
+import HttpError from "../../../utils/HttpError";
 import { User } from "@prisma/client";
 import { compare } from "bcrypt";
 import { sign } from "jsonwebtoken";
@@ -8,7 +9,7 @@ class AuthenticateUserUseCase {
     const User = await prisma.user.findFirst({ where: { email } });
 
     if (!User) {
-      throw new Error("Email or password incorrect");
+      throw new HttpError("Não existe usuário com o email passado!", 401);
     }
 
     return User;
@@ -18,7 +19,7 @@ class AuthenticateUserUseCase {
     const passwordMatch = await compare(password, User.password);
 
     if (!passwordMatch) {
-      throw new Error("Email or password incorrect");
+      throw new HttpError("Senha ou Email incorretas",401);
     }
 
   }

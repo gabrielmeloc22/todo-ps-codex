@@ -1,7 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { verify } from "jsonwebtoken";
+import HttpError from "../utils/HttpError";
 
-const getToken = () => {
+const getTokenSecret = () => {
 
     const TOKEN = process.env.ACCESS_TOKEN_SECRET;
 
@@ -14,7 +15,7 @@ const verifyTokenExists = (request: Request) => {
     const authToken = request.headers.authorization;
 
     if(!authToken) {
-        throw new Error("Token is missing");
+        throw new HttpError("Token não enviado", 401);
     }
 
     return authToken;
@@ -27,7 +28,7 @@ export async function ensureAuthenticated(request: Request, response: Response, 
 
     const token = authToken.split(" ")[1];
 
-    const { userId } = verify(token, getToken()) as { userId: string };
+    const { userId } = verify(token, getTokenSecret()) as { userId: string };
 
     request.headers.userId = userId;
 

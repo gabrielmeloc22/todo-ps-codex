@@ -2,10 +2,10 @@
 import HttpError from "./HttpError";
 
 class CheckUser {
-    static check (userId: string, authorId: string, text: string) {
+    static check (userId: string, authorId: string) {
 
         if (userId !== authorId) {
-            throw new HttpError(text, 401);
+            throw new HttpError("Token de outro usuário", 401);
         }
 
     }
