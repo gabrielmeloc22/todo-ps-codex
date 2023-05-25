@@ -1,9 +1,8 @@
+import { api } from "@/services/axios";
+import { User } from "@/types";
 import { QueryFunction, useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { getCookie } from "cookies-next";
-import { useRouter } from "next/navigation";
-import { api } from "../src/services/axios";
-import { User } from "../types";
 
 type GetUserRes = {
   id: string;
@@ -25,14 +24,10 @@ const getUser: QueryFunction<User> = async () => {
   return data;
 };
 
-export function useGetUserQuery() {
-  const router = useRouter();
-
+export function useGetUserQuery(enabled = true) {
   return useQuery<GetUserRes, GetUserReqError>({
     queryFn: getUser,
     queryKey: ["user"],
-    onError: () => {
-      router.push("login");
-    },
+    enabled,
   });
 }
