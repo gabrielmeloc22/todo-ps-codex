@@ -1,8 +1,8 @@
+import { api } from "@/services/axios";
+import { Task } from "@/types";
 import { QueryFunction, useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { getCookie } from "cookies-next";
-import { api } from "../src/services/axios";
-import { Task } from "../types";
 
 type GetTasksRes = Task[];
 type GetTasksError = AxiosError;
@@ -19,5 +19,8 @@ export function useGetTasksQuery() {
     queryFn: getTasks,
     queryKey: ["tasks"],
     onError: (e) => {},
+    select(data) {
+      return data.sort((task1, task2) => task1.id.localeCompare(task2.id));
+    },
   });
 }
