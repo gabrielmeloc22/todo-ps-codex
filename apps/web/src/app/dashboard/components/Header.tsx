@@ -1,4 +1,4 @@
-import { useAuth } from "../../../../components/Auth";
+import { useAuth } from "@/components/Auth";
 
 const getGreeting = () => {
   const hours = new Date().getHours();

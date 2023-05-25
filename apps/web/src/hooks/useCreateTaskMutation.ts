@@ -1,9 +1,9 @@
 import { MutationFunction, useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { getCookie } from "cookies-next";
-import { api } from "../src/services/axios";
-import { Task } from "../types";
-import { queryClient } from "../src/services/reactQuery";
+import { api } from "@/services/axios";
+import { queryClient } from "@/services/reactQuery";
+import { Task } from "@/types";
 
 type TaskMutationData = Task;
 type TaskMutationVariables = Partial<Omit<Task, "id" | "authorId" | "createdAt" | "updatedAt">>;

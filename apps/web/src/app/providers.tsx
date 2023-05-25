@@ -2,8 +2,8 @@
 
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactNode } from "react";
-import { Auth } from "../../components/Auth";
-import { queryClient } from "../services/reactQuery";
+import { Auth } from "@/components/Auth";
+import { queryClient } from "@/services/reactQuery";
 
 interface ProvidersProps {
   children: ReactNode;

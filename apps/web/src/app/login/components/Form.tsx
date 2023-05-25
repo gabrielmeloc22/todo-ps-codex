@@ -5,7 +5,7 @@ import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import NextLink from "next/link";
-import { userUserLoginMutation } from "../../../../hooks/useUserLoginMutation";
+import { userUserLoginMutation } from "@/hooks/useUserLoginMutation";
 
 const loginValidationSchema = z.object({
   email: z.string().min(1, { message: "Por favor, insira seu e-mail" }).email({ message: "E-mail inválido" }),

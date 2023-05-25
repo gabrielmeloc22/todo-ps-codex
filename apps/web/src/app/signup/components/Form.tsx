@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FieldError, SubmitHandler, useForm } from "react-hook-form";
 import { Button, Input, Label } from "ui";
 import { string, z } from "zod";
-import { useCreateUserMutation } from "../../../../hooks/useCreateUserMutation";
+import { useCreateUserMutation } from "@/hooks/useCreateUserMutation";
 
 const createAccountValidation = z
   .object({
@@ -99,7 +99,7 @@ export function Form() {
           })}
         />
       </Label>
-      <div className="flex w-full max-md:justify-center">
+      <div className="max-md:justify-center">
         <Button loading={isLoading} type="submit">
           Criar conta
         </Button>
