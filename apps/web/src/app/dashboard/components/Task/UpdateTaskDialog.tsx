@@ -17,8 +17,8 @@ import {
   TextArea,
 } from "ui";
 import { z } from "zod";
-import { useUpdateTaskMutation } from "../../../../../hooks/useUpdateTaskMutation";
-import { Task } from "../../../../../types";
+import { useUpdateTaskMutation } from "@/hooks/useUpdateTaskMutation";
+import { Task } from "@/types";
 
 const updateTaskValidationSchema = z.object({
   title: z.string().nonempty({ message: "Título é obrigatório" }),

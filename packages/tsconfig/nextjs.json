@@ -14,10 +14,10 @@
     "resolveJsonModule": true,
     "strict": true,
     "target": "es5",
-    "baseUrl": ".",
+    "baseUrl": "../../apps/web/src",
     "paths": {
-      "@/*": ["./src/*"],
-      "@ui/*": ["../../packages/ui/src/*"]
+      "@/*": ["./*"],
+      "@ui/*": ["../../../packages/ui/src/*"]
     },
     "plugins": [
       {

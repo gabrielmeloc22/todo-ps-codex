@@ -1,8 +1,8 @@
 import { MutationFunction, useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
-import { api } from "../src/services/axios";
-import { ReqErrorRes, User } from "../types";
+import { api } from "@/services/axios";
+import { ReqErrorRes, User } from "@/types";
 
 type UserMutationData = {
   token: string;

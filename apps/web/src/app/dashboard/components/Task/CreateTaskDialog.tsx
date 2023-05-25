@@ -17,7 +17,7 @@ import {
   TextArea,
 } from "ui";
 import { z } from "zod";
-import { useCreateTaskMutation } from "../../../../../hooks/useCreateTaskMutation";
+import { useCreateTaskMutation } from "@/hooks/useCreateTaskMutation";
 
 const createTaskValidationSchema = z.object({
   title: z.string().nonempty({ message: "Título é obrigatório" }),
@@ -65,7 +65,7 @@ export function CreateTaskDialog() {
     >
       <DialogTrigger asChild>
         <Button className="w-full">
-          Adiicionar tarefa <PlusIcon className="ml-2" size={16} />
+          Adicionar tarefa <PlusIcon className="ml-2" size={16} />
         </Button>
       </DialogTrigger>
 

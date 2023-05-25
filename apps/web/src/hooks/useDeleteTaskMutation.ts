@@ -1,9 +1,9 @@
 import { MutationFunction, useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { getCookie } from "cookies-next";
-import { api } from "../src/services/axios";
-import { Task } from "../types";
-import { queryClient } from "../src/services/reactQuery";
+import { api } from "@/services/axios";
+import { Task } from "@/types";
+import { queryClient } from "@/services/reactQuery";
 
 type TaskMutationData = Task;
 type TaskMutationVariables = Pick<Task, "id">;

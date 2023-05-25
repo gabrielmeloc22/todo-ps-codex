@@ -2,7 +2,7 @@ import { Trash2 } from "lucide-react";
 import { useState } from "react";
 import { Popover, Button } from "ui";
 import { PopoverTrigger, PopoverContent } from "ui/src/components/Popover";
-import { useDeleteTaskMutation } from "../../../../../hooks/useDeleteTaskMutation";
+import { useDeleteTaskMutation } from "@/hooks/useDeleteTaskMutation";
 
 interface RemoveTaskPopover {
   taskId: string;
