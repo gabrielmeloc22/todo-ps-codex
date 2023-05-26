@@ -1,11 +1,11 @@
-import { Task } from '@prisma/client'
+import { Prisma, Task } from '@prisma/client'
 import GetTaskRepository from '../repositories/get'
 
 class GetAllTasksUseCase {
     
-    static async execute(authorId: string) {
+    static async execute(authorId: string, orderBy: Prisma.SortOrder) {
 
-        const allTasks: Task[] = await GetTaskRepository.getAll(authorId);
+        const allTasks: Task[] = await GetTaskRepository.getAll(authorId, orderBy);
         return allTasks;
         
     }
