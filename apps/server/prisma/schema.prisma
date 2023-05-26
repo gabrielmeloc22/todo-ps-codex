@@ -8,15 +8,16 @@ datasource db {
 }
 
 model User {
-  id          String       @id @default(cuid())
-  email       String       @unique
-  password    String
-  gender      String?
-  age         Int?
-  name        String
-  lastName    String
-  tasks       Task[]
-  collections Collection[]
+  id             String       @id @default(cuid())
+  email          String       @unique
+  password       String
+  gender         String?
+  age            Int?
+  name           String
+  photoPublicUrl String?
+  lastName       String
+  tasks          Task[]
+  collections    Collection[]
 }
 
 model Task {
@@ -27,7 +28,7 @@ model Task {
   title          String
   content        String?
   status         Boolean     @default(false)
-  author         User        @relation(fields: [authorId], references: [id], onDelete: Cascade) 
+  author         User        @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId       String
   collection     Collection? @relation(fields: [collectionId], references: [id], onDelete: SetNull)
   collectionId   String?
