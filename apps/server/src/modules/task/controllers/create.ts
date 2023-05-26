@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { Task } from '@prisma/client';
 import CreateTaskUseCase from '../useCases/create';
+import CheckUser from '../../../utils/checkUser';
 
 type TaskInput = Omit<Task, "id" | "createdAt" | "updatedAt" > & { completionDate: Date & string };
 
@@ -10,9 +11,9 @@ class createTaskController {
 
         const { title, authorId, completionDate, content, status, collectionId }: TaskInput = request.body;
 
-        const userID = request.headers.userId as string;
+        const tokenUserId = request.headers.userId as string;
 
-        CreateTaskUseCase.checkUser(userID, authorId);
+        CheckUser.check(tokenUserId, authorId);
         
         const task = await CreateTaskUseCase.execute(
             {

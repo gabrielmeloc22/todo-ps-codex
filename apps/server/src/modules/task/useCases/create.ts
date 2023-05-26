@@ -5,12 +5,6 @@ type TaskInput = Omit<Task, "id" | "createdAt" | "updatedAt"> & { completionDate
 
 class createTaskUseCase {
     
-    static checkUser (userId: string, authorId: string) {
-        if (userId !== authorId) {
-            throw new Error("You can't create a task for another user");
-        }
-    }
-
     static dateToString(stringDate: string):Date | null {
         if (stringDate === "") {
             return null;

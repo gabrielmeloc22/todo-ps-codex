@@ -1,4 +1,4 @@
-import { Router, response } from "express";
+import { Router } from "express";
 import createTask from "./controllers/create";
 import getTaskById from "./controllers/get";
 import getAllTasks from "./controllers/getAll";
@@ -11,16 +11,16 @@ router
   .post("/", (request, response) => {
     return createTask.handle(request, response);
   })
-  .get("/:id", (request, response) => {
+  .get("/:authorId/:taskId", (request, response) => {
     return getTaskById.handle(request, response);
   })
-  .get("/all/:authorId", (request, response) => {
+  .get("/:authorId", (request, response) => {
     return getAllTasks.handle(request, response);
   })
-  .put("/:id", (request, response) => {
+  .put("/:authorId/:taskId", (request, response) => {
     return updateTask.handle(request, response)
   })
-  .delete("/:id", (request, response) => {
+  .delete("/:authorId/:taskId", (request, response) => {
     return deleteTask.handle(request, response);
   });
 

@@ -3,12 +3,13 @@ import prisma from "../../../middleware/prisma/client";
 
 class DeleteUserRepository {
     
-    static async delete(id: string): Promise<User | null > {
+    static async delete(email: string): Promise<User | null > {
         const user = await prisma.user.delete({
             where: {
-                id: id
+                email: email
             },
         });
+        
         return user;
     }
     

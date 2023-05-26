@@ -1,8 +1,8 @@
 import express, { Request, Response } from "express";
 import { ensureAuthenticated } from "../middleware/ensureAuthenticated";
 import userRoutes from "../modules/user/routes";
-import taskRoutes from "../modules/task/task.routes";
-import collectioRoutes from "../modules/collection/collection.routes";
+import taskRoutes from "../modules/task/routes";
+import collectioRoutes from "../modules/collection/routes";
 import cors from 'cors';
 
 
