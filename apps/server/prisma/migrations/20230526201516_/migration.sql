@@ -6,7 +6,7 @@ CREATE TABLE "User" (
     "gender" TEXT,
     "age" INTEGER,
     "name" TEXT NOT NULL,
-    "photoPublicUrl" TEXT,
+    "profilePic" TEXT,
     "lastName" TEXT NOT NULL,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
