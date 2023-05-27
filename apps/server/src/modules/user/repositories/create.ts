@@ -1,7 +1,7 @@
 import { User } from "@prisma/client";
 import prisma from "../../../middleware/prisma/client";
 
-type UserInput = Omit<User, "id" | "photoPublicUrl" >;
+type UserInput = Omit<User, "id" | "profilePic" >;
 
 class CreateUserRepository {
 
