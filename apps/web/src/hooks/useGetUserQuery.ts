@@ -4,13 +4,7 @@ import { QueryFunction, useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { getCookie } from "cookies-next";
 
-type GetUserRes = {
-  id: string;
-  name: string;
-  lastName: string;
-  email: string;
-};
-
+type GetUserRes = User;
 type GetUserReqError = AxiosError;
 
 const getUser: QueryFunction<User> = async () => {
