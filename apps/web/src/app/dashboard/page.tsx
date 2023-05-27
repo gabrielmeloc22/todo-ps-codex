@@ -7,16 +7,13 @@ import { Header } from "./components/Header";
 import { Task } from "./components/Task";
 
 const aggregateTasksByCompletionDate = (tasks: TaskType[]) => {
-  return tasks.reduce(
-    (acc, curr) => {
-      const prevTasks = acc[curr?.completionDate || "sem data"];
-      return {
-        ...acc,
-        [curr?.completionDate || "sem data"]: [...(prevTasks || []), curr],
-      };
-    },
-    { "sem data": null } as Record<string, TaskType[] | null>
-  );
+  return tasks.reduce((acc, curr) => {
+    const prevTasks = acc[curr?.completionDate || "sem data"];
+    return {
+      ...acc,
+      [curr?.completionDate || "sem data"]: [...(prevTasks || []), curr],
+    };
+  }, {} as Record<string, TaskType[] | null>);
 };
 
 export default function DashboardPage() {
@@ -26,7 +23,7 @@ export default function DashboardPage() {
   return (
     <>
       <Header />
-      <section className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] grid-flow-row gap-4 mt-10">
+      <section className="max-w-screen-lg grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] grid-flow-row gap-4 mt-10">
         {isLoading
           ? Array.from(new Array(7)).map((_, i) => <Skeleton key={i} className="w-[100%] h-16" />)
           : Object.entries(aggregatedTasks).map(([key, value]) => {

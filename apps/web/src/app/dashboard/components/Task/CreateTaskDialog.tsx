@@ -64,7 +64,7 @@ export function CreateTaskDialog() {
       }}
     >
       <DialogTrigger asChild>
-        <Button className="w-full">
+        <Button className="w-[90%] px-4" size="lg">
           Adicionar tarefa <PlusIcon className="ml-2" size={16} />
         </Button>
       </DialogTrigger>
