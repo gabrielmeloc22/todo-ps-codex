@@ -17,6 +17,9 @@ export type Task = {
 export type User = {
   id: string;
   name: string;
-  lastName: string;
+  lastName: string | null;
   email: string;
+  age: number | null;
+  gender: string | null;
+  profilePic: string | null;
 };
