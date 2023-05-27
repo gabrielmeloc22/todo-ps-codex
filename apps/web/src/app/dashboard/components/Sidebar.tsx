@@ -3,7 +3,7 @@ import { CreateTaskDialog } from "./Task/CreateTaskDialog";
 
 export function Sidebar() {
   return (
-    <aside className="flex flex-col gap-8 items-center max-w-[350px] w-[20vw] px-20 py-20 bg-zinc-800">
+    <aside className="w-[20vw] max-w-xs max-2xl:hidden flex flex-col gap-16 px-10 py-24 bg-zinc-800">
       <Profile />
       <CreateTaskDialog />
     </aside>
