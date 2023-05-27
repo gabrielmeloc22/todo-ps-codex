@@ -24,6 +24,10 @@ export function Auth({ children }: AuthProps) {
     const authToken = getCookie("auth_token");
     const userId = getCookie("user_id");
 
+    if (isError) {
+      signOut();
+      router.push("login");
+    }
     if ((isError || !authToken || !userId) && !isPublicRoute(pathName)) return router.push("login");
     if (authToken && userId && isPublicRoute(pathName)) return router.push("dashboard");
   }, [isSuccess, isError, pathName]);
@@ -32,7 +36,8 @@ export function Auth({ children }: AuthProps) {
 }
 
 export const useAuth = () => {
-  return queryClient.getQueryData<User>(["user"])!;
+  const { data } = useGetUserQuery();
+  return data;
 };
 
 export const signOut = () => {
