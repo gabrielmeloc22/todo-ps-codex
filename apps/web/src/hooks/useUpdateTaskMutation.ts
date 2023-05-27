@@ -1,14 +1,12 @@
+import { api } from "@/services/axios";
+import { queryClient } from "@/services/reactQuery";
+import { Task } from "@/types";
 import { MutationFunction, useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { getCookie } from "cookies-next";
-import { api } from "@/services/axios";
-import { Task } from "@/types";
-import { queryClient } from "@/services/reactQuery";
 
 type TaskMutationData = Task;
-type TaskMutationVariables = Partial<Omit<Task, "id" | "authorId" | "createdAt" | "updatedAt">> & {
-  id: string;
-};
+type TaskMutationVariables = Partial<Omit<Task, "authorId" | "createdAt" | "updatedAt">>;
 type UpdateTaskReqError = AxiosError<TaskMutationData>;
 
 const updateTask: MutationFunction<TaskMutationData, TaskMutationVariables> = async ({ id, ...rest }) => {

@@ -19,8 +19,5 @@ export function useGetTasksQuery() {
     queryFn: getTasks,
     queryKey: ["tasks"],
     onError: (e) => {},
-    select(data) {
-      return data.sort((task1, task2) => task1.id.localeCompare(task2.id));
-    },
   });
 }
