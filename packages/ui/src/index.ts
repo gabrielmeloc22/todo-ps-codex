@@ -17,4 +17,5 @@ export { Popover } from "@ui/components/Popover";
 export { Separator } from "@ui/components/Separator";
 export { Skeleton } from "@ui/components/Skeleton";
 export { TextArea } from "@ui/components/TextArea";
+export { Toaster, useToast } from "@ui/components/Toast";
 export { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@ui/components/Tooltip";
