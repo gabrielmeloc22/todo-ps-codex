@@ -20,11 +20,11 @@ class InvalidEntries {
 
   }
 
-  public static async userDontExists(email: string): Promise<void> {
+  public static async userDontExists(id: string): Promise<void> {
     const user = await prisma.user.findFirst(
       {
         where: {
-          email
+          id
         }
       });
 

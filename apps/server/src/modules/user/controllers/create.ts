@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import CreateUserUseCase from "../useCases/create"
 import { User } from "@prisma/client";
 
-type UserInput = Omit<User, "id" | "photoPublicUrl" >;
+type UserInput = Omit<User, "id" | "profilePic" >;
 
 class createUserController {
 

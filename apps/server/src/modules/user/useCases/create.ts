@@ -3,7 +3,7 @@ import { genSaltSync, hashSync } from "bcrypt";
 import InvalidEntries from "../../../utils/invalidEntries";
 import CreateUserRepository from "../repositories/create";
 
-type UserInput = Omit<User, "id" | "photoPublicUrl" >;
+type UserInput = Omit<User, "id" | "profilePic" >;
 
 class createUserUseCase {
 
@@ -15,7 +15,7 @@ class createUserUseCase {
     const salt = genSaltSync(10)
     const hashedPassword = hashSync(password, salt);
 
-    const result = CreateUserRepository.create({
+    const result = await CreateUserRepository.create({
       email,
       password: hashedPassword,
       name,
