@@ -14,7 +14,7 @@ model User {
   gender         String?
   age            Int?
   name           String
-  photoPublicUrl String?
+  profilePic     String?
   lastName       String
   tasks          Task[]
   collections    Collection[]

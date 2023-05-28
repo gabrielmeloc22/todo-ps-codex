@@ -1,9 +1,10 @@
 "use client";
 
 import { QueryClientProvider } from "@tanstack/react-query";
-import { queryClient } from "../services/ReactQuery";
 import { ReactNode } from "react";
-import { AuthContextProvider } from "../context/auth";
+import { Auth } from "@/components/Auth";
+import { queryClient } from "@/services/reactQuery";
+import { TooltipProvider } from "ui";
 
 interface ProvidersProps {
   children: ReactNode;
@@ -12,7 +13,9 @@ interface ProvidersProps {
 export function Providers({ children }: ProvidersProps) {
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthContextProvider>{children}</AuthContextProvider>
+      <Auth>
+        <TooltipProvider>{children}</TooltipProvider>
+      </Auth>
     </QueryClientProvider>
   );
 }

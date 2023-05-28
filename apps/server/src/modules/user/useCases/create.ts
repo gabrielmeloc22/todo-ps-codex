@@ -3,7 +3,7 @@ import { genSaltSync, hashSync } from "bcrypt";
 import InvalidEntries from "../../../utils/invalidEntries";
 import CreateUserRepository from "../repositories/create";
 
-type UserInput = Omit<User, "id" | "profilePic">;
+type UserInput = Omit<User, "id" | "profilePic" >;
 
 class createUserUseCase {
 
