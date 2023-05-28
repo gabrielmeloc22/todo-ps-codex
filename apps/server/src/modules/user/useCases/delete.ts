@@ -9,6 +9,7 @@ class DeleteUserUseCase {
 
         const user = DeleteUserRepository.delete(id);
         return user;
+        
     }
 
 }
