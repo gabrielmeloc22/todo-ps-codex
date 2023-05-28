@@ -49,12 +49,13 @@ export function ImageUploader({ value: src, alt, onFileChange, type, ...props }:
           <Image
             className="absolute object-cover rounded-md"
             fill
-            // sizes={"(max-width: 648px) 100%"}
+            loader={({ src }) => src}
+            unoptimized
             src={src}
             alt={alt}
           />
         ) : (
-          <div className="flex items-center justify-center bg-muted h-full rounded-md">GM</div>
+          <div className="flex items-center justify-center bg-muted h-full rounded-md" />
         )}
       </div>
     </div>
