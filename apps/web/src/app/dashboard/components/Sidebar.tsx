@@ -8,12 +8,15 @@ export function Sidebar() {
   return (
     <>
       <aside className="w-full max-w-[280px] max-xl:hidden flex flex-col gap-8 px-6 py-4 bg-zinc-800">
-        <div className="z-0 flex relative gap-4 items-center w-full pb-4 after:absolute after:left-[-1.5rem] after:top-[-1.5rem] after:w-[calc(100%+3rem)] after:h-[calc(100%+1.5rem)] after:bg-zinc-900/40 after:-z-10">
-          <div className="rounded-full bg-zinc-900/70 w-fit h-fit p-2">✅</div>
-          <h2 className="font-bold">AllDone</h2>
+        <div className="z-0 relative w-full pb-4 after:absolute after:left-[-1.5rem] after:top-[-1.5rem] after:w-[calc(100%+3rem)] after:h-[calc(100%+1.5rem)] after:bg-zinc-900/40 after:-z-10">
+          <Link href="/dashboard" className="flex gap-4 items-center">
+            <div className="rounded-full bg-zinc-900/70 w-fit h-fit p-2">✅</div>
+            <h2 className="font-bold">AllDone</h2>
+          </Link>
         </div>
+
         <Profile />
-        <div className="mt-10">
+        <div className="flex flex-col gap-4 mt-10">
           <CreateTaskDialog
             trigger={
               <Button className="w-[90%] px-4" size="lg">
@@ -24,7 +27,9 @@ export function Sidebar() {
         </div>
       </aside>
       <aside className="hidden max-xl:flex max-sm:hidden flex-col gap-6 items-center w-24 bg-zinc-800 py-6">
-        <div className="rounded-full bg-zinc-900/70 w-fit h-fit p-2 mb-8">✅</div>
+        <Link href="/dashboard">
+          <div className="rounded-full bg-zinc-900/70 w-fit h-fit p-2 mb-8">✅</div>
+        </Link>
         <CreateTaskDialog
           trigger={
             <Button className="w-fit h-fit p-2" size="lg">

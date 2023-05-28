@@ -1,3 +1,6 @@
+import { signOut } from "@/components/Auth";
+import { useDeleteUserMutation } from "@/hooks/useDeleteUserMutation";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import {
   Button,
@@ -10,7 +13,9 @@ import {
 } from "ui";
 
 export function DeleteAccountDialog() {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
+  const { mutateAsync, isLoading } = useDeleteUserMutation();
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -22,7 +27,17 @@ export function DeleteAccountDialog() {
           Essa ação é irreversível e todos seus dados serão perdidos para sempre.
         </DialogDescription>
         <div className="flex gap-6">
-          <Button id="deleteAccount" variant="destructive">
+          <Button
+            id="deleteAccount"
+            variant="destructive"
+            loading={isLoading}
+            onClick={() => {
+              mutateAsync().then(() => {
+                signOut();
+                router.replace("login");
+              });
+            }}
+          >
             Deletar conta
           </Button>
           <Button
