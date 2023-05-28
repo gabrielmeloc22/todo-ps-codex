@@ -14,6 +14,7 @@ export {
 export { Input } from "@ui/components/Input";
 export { Label } from "@ui/components/Label";
 export { Popover } from "@ui/components/Popover";
+export { Separator } from "@ui/components/Separator";
 export { Skeleton } from "@ui/components/Skeleton";
 export { TextArea } from "@ui/components/TextArea";
 export { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@ui/components/Tooltip";
