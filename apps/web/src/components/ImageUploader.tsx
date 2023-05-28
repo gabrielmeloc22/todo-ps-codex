@@ -25,7 +25,7 @@ export function ImageUploader({ value: src, alt, onFileChange, type, ...props }:
         }}
         {...props}
       />
-      <div className="absolute bottom-0 bg-gradient-to-t from-zinc-900 p-4 rounded-none animate-in hidden group-hover:flex group-hover:slide-in-from-bottom-4 group-hover:fade-in-5 gap-3 w-full z-10">
+      <div className="absolute bottom-0 bg-gradient-to-t from-zinc-900 p-4 rounded-none animate-in hidden max-xl:flex group-hover:flex group-hover:slide-in-from-bottom-4 group-hover:fade-in-5 gap-3 w-full z-10">
         <Tooltip>
           <TooltipContent>Editar foto de perfil</TooltipContent>
           <TooltipTrigger asChild>
