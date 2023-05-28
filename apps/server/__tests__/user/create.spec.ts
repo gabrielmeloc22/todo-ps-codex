@@ -27,8 +27,26 @@ const resetTest = async () => {
     expect(clearUserDb.status).toBe(201)
 }
 
+it("Testa Post de Usuário com Json", async () => {
+    const response = await request(`http://localhost:3001`).post(`/user/`)
+    .send({})
+    .set('Accept', 'application/json')
+    .expect('Content-Type', /json/)
 
-it("Testa Post de Novo Usuário", async () => {
+    expect(response.status).toBe(500)
+});
+
+it("Testa Post de Usuário com Json vazio", async () => {
+    const response = await request(`http://localhost:3001`).post(`/user/`)
+    .send({})
+    .set('Accept', 'application/json')
+    .expect('Content-Type', /json/)
+
+    expect(response.status).toBe(500)
+});
+
+
+it("Testa Post de Usuário", async () => {
     const response = await request(`http://localhost:3001`).post(`/user/`)
     .send(testUserJson)
     .set('Accept', 'application/json')
