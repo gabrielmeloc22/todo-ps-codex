@@ -1,5 +1,7 @@
 "use client";
 
+import { useUpdateTaskMutation } from "@/hooks/useUpdateTaskMutation";
+import { Task } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Edit } from "lucide-react";
 import { useState } from "react";
@@ -15,10 +17,9 @@ import {
   Input,
   Label,
   TextArea,
+  useToast,
 } from "ui";
 import { z } from "zod";
-import { useUpdateTaskMutation } from "@/hooks/useUpdateTaskMutation";
-import { Task } from "@/types";
 
 const updateTaskValidationSchema = z.object({
   title: z.string().nonempty({ message: "Título é obrigatório" }),
@@ -49,6 +50,7 @@ export function UpdateTaskDialog({ task: { title, completionDate, content, id } 
     resolver: zodResolver(updateTaskValidationSchema),
   });
   const [open, setOpen] = useState(false);
+  const { toast } = useToast();
 
   const setErrorProps = (error: FieldError | undefined) => ({
     errorMessage: error?.message || "",
@@ -62,8 +64,20 @@ export function UpdateTaskDialog({ task: { title, completionDate, content, id } 
       id,
       completionDate: completionDate?.toISOString() || null,
       ...rest,
-    });
-    setOpen(false);
+    })
+      .then(() => {
+        setOpen(false);
+        toast({
+          description: "Tarefa editada com sucesso!",
+          variant: "success",
+        });
+      })
+      .catch(() => {
+        toast({
+          description: "Algo de errado aconteceu!",
+          variant: "destructive",
+        });
+      });
   };
 
   return (

@@ -2,6 +2,7 @@
 
 import { useCreateTaskMutation } from "@/hooks/useCreateTaskMutation";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Check, X } from "lucide-react";
 import { ReactNode, useState } from "react";
 import { Controller, FieldError, SubmitHandler, useForm } from "react-hook-form";
 import {
@@ -15,6 +16,7 @@ import {
   Input,
   Label,
   TextArea,
+  useToast,
 } from "ui";
 import { z } from "zod";
 
@@ -42,6 +44,7 @@ export function CreateTaskDialog({ trigger }: CreateTaskDialogProps) {
     resolver: zodResolver(createTaskValidationSchema),
   });
   const [open, setOpen] = useState(false);
+  const { toast } = useToast();
 
   const setErrorProps = (error: FieldError | undefined) => ({
     errorMessage: error?.message || "",
@@ -51,10 +54,22 @@ export function CreateTaskDialog({ trigger }: CreateTaskDialogProps) {
     e?.preventDefault();
     const { completionDate, ...rest } = data;
 
-    await mutateAsync({
+    mutateAsync({
       completionDate: null ?? completionDate?.toISOString(),
       ...rest,
-    });
+    })
+      .then(() => {
+        toast({
+          description: "Tarefa criada com sucesso!",
+          variant: "success",
+        });
+      })
+      .catch(() => {
+        toast({
+          description: "Algo de errado aconteceu!",
+          variant: "destructive",
+        });
+      });
     setOpen(false);
   };
 

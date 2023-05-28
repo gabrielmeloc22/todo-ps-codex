@@ -1,13 +1,13 @@
+import { api } from "@/services/axios";
+import { queryClient } from "@/services/reactQuery";
+import { Task } from "@/types";
 import { MutationFunction, useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { getCookie } from "cookies-next";
-import { api } from "@/services/axios";
-import { Task } from "@/types";
-import { queryClient } from "@/services/reactQuery";
 
 type TaskMutationData = Task;
 type TaskMutationVariables = Pick<Task, "id">;
-type removeTaskReqError = AxiosError<TaskMutationData>;
+type RemoveTaskReqError = AxiosError<TaskMutationData>;
 
 const deleteTask: MutationFunction<TaskMutationData, TaskMutationVariables> = async ({ id }) => {
   const authorId = getCookie("user_id");
@@ -17,7 +17,7 @@ const deleteTask: MutationFunction<TaskMutationData, TaskMutationVariables> = as
 };
 
 export function useDeleteTaskMutation() {
-  return useMutation<TaskMutationData, removeTaskReqError, TaskMutationVariables>({
+  return useMutation<TaskMutationData, RemoveTaskReqError, TaskMutationVariables>({
     mutationFn: deleteTask,
     onSuccess: () => {
       queryClient.refetchQueries(["tasks"]);

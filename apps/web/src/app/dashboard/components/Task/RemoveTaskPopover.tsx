@@ -1,6 +1,6 @@
 import { Trash2 } from "lucide-react";
 import { useState } from "react";
-import { Popover, Button } from "ui";
+import { Popover, Button, useToast } from "ui";
 import { PopoverTrigger, PopoverContent } from "ui/src/components/Popover";
 import { useDeleteTaskMutation } from "@/hooks/useDeleteTaskMutation";
 
@@ -10,7 +10,24 @@ interface RemoveTaskPopover {
 
 export function RemoveTaskPopover({ taskId }: RemoveTaskPopover) {
   const [open, setOpen] = useState(false);
-  const { mutate, isLoading } = useDeleteTaskMutation();
+  const { mutateAsync, isLoading } = useDeleteTaskMutation();
+  const { toast } = useToast();
+
+  const onDelete = () => {
+    mutateAsync({ id: taskId })
+      .then(() => {
+        toast({
+          description: "Tarefa excluída com sucesso!",
+          variant: "success",
+        });
+      })
+      .catch(() => {
+        toast({
+          description: "Algo de errado aconteceu!",
+          variant: "destructive",
+        });
+      });
+  };
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -22,13 +39,7 @@ export function RemoveTaskPopover({ taskId }: RemoveTaskPopover) {
       <PopoverContent className="w-fit" align="end" alignOffset={-16}>
         <p className="mb-4">Excluir tarefa?</p>
         <div className="flex gap-4">
-          <Button
-            variant="destructive"
-            loading={isLoading}
-            onClick={() => {
-              mutate({ id: taskId });
-            }}
-          >
+          <Button variant="destructive" loading={isLoading} onClick={onDelete}>
             Excluir
           </Button>
           <Button variant="secondary" onClick={() => setOpen(false)}>
