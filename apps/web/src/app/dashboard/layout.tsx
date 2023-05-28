@@ -10,9 +10,9 @@ interface DashboardLayoutProps {
 }
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
-    <div className="flex">
+    <div className="flex h-screen">
       <Sidebar />
-      <main className="flex flex-col relative w-full h-screen pl-[10vw] max-2xl:px-8 max-2xl:pl-[5vw] max-xl:px-8 gap-32 px-10 py-20 overflow-y-scroll no-scrollbar">
+      <main className="flex flex-col relative w-full pl-[10vw] px-10 py-20 gap-18 max-2xl:px-8 max-2xl:pl-[5vw] max-xl:px-8 max-2xl:py-10 max-2xl:gap-10 overflow-y-scroll no-scrollbar [&>*]:mb-10">
         {children}
       </main>
     </div>

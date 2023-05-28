@@ -1,8 +1,8 @@
 "use client";
 
+import { useCreateTaskMutation } from "@/hooks/useCreateTaskMutation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { PlusIcon } from "lucide-react";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { Controller, FieldError, SubmitHandler, useForm } from "react-hook-form";
 import {
   Button,
@@ -17,7 +17,6 @@ import {
   TextArea,
 } from "ui";
 import { z } from "zod";
-import { useCreateTaskMutation } from "@/hooks/useCreateTaskMutation";
 
 const createTaskValidationSchema = z.object({
   title: z.string().nonempty({ message: "Título é obrigatório" }),
@@ -27,7 +26,11 @@ const createTaskValidationSchema = z.object({
 
 type CreateTaskValidationSchema = z.infer<typeof createTaskValidationSchema>;
 
-export function CreateTaskDialog() {
+interface CreateTaskDialogProps {
+  trigger: ReactNode;
+}
+
+export function CreateTaskDialog({ trigger }: CreateTaskDialogProps) {
   const { mutateAsync, isLoading } = useCreateTaskMutation();
   const {
     register,
@@ -63,18 +66,14 @@ export function CreateTaskDialog() {
         setOpen(open);
       }}
     >
-      <DialogTrigger asChild>
-        <Button className="w-[90%] px-4" size="lg">
-          Adicionar tarefa <PlusIcon className="ml-2" size={16} />
-        </Button>
-      </DialogTrigger>
+      <DialogTrigger asChild>{trigger}</DialogTrigger>
 
-      <DialogContent className="p-10">
+      <DialogContent className="p-10 max-sm:top-[50%] max-sm:translate-y-[-50%] max-sm:max-w-[90vw]">
         <DialogHeader>
           <DialogTitle>Adicionar tarefa</DialogTitle>
         </DialogHeader>
         <form className="flex flex-wrap gap-10" onSubmit={handleSubmit(onSubmit)}>
-          <div className="flex gap-6">
+          <div className="flex flex-wrap gap-6">
             <Label htmlFor="title" {...setErrorProps(errors.title)}>
               <p className="mb-4">Título</p>
               <Input id="title" placeholder="título" {...register("title")} />

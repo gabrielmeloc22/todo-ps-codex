@@ -11,7 +11,7 @@ export function Profile() {
   const router = useRouter();
 
   return (
-    <div className="flex gap-6 h-14">
+    <div className="flex gap-6 h-14 mt-6">
       {user?.profilePic ? (
         <div className="relative aspect-square h-full">
           <NextImage

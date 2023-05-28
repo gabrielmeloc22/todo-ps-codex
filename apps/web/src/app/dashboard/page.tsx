@@ -23,12 +23,12 @@ export default function DashboardPage() {
   return (
     <>
       <Header />
-      <section className="max-w-screen-lg grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] grid-flow-row gap-4 mt-10">
+      <section className="max-w-screen-lg grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] grid-flow-row gap-4">
         {isLoading
           ? Array.from(new Array(7)).map((_, i) => <Skeleton key={i} className="w-[100%] h-16" />)
           : Object.entries(aggregatedTasks).map(([key, value]) => {
               return value !== null ? (
-                <div key={key}>
+                <div key={key} className="max-w-md">
                   <p className="mb-4 text-base">
                     {key !== "sem data" ? new Intl.DateTimeFormat().format(new Date(key)) : key}
                   </p>

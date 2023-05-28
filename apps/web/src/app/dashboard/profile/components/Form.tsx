@@ -54,7 +54,10 @@ export function Form() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-wrap gap-10 mt-20">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-wrap gap-10 mt-10 max-sm:[&_input]:w-full max-sm:[&_label]:w-full max-sm:justify-center"
+    >
       <Controller
         control={control}
         name="profilePic"
@@ -67,7 +70,7 @@ export function Form() {
           />
         )}
       />
-      <div className="flex max-w-[clamp(200px,70vw,35rem)] flex-wrap gap-6">
+      <div className="flex flex-wrap gap-6 max-w-[clamp(200px,70vw,35rem)] max-md:max-w-full ">
         <Label htmlFor="name" {...setErrorProps(errors.name)}>
           <p className="mb-4">Nome</p>
           <Input id="name" placeholder="nome" {...register("name")} />
