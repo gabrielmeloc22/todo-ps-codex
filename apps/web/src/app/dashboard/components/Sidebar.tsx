@@ -16,7 +16,7 @@ export function Sidebar() {
         </div>
 
         <Profile />
-        <div className="flex flex-col gap-4 mt-10">
+        <div className="flex flex-col gap-4 mt-4">
           <CreateTaskDialog
             trigger={
               <Button className="w-[90%] px-4" size="lg">

@@ -1,4 +1,5 @@
 import "@ui/styles/globals.css";
+import { Toaster } from "ui";
 import { Providers } from "./providers";
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -17,6 +18,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       </head>
       <body className="h-screen">
         <Providers>{children}</Providers>
+        <Toaster />
       </body>
     </html>
   );
