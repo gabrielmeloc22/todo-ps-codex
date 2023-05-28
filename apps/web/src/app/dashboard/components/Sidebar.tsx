@@ -14,16 +14,17 @@ export function Sidebar() {
             <h2 className="font-bold">AllDone</h2>
           </Link>
         </div>
-
-        <Profile />
-        <div className="flex flex-col gap-4 mt-4">
-          <CreateTaskDialog
-            trigger={
-              <Button className="w-[90%] px-4" size="lg">
-                Adicionar tarefa <PlusIcon className="ml-2" size={16} />
-              </Button>
-            }
-          />
+        <div>
+          <Profile />
+          <div className="flex flex-col gap-4 mt-6">
+            <CreateTaskDialog
+              trigger={
+                <Button className="w-[90%] px-4" size="lg">
+                  Adicionar tarefa <PlusIcon className="ml-2" size={16} />
+                </Button>
+              }
+            />
+          </div>
         </div>
       </aside>
       <aside className="hidden max-xl:flex max-sm:hidden flex-col gap-6 items-center w-24 bg-zinc-800 py-6">
