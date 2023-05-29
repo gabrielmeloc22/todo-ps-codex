@@ -1,9 +1,13 @@
-import { Skeleton, useToast } from "@/../../../packages/ui/src";
+import { Skeleton, useToast } from "ui";
 import { useDeleteTaskMutation } from "@/hooks/useDeleteTaskMutation";
 import { useUpdateTaskMutation } from "@/hooks/useUpdateTaskMutation";
 import type { Task as TaskModel } from "@/types";
 import { Task } from "./Task";
 import { OnSubmitTask } from "./Task/TaskDialog";
+
+const isOldTask = (completionDate: Date) => {
+  return completionDate.getTime() < Date.now();
+};
 
 interface TasksProps {
   data: Record<string, TaskModel[] | null>;
@@ -68,7 +72,11 @@ export function Tasks({ data, isLoading }: TasksProps) {
         : Object.entries(data).map(([key, value]) => {
             return value !== null ? (
               <div key={key} className="max-w-md">
-                <p className="mb-4 text-base">
+                <p
+                  className={`mb-4 text-base ${
+                    key !== "sem data" ? (isOldTask(new Date(key)) ? "text-red-400" : "") : ""
+                  }`}
+                >
                   {key !== "sem data" ? new Intl.DateTimeFormat().format(new Date(key)) : key}
                 </p>
                 {value
