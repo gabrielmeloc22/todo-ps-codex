@@ -32,15 +32,23 @@ interface TaskDialogProps {
   trigger: ReactNode;
   onSubmit: OnSubmitTask;
   title: string;
+  actionDescription: string;
   defaultValues?: TaskValidationSchema & { id: string };
 }
 
-export function TaskDialog({ title, trigger, onSubmit: onSubmitFunc, defaultValues }: TaskDialogProps) {
+export function TaskDialog({
+  title,
+  trigger,
+  onSubmit: onSubmitFunc,
+  actionDescription,
+  defaultValues,
+}: TaskDialogProps) {
   const {
     register,
     handleSubmit,
     control,
     reset,
+    resetField,
     formState: { errors },
   } = useForm<TaskValidationSchema>({
     resolver: zodResolver(taskFormValidationSchema),
@@ -55,7 +63,6 @@ export function TaskDialog({ title, trigger, onSubmit: onSubmitFunc, defaultValu
   });
   const onSubmit: SubmitHandler<TaskValidationSchema> = async (data, e) => {
     e?.preventDefault();
-    const { completionDate, ...rest } = data;
 
     setIsLoading(true);
     await onSubmitFunc({
@@ -100,6 +107,15 @@ export function TaskDialog({ title, trigger, onSubmit: onSubmitFunc, defaultValu
                 name="completionDate"
                 control={control}
               />
+              <Button
+                variant="icon"
+                className="mt-1 font-light"
+                onClick={() => {
+                  resetField("completionDate");
+                }}
+              >
+                Limpar
+              </Button>
             </Label>
           </div>
           <Label htmlFor="content" className="w-full" {...setErrorProps(errors.content)}>
@@ -123,7 +139,7 @@ export function TaskDialog({ title, trigger, onSubmit: onSubmitFunc, defaultValu
               Descartar
             </Button>
             <Button type="submit" loading={isLoading}>
-              Adicionar
+              {actionDescription}
             </Button>
           </div>
         </form>

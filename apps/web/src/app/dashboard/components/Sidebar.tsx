@@ -43,6 +43,7 @@ export function Sidebar() {
           <Profile />
           <div className="flex flex-col gap-4 mt-6">
             <TaskDialog
+              actionDescription="Adicionar"
               title="Adicionar tarefa"
               onSubmit={onSubmit}
               trigger={
@@ -59,6 +60,7 @@ export function Sidebar() {
           <div className="rounded-full bg-zinc-900/70 w-fit h-fit p-2 mb-8">✅</div>
         </Link>
         <TaskDialog
+          actionDescription="Adicionar"
           title="Adicionar tarefa"
           onSubmit={onSubmit}
           trigger={
@@ -77,14 +79,10 @@ export function Sidebar() {
             <UserIcon size={20} />
           </Button>
         </Link>
-        <Link href="/dashboard/collections">
-          <Button variant="icon" className="w-fit h-fit p-2 rounded-xl">
-            <BookmarkIcon size={20} />
-          </Button>
-        </Link>
       </aside>
       <aside className="z-10 hidden max-sm:flex gap-10 justify-center p-4 w-full  fixed left-[50%] translate-x-[-50%] bottom-0 mx-auto bg-zinc-800/70 backdrop-blur-md">
         <TaskDialog
+          actionDescription="Adicionar"
           title="Adicionar tarefa"
           onSubmit={onSubmit}
           trigger={
@@ -101,11 +99,6 @@ export function Sidebar() {
         <Link href="/dashboard/profile">
           <Button variant="icon" className="w-fit h-fit p-2 rounded-xl">
             <UserIcon />
-          </Button>
-        </Link>
-        <Link href="/dashboard/collections">
-          <Button variant="icon" className="w-fit h-fit p-2 rounded-xl">
-            <BookmarkIcon />
           </Button>
         </Link>
       </aside>

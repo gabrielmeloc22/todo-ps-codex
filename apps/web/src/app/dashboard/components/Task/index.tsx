@@ -49,6 +49,7 @@ export const Task = forwardRef<HTMLDivElement, TaskProps>(function Task(
       </div>
       <div className="flex gap-4 duration-200 animate-in fade-in-10 slide-in-from-right-5" id="task-tools">
         <TaskDialog
+          actionDescription="Editar"
           title="Editar tarefa"
           onSubmit={onUpdate}
           trigger={

@@ -66,7 +66,7 @@ export function Tasks({ data, isLoading }: TasksProps) {
   };
 
   return (
-    <section className="max-w-screen-lg grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] grid-flow-row gap-4">
+    <section className="max-w-screen-lg grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] grid-flow-row gap-4 mt-10">
       {isLoading
         ? Array.from(new Array(7)).map((_, i) => <Skeleton key={i} className="w-[100%] h-16" />)
         : Object.entries(data).map(([key, value]) => {
@@ -77,7 +77,11 @@ export function Tasks({ data, isLoading }: TasksProps) {
                     key !== "sem data" ? (isOldTask(new Date(key)) ? "text-red-400" : "") : ""
                   }`}
                 >
-                  {key !== "sem data" ? new Intl.DateTimeFormat().format(new Date(key)) : key}
+                  {key !== "sem data"
+                    ? new Intl.DateTimeFormat("pt-BR", {
+                        dateStyle: "medium",
+                      }).format(new Date(key))
+                    : key}
                 </p>
                 {value
                   .sort(({ id }, { id: id2 }) => id.localeCompare(id2))
