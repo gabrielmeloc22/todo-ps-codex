@@ -11,24 +11,25 @@ export function Profile() {
   const router = useRouter();
 
   return (
-    <div className="flex gap-6 h-14 mt-6">
+    <div className="flex gap-6 h-fit mt-6 bg-zinc-900/40 p-4 rounded-md">
       {user?.profilePic ? (
-        <div className="relative aspect-square h-full">
-          <NextImage
-            className="absolute w-full h-full rounded-md"
+        <div className="relative aspect-square h-12">
+          <img
+            className="absolute rounded-full aspect-square object-cover"
             src={user.profilePic}
-            fill
             alt={`${user?.name}`}
           />
         </div>
       ) : (
-        <div className="w-10 h-10 bg-zinc-400 rounded-md" />
+        <div className="flex items-center justify-center w-12 h-12 bg-zinc-600 rounded-full">
+          {(user?.name[0] + (user?.lastName?.charAt(0) || "")).toUpperCase()}
+        </div>
       )}
       <div>
-        <p className="leading-none font-semibold text-lg">
+        <p className="leading-none font-semibold text-md">
           {user?.name} {user?.lastName}
         </p>
-        <div className="mt-2 flex gap-4 leading-none text">
+        <div className="mt-1 flex gap-2 leading-none ">
           <NextLink href="/dashboard/profile">
             <Button variant="link" className="text-zinc-300 font-light p-0 w-fit h-fit">
               Meu perfil

@@ -3,7 +3,7 @@ import { useGetUserQuery } from "@/hooks/useGetUserQuery";
 import { useUpdateUserMutation } from "@/hooks/useUpdateUserMutation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, FieldError, SubmitHandler, useForm } from "react-hook-form";
-import { Button, Input, Label } from "ui";
+import { Button, Input, Label, useToast } from "ui";
 import { z } from "zod";
 
 const updateUserSchema = z.object({
@@ -25,6 +25,7 @@ type UpdateUserSchema = z.infer<typeof updateUserSchema>;
 export function Form() {
   const { data: user, isSuccess } = useGetUserQuery();
   const { mutateAsync, isLoading } = useUpdateUserMutation();
+  const { toast } = useToast();
 
   const {
     handleSubmit,
@@ -49,8 +50,21 @@ export function Form() {
   });
 
   const onSubmit: SubmitHandler<UpdateUserSchema> = (data, e) => {
-    mutateAsync(data);
     e?.preventDefault();
+    mutateAsync(data)
+      .then(() => {
+        toast({
+          description:
+            "Perfil atualizado com sucesso! Talvez demore um pouco para todas mudanças tomarem efeito!",
+          variant: "success",
+        });
+      })
+      .catch(() => {
+        toast({
+          description: "Algo de errado aconteceu, perfil não atualizado!",
+          variant: "destructive",
+        });
+      });
   };
 
   return (

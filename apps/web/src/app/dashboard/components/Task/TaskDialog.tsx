@@ -1,8 +1,8 @@
 "use client";
 
+import { Task } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Edit } from "lucide-react";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { Controller, FieldError, SubmitHandler, useForm } from "react-hook-form";
 import {
   Button,
@@ -17,53 +17,53 @@ import {
   TextArea,
 } from "ui";
 import { z } from "zod";
-import { useUpdateTaskMutation } from "@/hooks/useUpdateTaskMutation";
-import { Task } from "@/types";
 
-const updateTaskValidationSchema = z.object({
+const taskFormValidationSchema = z.object({
+  status: z.boolean().optional(),
   title: z.string().nonempty({ message: "Título é obrigatório" }),
   content: z.string().nullable().optional(),
   completionDate: z.date().nullable().optional(),
 });
 
-type UpdateTaskValidationSchema = z.infer<typeof updateTaskValidationSchema>;
+type TaskValidationSchema = z.infer<typeof taskFormValidationSchema>;
+export type OnSubmitTask = (data: Partial<Task>) => Promise<void>;
 
 interface TaskDialogProps {
-  task: Task;
+  trigger: ReactNode;
+  onSubmit: OnSubmitTask;
+  title: string;
+  defaultValues?: TaskValidationSchema & { id: string };
 }
 
-export function UpdateTaskDialog({ task: { title, completionDate, content, id } }: TaskDialogProps) {
-  const { mutateAsync, isLoading } = useUpdateTaskMutation();
+export function TaskDialog({ title, trigger, onSubmit: onSubmitFunc, defaultValues }: TaskDialogProps) {
   const {
     register,
     handleSubmit,
     control,
     reset,
     formState: { errors },
-  } = useForm<UpdateTaskValidationSchema>({
-    values: {
-      title: title,
-      completionDate: completionDate ? new Date(completionDate) : undefined,
-      content,
-    },
-    resolver: zodResolver(updateTaskValidationSchema),
+  } = useForm<TaskValidationSchema>({
+    resolver: zodResolver(taskFormValidationSchema),
+    values: defaultValues,
   });
   const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const setErrorProps = (error: FieldError | undefined) => ({
     errorMessage: error?.message || "",
     variant: (error ? "error" : "default") as "error" | "default",
   });
-  const onSubmit: SubmitHandler<UpdateTaskValidationSchema> = async (data, e) => {
+  const onSubmit: SubmitHandler<TaskValidationSchema> = async (data, e) => {
     e?.preventDefault();
     const { completionDate, ...rest } = data;
 
-    await mutateAsync({
-      id,
-      completionDate: completionDate?.toISOString() || null,
-      ...rest,
-    });
+    setIsLoading(true);
+    await onSubmitFunc({
+      id: defaultValues?.id,
+      ...data,
+    } as Task);
     setOpen(false);
+    setIsLoading(false);
   };
 
   return (
@@ -74,18 +74,14 @@ export function UpdateTaskDialog({ task: { title, completionDate, content, id } 
         setOpen(open);
       }}
     >
-      <DialogTrigger asChild>
-        <Button variant="icon" size="sm">
-          <Edit strokeWidth={1.5} size={20} />
-        </Button>
-      </DialogTrigger>
+      <DialogTrigger asChild>{trigger}</DialogTrigger>
 
-      <DialogContent className="p-10">
+      <DialogContent className="p-10 max-sm:top-[50%] max-sm:translate-y-[-50%] max-sm:max-w-[90vw]">
         <DialogHeader>
-          <DialogTitle>Editar tarefa</DialogTitle>
+          <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
         <form className="flex flex-wrap gap-10" onSubmit={handleSubmit(onSubmit)}>
-          <div className="flex gap-6">
+          <div className="flex flex-wrap gap-6">
             <Label htmlFor="title" {...setErrorProps(errors.title)}>
               <p className="mb-4">Título</p>
               <Input id="title" placeholder="título" {...register("title")} />
@@ -127,7 +123,7 @@ export function UpdateTaskDialog({ task: { title, completionDate, content, id } 
               Descartar
             </Button>
             <Button type="submit" loading={isLoading}>
-              Editar
+              Adicionar
             </Button>
           </div>
         </form>

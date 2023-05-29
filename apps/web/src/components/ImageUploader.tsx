@@ -46,15 +46,9 @@ export function ImageUploader({ value: src, alt, onFileChange, type, ...props }:
       <Label htmlFor="profilePic">Foto de perfil</Label>
       <div className="relative w-40 h-40">
         {src ? (
-          <Image
-            className="absolute object-cover rounded-md"
-            fill
-            // sizes={"(max-width: 648px) 100%"}
-            src={src}
-            alt={alt}
-          />
+          <img className="absolute object-cover rounded-md aspect-square" src={src} alt={alt} />
         ) : (
-          <div className="flex items-center justify-center bg-muted h-full rounded-md">GM</div>
+          <div className="flex items-center justify-center bg-muted h-full rounded-md" />
         )}
       </div>
     </div>

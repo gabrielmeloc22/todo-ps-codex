@@ -10,12 +10,14 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  useToast,
 } from "ui";
 
 export function DeleteAccountDialog() {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const { mutateAsync, isLoading } = useDeleteUserMutation();
+  const { toast } = useToast();
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -32,10 +34,21 @@ export function DeleteAccountDialog() {
             variant="destructive"
             loading={isLoading}
             onClick={() => {
-              mutateAsync().then(() => {
-                signOut();
-                router.replace("login");
-              });
+              mutateAsync()
+                .then(() => {
+                  signOut();
+                  toast({
+                    description: "Conta excluída com sucesso!",
+                    variant: "success",
+                  });
+                  router.replace("login");
+                })
+                .catch(() => {
+                  toast({
+                    description: "Algo de errado aconteceu, conta não excluída.",
+                    variant: "destructive",
+                  });
+                });
             }}
           >
             Deletar conta

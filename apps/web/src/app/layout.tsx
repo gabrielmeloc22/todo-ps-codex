@@ -1,5 +1,7 @@
 import "@ui/styles/globals.css";
+import { Toaster } from "ui";
 import { Providers } from "./providers";
+import NextTopLoader from "nextjs-toploader";
 interface RootLayoutProps {
   children: React.ReactNode;
 }
@@ -16,7 +18,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
         />
       </head>
       <body className="h-screen">
+        <NextTopLoader color="#7C3AED" />
         <Providers>{children}</Providers>
+        <Toaster />
       </body>
     </html>
   );
