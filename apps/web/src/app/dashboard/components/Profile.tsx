@@ -14,12 +14,9 @@ export function Profile() {
     <div className="flex gap-6 h-fit mt-6 bg-zinc-900/40 p-4 rounded-md">
       {user?.profilePic ? (
         <div className="relative aspect-square h-12">
-          <NextImage
-            className="absolute rounded-full object-cover"
+          <img
+            className="absolute rounded-full aspect-square object-cover"
             src={user.profilePic}
-            loader={({ src }) => src}
-            unoptimized
-            fill
             alt={`${user?.name}`}
           />
         </div>
@@ -29,7 +26,7 @@ export function Profile() {
         </div>
       )}
       <div>
-        <p className="leading-none font-semibold text-md text-accent">
+        <p className="leading-none font-semibold text-md">
           {user?.name} {user?.lastName}
         </p>
         <div className="mt-1 flex gap-2 leading-none ">
