@@ -1,32 +1,20 @@
 import { Trash2 } from "lucide-react";
 import { useState } from "react";
-import { Popover, Button, useToast } from "ui";
-import { PopoverTrigger, PopoverContent } from "ui/src/components/Popover";
-import { useDeleteTaskMutation } from "@/hooks/useDeleteTaskMutation";
+import { Button, Popover } from "ui";
+import { PopoverContent, PopoverTrigger } from "ui/src/components/Popover";
 
 interface RemoveTaskPopover {
-  taskId: string;
+  onDelete: () => Promise<void>;
 }
 
-export function RemoveTaskPopover({ taskId }: RemoveTaskPopover) {
+export function RemoveTaskPopover({ onDelete: onDeleteFn }: RemoveTaskPopover) {
   const [open, setOpen] = useState(false);
-  const { mutateAsync, isLoading } = useDeleteTaskMutation();
-  const { toast } = useToast();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const onDelete = () => {
-    mutateAsync({ id: taskId })
-      .then(() => {
-        toast({
-          description: "Tarefa excluída com sucesso!",
-          variant: "success",
-        });
-      })
-      .catch(() => {
-        toast({
-          description: "Algo de errado aconteceu!",
-          variant: "destructive",
-        });
-      });
+  const onDelete = async () => {
+    setIsLoading(true);
+    await onDeleteFn();
+    setIsLoading(false);
   };
 
   return (

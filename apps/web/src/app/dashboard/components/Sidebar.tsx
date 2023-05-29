@@ -1,10 +1,35 @@
+"use client";
+
+import { useCreateTaskMutation } from "@/hooks/useCreateTaskMutation";
 import { BookmarkIcon, HomeIcon, PlusIcon, UserIcon } from "lucide-react";
 import Link from "next/link";
-import { Button, Separator } from "ui";
+import { Button, useToast } from "ui";
 import { Profile } from "./Profile";
-import { CreateTaskDialog } from "./Task/CreateTaskDialog";
+import { OnSubmitTask, TaskDialog } from "./Task/TaskDialog";
 
 export function Sidebar() {
+  const { mutateAsync } = useCreateTaskMutation();
+  const { toast } = useToast();
+
+  const onSubmit: OnSubmitTask = async (data) => {
+    const { completionDate, ...rest } = data;
+    try {
+      await mutateAsync({
+        completionDate: data.completionDate,
+        ...rest,
+      });
+      toast({
+        description: "Tarefa criada com sucesso!",
+        variant: "success",
+      });
+    } catch (error) {
+      toast({
+        description: "Algo de errado aconteceu!",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <>
       <aside className="w-full max-w-[280px] max-xl:hidden flex flex-col gap-8 px-6 py-4 bg-zinc-800">
@@ -17,7 +42,9 @@ export function Sidebar() {
         <div>
           <Profile />
           <div className="flex flex-col gap-4 mt-6">
-            <CreateTaskDialog
+            <TaskDialog
+              title="Adicionar tarefa"
+              onSubmit={onSubmit}
               trigger={
                 <Button className="w-[90%] px-4" size="lg">
                   Adicionar tarefa <PlusIcon className="ml-2" size={16} />
@@ -31,7 +58,9 @@ export function Sidebar() {
         <Link href="/dashboard">
           <div className="rounded-full bg-zinc-900/70 w-fit h-fit p-2 mb-8">✅</div>
         </Link>
-        <CreateTaskDialog
+        <TaskDialog
+          title="Adicionar tarefa"
+          onSubmit={onSubmit}
           trigger={
             <Button className="w-fit h-fit p-2" size="lg">
               <PlusIcon size={20} />
@@ -55,7 +84,9 @@ export function Sidebar() {
         </Link>
       </aside>
       <aside className="z-10 hidden max-sm:flex gap-10 justify-center p-4 w-full  fixed left-[50%] translate-x-[-50%] bottom-0 mx-auto bg-zinc-800/70 backdrop-blur-md">
-        <CreateTaskDialog
+        <TaskDialog
+          title="Adicionar tarefa"
+          onSubmit={onSubmit}
           trigger={
             <Button className="w-fit h-fit p-2 rounded-xl" size="lg">
               <PlusIcon size={24} />

@@ -1,20 +1,26 @@
 "use client";
 
-import { useUpdateTaskMutation } from "@/hooks/useUpdateTaskMutation";
 import { Task as TaskModel } from "@/types";
 import { cn } from "@ui/lib/utils";
+import { Edit } from "lucide-react";
 import { forwardRef } from "react";
-import { Checkbox, Label } from "ui";
+import { Button, Checkbox, Label } from "ui";
 import { RemoveTaskPopover } from "./RemoveTaskPopover";
-import { UpdateTaskDialog } from "./UpdateTaskDialog";
+import { OnSubmitTask, TaskDialog } from "./TaskDialog";
 
 interface TaskProps extends React.HTMLAttributes<HTMLDivElement> {
   data: TaskModel;
+  onUpdate: OnSubmitTask;
+  onDelete: OnSubmitTask;
+  onCheck: OnSubmitTask;
 }
 
-export const Task = forwardRef<HTMLDivElement, TaskProps>(function Task({ data, className, ...props }, ref) {
+export const Task = forwardRef<HTMLDivElement, TaskProps>(function Task(
+  { data, onDelete, onUpdate, onCheck, className, ...props },
+  ref
+) {
   const { id, status, title, completionDate } = data;
-  const { mutate } = useUpdateTaskMutation();
+
   return (
     <div
       className={cn(
@@ -28,7 +34,7 @@ export const Task = forwardRef<HTMLDivElement, TaskProps>(function Task({ data, 
         id={id}
         defaultChecked={status}
         onCheckedChange={(checked) => {
-          mutate({ id, status: !!checked });
+          onCheck({ id, status: !!checked });
         }}
       />
       <div className="flex flex-col gap-1 w-full peer-data-[state=checked]:[&>*>#task-title]:line-through">
@@ -42,8 +48,22 @@ export const Task = forwardRef<HTMLDivElement, TaskProps>(function Task({ data, 
         </span>
       </div>
       <div className="flex gap-4 duration-200 animate-in fade-in-10 slide-in-from-right-5" id="task-tools">
-        <UpdateTaskDialog task={data} />
-        <RemoveTaskPopover taskId={id} />
+        <TaskDialog
+          title="Editar tarefa"
+          onSubmit={onUpdate}
+          trigger={
+            <Button variant="icon" size="sm">
+              <Edit strokeWidth={1.5} size={20} />
+            </Button>
+          }
+          defaultValues={{
+            id,
+            title: data.title,
+            completionDate: (data.completionDate && new Date(data.completionDate)) || undefined,
+            content: data.content,
+          }}
+        />
+        <RemoveTaskPopover onDelete={() => onDelete({ id })} />
       </div>
     </div>
   );
