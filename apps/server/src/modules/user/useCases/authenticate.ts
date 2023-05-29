@@ -19,9 +19,8 @@ class AuthenticateUserUseCase {
     const passwordMatch = await compare(password, User.password);
 
     if (!passwordMatch) {
-      throw new HttpError("Senha ou Email incorretas",401);
+      throw new HttpError("Senha ou Email incorretas", 401);
     }
-
   }
 
   static getToken() {
@@ -30,22 +29,21 @@ class AuthenticateUserUseCase {
   }
 
   static async execute({ email, password }: Pick<User, "email" | "password">) {
-
     const user = await this.UserAlreadyExists(email);
     await this.passwordMatch(user, password);
 
     const token = sign(
       {
-      userId: user.id,
+        userId: user.id,
       },
       this.getToken(),
       {
-      expiresIn: '5d' 
-      });
+        expiresIn: "5d",
+      }
+    );
 
-    const {password: _, ...User } = user;
+    const { password: _, ...User } = user;
     return { token, User };
-
   }
 }
 

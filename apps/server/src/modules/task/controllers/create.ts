@@ -1,34 +1,29 @@
-import { Request, Response } from 'express';
-import { Task } from '@prisma/client';
-import CreateTaskUseCase from '../useCases/create';
-import CheckUser from '../../../utils/checkUser';
+import { Request, Response } from "express";
+import { Task } from "@prisma/client";
+import CreateTaskUseCase from "../useCases/create";
+import CheckUser from "../../../utils/checkUser";
 
-type TaskInput = Omit<Task, "id" | "createdAt" | "updatedAt" > & { completionDate: Date & string };
+type TaskInput = Omit<Task, "id" | "createdAt" | "updatedAt"> & { completionDate: Date & string };
 
 class createTaskController {
- 
-    static async handle(request: Request, response: Response): Promise<Response> {
+  static async handle(request: Request, response: Response): Promise<Response> {
+    const { title, authorId, completionDate, content, status, collectionId }: TaskInput = request.body;
 
-        const { title, authorId, completionDate, content, status, collectionId }: TaskInput = request.body;
+    const tokenUserId = request.headers.userId as string;
 
-        const tokenUserId = request.headers.userId as string;
+    CheckUser.check(tokenUserId, authorId);
 
-        CheckUser.check(tokenUserId, authorId);
-        
-        const task = await CreateTaskUseCase.execute(
-            {
-                title,
-                authorId,
-                content,
-                completionDate,
-                status,
-                collectionId,
-            }
-        );
+    const task = await CreateTaskUseCase.execute({
+      title,
+      authorId,
+      content,
+      completionDate,
+      status,
+      collectionId,
+    });
 
-        return response.status(200).json(task);
-    }
-    
+    return response.status(200).json(task);
+  }
 }
 
 export default createTaskController;

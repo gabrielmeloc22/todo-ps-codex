@@ -3,14 +3,13 @@ import { ensureAuthenticated } from "../../middleware/ensureAuthenticated";
 import createUser from "./controllers/create";
 import deleteUser from "./controllers/delete";
 import getUser from "./controllers/get";
-import updateUser from "./controllers/update"
+import updateUser from "./controllers/update";
 import authenticateUser from "./controllers/authenticate";
-
 
 const router = Router();
 
 router
-  .get("/:userId", ensureAuthenticated,(request, response) => {
+  .get("/:userId", ensureAuthenticated, (request, response) => {
     return getUser.handle(request, response);
   })
   .post("/", (request, response) => {
@@ -19,7 +18,7 @@ router
   .post("/login", (request, response) => {
     return authenticateUser.handle(request, response);
   })
-  .put("/:userId", ensureAuthenticated , (request, response) => {
+  .put("/:userId", ensureAuthenticated, (request, response) => {
     return updateUser.handle(request, response);
   })
   .delete("/:userId", ensureAuthenticated, (request, response) => {

@@ -4,20 +4,17 @@ import CheckUser from "../../../utils/checkUser";
 import { Prisma } from "@prisma/client";
 
 class GetAllTasksController {
-    
-    static async handle(request: Request, response: Response) {
-        const { authorId } = request.params;
-        const orderBy = request.query.orderBy as Prisma.SortOrder;
-        const tokenUserId = request.headers.userId as string;
-        
-        CheckUser.check(tokenUserId, authorId);
+  static async handle(request: Request, response: Response) {
+    const { authorId } = request.params;
+    const orderBy = request.query.orderBy as Prisma.SortOrder;
+    const tokenUserId = request.headers.userId as string;
 
-        const allTasks = await GetAllTasksUseCase.execute(authorId, orderBy);
+    CheckUser.check(tokenUserId, authorId);
 
-        return response.status(200).json(allTasks)
+    const allTasks = await GetAllTasksUseCase.execute(authorId, orderBy);
 
-    }
-
+    return response.status(200).json(allTasks);
+  }
 }
 
 export default GetAllTasksController;
