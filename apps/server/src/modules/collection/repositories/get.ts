@@ -1,4 +1,4 @@
-import { Collection, Task } from "@prisma/client";
+import { Collection } from "@prisma/client";
 import prisma from "../../../middleware/prisma/client";
 
 class GetCollectionRepository {
