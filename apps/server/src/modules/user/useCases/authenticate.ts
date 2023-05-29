@@ -2,7 +2,7 @@ import prisma from "../../../middleware/prisma/client";
 import HttpError from "../../../utils/HttpError";
 import { User } from "@prisma/client";
 import { compare } from "bcrypt";
-import { sign } from "jsonwebtoken";
+import { SignJWT } from "jose";
 
 class AuthenticateUserUseCase {
   static async UserAlreadyExists(email: string): Promise<User> {
@@ -25,22 +25,23 @@ class AuthenticateUserUseCase {
 
   static getToken() {
     const TOKEN = process.env.ACCESS_TOKEN_SECRET;
-    return TOKEN;
+    const jwtToken = new TextEncoder().encode(TOKEN);
+    return jwtToken;
   }
 
   static async execute({ email, password }: Pick<User, "email" | "password">) {
     const user = await this.UserAlreadyExists(email);
     await this.passwordMatch(user, password);
 
-    const token = sign(
-      {
-        userId: user.id,
-      },
-      this.getToken(),
-      {
-        expiresIn: "5d",
-      }
-    );
+    const alg = 'HS256'
+
+    const token = await new SignJWT({ 'urn:example:claim': true, userId: user.id })
+    .setProtectedHeader({ alg })
+    .setIssuedAt()
+    .setIssuer('urn:example:issuer')
+    .setAudience('urn:example:audience')
+    .setExpirationTime('5d')
+    .sign(this.getToken())
 
     const { password: _, ...User } = user;
     return { token, User };
