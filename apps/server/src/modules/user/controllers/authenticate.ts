@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import AuthenticateUserUseCase from "../useCases/authenticate";
 
 class AuthenticateUserController {
-  
   static async handle(request: Request, response: Response): Promise<Response> {
     const { email, password } = request.body;
 

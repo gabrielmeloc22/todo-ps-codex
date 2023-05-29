@@ -3,16 +3,15 @@ import { genSaltSync, hashSync } from "bcrypt";
 import InvalidEntries from "../../../utils/invalidEntries";
 import CreateUserRepository from "../repositories/create";
 
-type UserInput = Omit<User, "id" | "profilePic" >;
+type UserInput = Omit<User, "id" | "profilePic">;
 
 class createUserUseCase {
-
   constructor() {}
 
   static async execute({ email, password, age, gender, name, lastName }: UserInput) {
     await InvalidEntries.userAlreadyExists(email);
 
-    const salt = genSaltSync(10)
+    const salt = genSaltSync(10);
     const hashedPassword = hashSync(password, salt);
 
     const result = await CreateUserRepository.create({
