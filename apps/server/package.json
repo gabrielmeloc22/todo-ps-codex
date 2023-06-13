@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@prisma/client": "4.14.0",
+    "@trpc/server": "^10.28.0",
     "bcrypt": "^5.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
@@ -18,7 +19,8 @@
     "jose": "^4.14.4",
     "multer": "1.4.5-lts.1",
     "tsup": "^6.7.0",
-    "tsx": "^3.12.7"
+    "tsx": "^3.12.7",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
