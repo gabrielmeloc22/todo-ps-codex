@@ -11,11 +11,11 @@ export const taskRouter = router({
     .input(
       z.object({
         title: z.string(),
-        content: z.string(),
-        completionDate: z.string(),
+        content: z.string().optional(),
+        completionDate: z.string().optional(),
         status: z.boolean().optional(),
         authorId: z.string(),
-        collectionId: z.string(),
+        collectionId: z.string().optional(),
       }))
     .mutation(async (opts) => {
       const { input } = opts;
@@ -41,12 +41,11 @@ export const taskRouter = router({
     .input(
       z.object({
         id: z.string(),
-        title: z.string(),
-        content: z.string(),
-        completionDate: z.string(),
+        title: z.string().optional(),
+        content: z.string().optional(),
+        completionDate: z.string().optional(),
         status: z.boolean().optional(),
-        authorId: z.string(),
-        collectionId: z.string(),
+        collectionId: z.string().optional(),
       })
     ).mutation(async (opts) => {
       const { input } = opts;
