@@ -14,7 +14,7 @@ const routes = (app: any) => {
   app
     .use(cors())
     .use(express.json())
-    .use("/api/trpc/task", trpcExpress.createExpressMiddleware({ router: taskRouter, createContext }))
+    .use("/trpc/task", trpcExpress.createExpressMiddleware({ router: taskRouter, createContext }))
     .use("/user", userRoutes)
     .use(ensureAuthenticated)
     .use("/task", taskRoutes)

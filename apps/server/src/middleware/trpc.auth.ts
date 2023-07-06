@@ -1,8 +1,7 @@
 import { Request } from "express";
-import { middleware, publicProcedure } from "../trpc";
+import { middleware } from "../trpc";
 import HttpError from "../utils/HttpError";
 import { jwtVerify } from "jose";
-import { TRPCError } from "@trpc/server";
 
 const getToken = () => {
     const TOKEN = process.env.ACCESS_TOKEN_SECRET;
@@ -14,7 +13,8 @@ const verifyTokenExists = (request: Request) => {
     const authToken = request.headers.authorization;
   
     if (!authToken) {
-      throw new TRPCError({ code: "UNAUTHORIZED", message: "Token não enviado" })};
+      throw new HttpError("Token não enviado", 401);
+    };
     
     return authToken;
     };
