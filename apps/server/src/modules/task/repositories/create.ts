@@ -1,7 +1,5 @@
-import { Task } from "@prisma/client";
-import prisma from "../../../middleware/prisma/client";
-
-type TaskInput = Omit<Task, "id" | "createdAt" | "updatedAt">;
+import { Prisma, Task } from "@prisma/client";
+import prisma from "../../../db";
 
 class CreateTaskRepository {
   static async create({
@@ -11,7 +9,7 @@ class CreateTaskRepository {
     status,
     authorId,
     collectionId,
-  }: TaskInput): Promise<Task> {
+  }: Prisma.TaskUncheckedCreateInput): Promise<Task> {
     const newTask = await prisma.task.create({
       data: {
         title,

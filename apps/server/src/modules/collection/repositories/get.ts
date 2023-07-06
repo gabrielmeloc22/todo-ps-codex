@@ -1,5 +1,5 @@
 import { Collection } from "@prisma/client";
-import prisma from "../../../middleware/prisma/client";
+import prisma from "../../../db";
 
 class GetCollectionRepository {
   static async getCollectionById(id: string, includeTasks: boolean): Promise<Collection | null> {

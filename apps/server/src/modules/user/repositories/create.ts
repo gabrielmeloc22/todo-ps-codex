@@ -1,5 +1,5 @@
 import { User } from "@prisma/client";
-import prisma from "../../../middleware/prisma/client";
+import prisma from "../../../db";
 
 type UserInput = Omit<User, "id" | "profilePic">;
 

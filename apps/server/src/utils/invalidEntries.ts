@@ -1,4 +1,4 @@
-import prisma from "../middleware/prisma/client";
+import prisma from "../db";
 import HttpError from "./HttpError";
 
 class InvalidEntries {

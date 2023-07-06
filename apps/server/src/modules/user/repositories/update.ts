@@ -1,5 +1,5 @@
 import { User, Prisma } from "@prisma/client";
-import prisma from "../../../middleware/prisma/client";
+import prisma from "../../../db";
 
 class UpdateUserRepository {
   static async update(id: string, data: Prisma.UserUpdateInput): Promise<User> {

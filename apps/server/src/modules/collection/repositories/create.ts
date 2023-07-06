@@ -1,5 +1,5 @@
 import { Collection } from "@prisma/client";
-import prisma from "../../../middleware/prisma/client";
+import prisma from "../../../db";
 
 type CollectionInput = Omit<Collection, "id" | "createdAt" | "updatedAt">;
 
