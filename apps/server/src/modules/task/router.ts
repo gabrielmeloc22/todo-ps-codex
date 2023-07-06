@@ -4,7 +4,11 @@ import createTaskUseCase from "./useCases/create";
 import getTaskUseCase from "./useCases/get";
 import DeleteTaskUseCase from "./useCases/delete";
 import UpdateTaskUseCase from "./useCases/update";
+import { inferRouterInputs, inferRouterOutputs } from "@trpc/server";
 
+
+export type taskRouterInputs = inferRouterInputs<typeof taskRouter>;
+export type taskRouterOutputs = inferRouterOutputs<typeof taskRouter>;
 
 export const taskRouter = router({
   createTask: publicProcedure

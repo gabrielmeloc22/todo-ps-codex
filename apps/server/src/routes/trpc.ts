@@ -1,5 +1,4 @@
-import { mergeRouters } from "@trpc/server";
-import { taskRouter } from "../modules/task/router";
+import { taskRouter, taskRouterInputs, taskRouterOutputs } from "../modules/task/router";
 import trpc, { router } from "../trpc";
 
 const appRouter = router({
@@ -8,3 +7,4 @@ const appRouter = router({
 })
 
 export type AppRouter = typeof appRouter;
+export { taskRouterInputs, taskRouterOutputs };
