@@ -1,0 +1,5 @@
+FROM node:18.16.1
+WORKDIR .
+COPY . .
+RUN npm update
+RUN npm install --only=prod

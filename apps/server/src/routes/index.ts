@@ -1,24 +1,23 @@
-import express, { Request, Response } from "express";
-import { ensureAuthenticated } from "../middleware/ensureAuthenticated";
-import userRoutes from "../modules/user/routes";
-import taskRoutes from "../modules/task/routes";
-import collectioRoutes from "../modules/collection/routes";
+import userRoutes from "../../trash/user/routes";
+import taskRoutes from "../../trash/task/routes";
+import collectioRoutes from "../../trash/collection/routes";
+import express from "express";
 import cors from "cors";
 
-const routes = (app: any) => {
-  //Teste de rota base
-  app.route("/").get((req: Request, res: Response) => {
-    res.status(200).send({ title: "Home page Test Json" });
-  });
+import * as trpcExpress from "@trpc/server/adapters/express";
+import { taskRouter } from "../modules/task/router";
+import { createContext } from "../trpc";
 
-  //A baixo as rotas
+
+const routes = (app: any) => {
   app
     .use(cors())
     .use(express.json())
     .use("/user", userRoutes)
-    .use(ensureAuthenticated)
+    // .use(ensureAuthenticated)
     .use("/task", taskRoutes)
-    .use("/collection", collectioRoutes);
+    .use("/collection", collectioRoutes)
+    .use("/api/trpc/task", trpcExpress.createExpressMiddleware({ router: taskRouter, createContext }));
 };
 
 export default routes;

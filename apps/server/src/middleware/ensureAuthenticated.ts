@@ -28,7 +28,7 @@ export async function ensureAuthenticated(request: Request, response: Response, 
     audience: 'urn:example:audience',
   })
 
-  const { userId } = payload as {userId:string};
+  const { userId } = payload as { userId:string };
 
   request.headers.userId = userId;
 
