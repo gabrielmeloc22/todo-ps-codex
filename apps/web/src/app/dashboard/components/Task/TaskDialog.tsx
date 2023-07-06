@@ -112,7 +112,7 @@ export function TaskDialog({
                 type="button"
                 className="mt-1 font-light"
                 onClick={() => {
-                  setValue("completionDate", undefined);
+                  setValue("completionDate", null);
                 }}
               >
                 Limpar
