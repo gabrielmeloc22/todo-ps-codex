@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import GetAllTasksUseCase from "../useCases/getAll";
-import CheckUser from "../../../utils/checkUser";
+import GetAllTasksUseCase from "../../../src/modules/task/useCases/getAll";
+import CheckUser from "../../../src/utils/checkUser";
 import { Prisma } from "@prisma/client";
 
 class GetAllTasksController {

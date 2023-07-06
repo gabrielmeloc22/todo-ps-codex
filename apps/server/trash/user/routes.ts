@@ -1,5 +1,5 @@
 import { Router, response } from "express";
-import { ensureAuthenticated } from "../../middleware/ensureAuthenticated";
+import { ensureAuthenticated } from "../../src/middleware/ensureAuthenticated";
 import createUser from "./controllers/create";
 import deleteUser from "./controllers/delete";
 import getUser from "./controllers/get";

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { Task } from "@prisma/client";
-import CreateTaskUseCase from "../useCases/create";
-import CheckUser from "../../../utils/checkUser";
+import CreateTaskUseCase from "../../../src/modules/task/useCases/create";
+import CheckUser from "../../../src/utils/checkUser";
 
 type TaskInput = Omit<Task, "id" | "createdAt" | "updatedAt"> & { completionDate: Date & string };
 

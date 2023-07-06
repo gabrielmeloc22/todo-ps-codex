@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import DeleteCollectionUseCase from "../useCases/delete";
-import CheckUser from "../../../utils/checkUser";
+import DeleteCollectionUseCase from "../../../src/modules/collection/useCases/delete";
+import CheckUser from "../../../src/utils/checkUser";
 
 class DeleteCollectionController {
   static async handle(request: Request, response: Response): Promise<Response> {

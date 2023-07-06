@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import DeleteUserUseCase from "../useCases/delete";
-import CheckUser from "../../../utils/checkUser";
+import DeleteUserUseCase from "../../../src/modules/user/useCases/delete";
+import CheckUser from "../../../src/utils/checkUser";
 
 class DeleteUserController {
   static async handle(request: Request, response: Response): Promise<Response> {

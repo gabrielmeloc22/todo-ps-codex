@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import UpdateCollectionUsecase from "../useCases/update";
-import CheckUser from "../../../utils/checkUser";
+import UpdateCollectionUsecase from "../../../src/modules/collection/useCases/update";
+import CheckUser from "../../../src/utils/checkUser";
 
 class UpdateCollectionController {
   static async handle(request: Request, response: Response) {

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import DeleteTaskUseCase from "../useCases/delete";
-import CheckUser from "../../../utils/checkUser";
+import DeleteTaskUseCase from "../../../src/modules/task/useCases/delete";
+import CheckUser from "../../../src/utils/checkUser";
 
 class DeleteTaskController {
   static async handle(request: Request, response: Response): Promise<Response> {

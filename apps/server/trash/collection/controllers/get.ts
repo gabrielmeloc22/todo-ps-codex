@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import GetCollectionUseCase from "../useCases/get";
-import CheckUser from "../../../utils/checkUser";
+import GetCollectionUseCase from "../../../src/modules/collection/useCases/get";
+import CheckUser from "../../../src/utils/checkUser";
 
 class GetCollectionController {
   static async handle(request: Request, response: Response): Promise<Response> {
