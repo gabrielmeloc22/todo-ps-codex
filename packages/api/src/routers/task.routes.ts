@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { publicProcedure, router } from "../../trpc";
-import createTaskUseCase from "./useCases/create";
-import getTaskUseCase from "./useCases/get";
-import DeleteTaskUseCase from "./useCases/delete";
-import UpdateTaskUseCase from "./useCases/update";
+import { publicProcedure, router } from "../trpc";
+import createTaskUseCase from "../../../../apps/server/src/modules/task/useCases/create";
+import getTaskUseCase from "../../../../apps/server/src/modules/task/useCases/get";
+import DeleteTaskUseCase from "../../../../apps/server/src/modules/task/useCases/delete";
+import UpdateTaskUseCase from "../../../../apps/server/src/modules/task/useCases/update";
 
 
 export const taskRouter = router({
