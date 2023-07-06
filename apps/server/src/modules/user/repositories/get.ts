@@ -1,5 +1,5 @@
 import { User } from "@prisma/client";
-import prisma from "../../../middleware/prisma/client";
+import prisma from "../../../db";
 
 class GetUserRepository {
   static async getById(id: string): Promise<User | null> {

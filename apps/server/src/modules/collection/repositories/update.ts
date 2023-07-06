@@ -1,5 +1,5 @@
 import { Collection, Prisma } from "@prisma/client";
-import prisma from "../../../middleware/prisma/client";
+import prisma from "../../../db";
 
 class UpdateCollectionRepository {
   static async upadate(id: string, data: Prisma.CollectionUpdateInput): Promise<Collection> {

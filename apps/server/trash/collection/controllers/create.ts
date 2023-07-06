@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import CreateCollectionUseCase from "../useCases/create";
+import CreateCollectionUseCase from "../../../src/modules/collection/useCases/create";
 import { Collection } from "@prisma/client";
-import CheckUser from "../../../utils/checkUser";
+import CheckUser from "../../../src/utils/checkUser";
 
 class CreateCollectionController {
   static async handle(request: Request, response: Response): Promise<Response> {

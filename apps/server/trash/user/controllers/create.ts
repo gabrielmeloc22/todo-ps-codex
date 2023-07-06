@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import CreateUserUseCase from "../useCases/create";
+import CreateUserUseCase from "../../../src/modules/user/useCases/create";
 import { User } from "@prisma/client";
 
 type UserInput = Omit<User, "id" | "profilePic">;

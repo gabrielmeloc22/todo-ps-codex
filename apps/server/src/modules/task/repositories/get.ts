@@ -1,5 +1,5 @@
 import { Prisma, Task } from "@prisma/client";
-import prisma from "../../../middleware/prisma/client";
+import prisma from "../../../db";
 
 class GetTaskRepository {
   static async get(id: string): Promise<Task | null> {

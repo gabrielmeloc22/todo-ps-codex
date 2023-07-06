@@ -1,4 +1,4 @@
-import prisma from "../../../middleware/prisma/client";
+import prisma from "../../../db";
 import HttpError from "../../../utils/HttpError";
 import { User } from "@prisma/client";
 import { compare } from "bcrypt";

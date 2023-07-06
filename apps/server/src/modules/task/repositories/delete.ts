@@ -1,5 +1,5 @@
 import { Task } from "@prisma/client";
-import prisma from "../../../middleware/prisma/client";
+import prisma from "../../../db";
 
 class DeleteTaskRepository {
   static async delete(id: string): Promise<Task> {

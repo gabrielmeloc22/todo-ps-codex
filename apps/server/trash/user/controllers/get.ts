@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import GetUserUseCase from "../useCases/get";
-import CheckUser from "../../../utils/checkUser";
+import GetUserUseCase from "../../../src/modules/user/useCases/get";
+import CheckUser from "../../../src/utils/checkUser";
 
 class getUserController {
   static async handle(request: Request, response: Response): Promise<Response> {

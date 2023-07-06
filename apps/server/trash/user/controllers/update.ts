@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import UpdateUserUseCase from "../useCases/update";
-import CheckUser from "../../../utils/checkUser";
+import UpdateUserUseCase from "../../../src/modules/user/useCases/update";
+import CheckUser from "../../../src/utils/checkUser";
 
 class UpdateUserController {
   static async handle(request: Request, response: Response) {
