@@ -5,8 +5,8 @@ import express from "express";
 import cors from "cors";
 
 import * as trpcExpress from '@trpc/server/adapters/express'
-import { taskRouter } from "../../../../packages/api/src/routers/task.routes";
-import { createContext } from "../../../../packages/api/src/trpc";
+import { taskRouter } from "../modules/task/router";
+import { createContext } from "../trpc";
 import { ensureAuthenticated } from "../middleware/ensureAuthenticated";
 
 
