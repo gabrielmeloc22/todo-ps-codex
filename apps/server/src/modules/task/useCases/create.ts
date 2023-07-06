@@ -2,8 +2,8 @@ import { Prisma, Task } from "@prisma/client";
 import CreateTaskRepository from "../repositories/create";
 
 class createTaskUseCase {
-  static stringToDate(stringDate: string | undefined): Date | null {
-    if (stringDate === "" || stringDate === undefined) {
+  static stringToDate(stringDate: string | null | undefined ): Date | null {
+    if (stringDate === "" || stringDate === undefined || stringDate === null) {
       return null;
     }
     const date = new Date(stringDate);
