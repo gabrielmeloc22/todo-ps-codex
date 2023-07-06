@@ -1,5 +1,5 @@
 import { taskRouter, taskRouterInputs, taskRouterOutputs } from "../modules/task/router";
-import trpc, { router } from "../trpc";
+import { router } from "../trpc";
 
 const appRouter = router({
     task: taskRouter,

@@ -1,14 +1,17 @@
 import { z } from "zod";
-import { authenticatedProcedure, publicProcedure, router } from "../../trpc";
+import { publicProcedure, router } from "../../trpc";
 import createTaskUseCase from "./useCases/create";
 import getTaskUseCase from "./useCases/get";
 import DeleteTaskUseCase from "./useCases/delete";
 import UpdateTaskUseCase from "./useCases/update";
 import { inferRouterInputs, inferRouterOutputs } from "@trpc/server";
 import CheckUser from "../../utils/checkUser";
+import { trpcEnsureAuthenticated } from "../../middleware/trpc.auth";
 
 export type taskRouterInputs = inferRouterInputs<typeof taskRouter>;
 export type taskRouterOutputs = inferRouterOutputs<typeof taskRouter>;
+
+const authenticatedProcedure = publicProcedure.use(trpcEnsureAuthenticated);
 
 export const taskRouter = router({
   createTask: authenticatedProcedure
