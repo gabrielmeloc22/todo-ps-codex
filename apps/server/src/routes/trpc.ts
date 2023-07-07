@@ -1,7 +1,7 @@
 import { taskRouter, taskRouterInputs, taskRouterOutputs } from "../modules/task/router";
 import { router } from "../trpc";
 
-const appRouter = router({
+export const appRouter = router({
     task: taskRouter,
     // user: userRouter,
 })
