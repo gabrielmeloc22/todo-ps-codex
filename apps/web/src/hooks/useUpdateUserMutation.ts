@@ -34,7 +34,9 @@ const updateUser: MutationFunction<UserMutationData, UserMutationVariables> = as
   const newProfilePic = await updateProfilePic(profilePic || null, userId);
   const { data: user } = await api.put<UserMutationData>(
     `user/${userId}`,
-    profilePic === undefined ? data : { profilePic: newProfilePic, ...data }
+    profilePic === undefined
+      ? data
+      : { profilePic: newProfilePic != null ? newProfilePic + "?" + Date.now() : null, ...data }
   );
   return user;
 };
