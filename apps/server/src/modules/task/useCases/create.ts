@@ -1,9 +1,10 @@
-import { Prisma, Task } from "@prisma/client";
-import CreateTaskRepository from "../repositories/create";
+import { Prisma } from "@prisma/client";
+import prisma from "../../../db";
 
-class createTaskUseCase {
-  static stringToDate(stringDate: string | null | undefined ): Date | null {
-    if (stringDate === "" || stringDate === undefined || stringDate === null) {
+class CreateTaskUseCase {
+
+  static stringToDate(stringDate: string | undefined | null): Date | null {
+    if (stringDate === "" || stringDate === null || stringDate === undefined) {
       return null;
     }
     const date = new Date(stringDate);
@@ -11,16 +12,18 @@ class createTaskUseCase {
   }
 
   static async execute({ title, content, completionDate, status, authorId, collectionId }: Prisma.TaskUncheckedCreateInput) {
-    const task = await CreateTaskRepository.create({
-      title,
-      content,
-      status,
-      completionDate,
-      authorId,
-      collectionId,
+    const newTask = await prisma.task.create({
+      data: {
+        title,
+        content,
+        status,
+        authorId,
+        collectionId,
+        completionDate,
+      },
     });
-    return task;
+    return newTask;
   }
 }
 
-export default createTaskUseCase;
+export default CreateTaskUseCase ;

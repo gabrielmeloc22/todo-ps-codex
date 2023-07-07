@@ -1,10 +1,29 @@
-import GetTaskRepository from "../repositories/get";
+import prisma from "../../../db";
+import { Prisma } from "@prisma/client";
 
-class getTaskUseCase {
+class GetTaskUseCase {
   static async execute(id: string) {
-    const task = await GetTaskRepository.get(id);
+    const task = await prisma.task.findUnique({
+      where: {
+        id: id,
+      },
+    });
     return task;
   }
 }
 
-export default getTaskUseCase;
+class GetAllTasksUseCase {
+  static async execute(authorId: string, orderBy: Prisma.SortOrder) {
+    const allTasks = await prisma.task.findMany({
+      where: {
+        authorId: authorId,
+      },
+      orderBy: {
+        completionDate: orderBy || "asc",
+      },
+    });
+    return allTasks;
+  }
+}
+
+export { GetTaskUseCase, GetAllTasksUseCase};

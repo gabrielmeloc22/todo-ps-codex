@@ -1,6 +1,6 @@
 import { User } from "@prisma/client";
 import HttpError from "../../../utils/HttpError";
-import GetUserRepository from "../repositories/get";
+import prisma from "../../../db";
 
 class GetUserUseCase {
   static userNull(user: User | null) {
@@ -10,9 +10,13 @@ class GetUserUseCase {
   }
 
   static async execute(id: string) {
-    const user = await GetUserRepository.getById(id);
-    GetUserUseCase.userNull(user);
-    return user;
+    const outputUser = await prisma.user.findUnique({
+      where: {
+        id,
+      },
+    });
+    GetUserUseCase.userNull(outputUser);
+    return outputUser;
   }
 }
 

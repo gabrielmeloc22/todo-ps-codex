@@ -1,8 +1,12 @@
-import DeleteTaskRepository from "../repositories/delete";
+import prisma from "../../../db";
 
 class DeleteTaskUseCase {
   static async execute(id: string) {
-    const task = DeleteTaskRepository.delete(id);
+    const task = await prisma.task.delete({
+      where: {
+        id: id,
+      },
+    });
     return task;
   }
 }
