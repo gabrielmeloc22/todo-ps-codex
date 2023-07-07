@@ -1,4 +1,5 @@
-import { AppRouter, taskRouterInputs, taskRouterOutputs } from "../../apps/server/src/routes/trpc";
+import { AppRouter, TaskRouterInputs, TaskRouterOutputs, UserRouterInputs, UserRouterOutputs } from "../../apps/server/src/routes/trpc";
 
 export default AppRouter;
-export { taskRouterInputs, taskRouterOutputs }
+export { TaskRouterInputs, TaskRouterOutputs }
+export { UserRouterInputs, UserRouterOutputs }
