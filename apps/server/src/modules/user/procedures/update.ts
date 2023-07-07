@@ -14,6 +14,7 @@ export const updateUserController = authenticatedProcedure
     age: z.number().optional(),
     gender: z.string().optional(),
     id: z.string().optional(),
+    profilePic : z.string().optional(),
 }))
 .mutation(async (opts) => {
     const { input } = opts;
