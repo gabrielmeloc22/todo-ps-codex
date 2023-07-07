@@ -1,11 +1,16 @@
+import prisma from "../../../db";
 import InvalidEntries from "../../../utils/invalidEntries";
-import DeleteUserRepository from "../repositories/delete";
 
 class DeleteUserUseCase {
   static async execute(id: string) {
     await InvalidEntries.userDontExists(id);
 
-    const user = DeleteUserRepository.delete(id);
+    const user = await prisma.user.delete({
+      where: {
+        id,
+      },
+    });
+
     return user;
   }
 }
