@@ -8,13 +8,14 @@ import * as trpcExpress from '@trpc/server/adapters/express'
 import { taskRouter } from "../modules/task/router";
 import { createContext } from "../trpc";
 import { ensureAuthenticated } from "../middleware/ensureAuthenticated";
+import { appRouter } from "./trpc";
 
 
 const routes = (app: any) => {
   app
     .use(cors())
     .use(express.json())
-    .use("/trpc/task", trpcExpress.createExpressMiddleware({ router: taskRouter, createContext }))
+    .use("/trpc", trpcExpress.createExpressMiddleware({ router: appRouter, createContext }))
     .use("/user", userRoutes)
     .use(ensureAuthenticated)
     .use("/task", taskRoutes)
