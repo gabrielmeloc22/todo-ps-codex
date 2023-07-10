@@ -6,7 +6,7 @@ import UpdateTaskUseCase from "../useCases/update";
 
 const authenticatedProcedure = publicProcedure.use(trpcEnsureAuthenticated);
 
-export const updateTaskController = authenticatedProcedure
+export const updateTask = authenticatedProcedure
 .input(
   z.object({
     id: z.string(),

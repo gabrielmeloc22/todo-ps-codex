@@ -6,14 +6,28 @@ import { GetTaskUseCase, GetAllTasksUseCase } from "../useCases/get";
 
 const authenticatedProcedure = publicProcedure.use(trpcEnsureAuthenticated);
 
-export const getTaskController = authenticatedProcedure.input(z.string()).query(async (opts) => {
-  const { input, ctx } = opts;
-  CheckUser.check(ctx.userId, input);
-  return await GetTaskUseCase.execute(input);
-});
+export const getTask = authenticatedProcedure
+  .input(
+    z.object({
+      taskId: z.string(),
+      authorId: z.string(),
+    })
+  )
+  .query(async (opts) => {
+    const { input, ctx } = opts;
+    CheckUser.check(ctx.userId, input.authorId);
+    return await GetTaskUseCase.execute(input.taskId);
+  });
 
-export const getAllTasksController = authenticatedProcedure.input(z.string()).query(async (opts) => {
-  const { input, ctx } = opts;
-  CheckUser.check(ctx.userId, input);
-  return await GetAllTasksUseCase.execute(input, "asc");
-});
+export const getAllTasks = authenticatedProcedure
+  .input(
+    z.object({
+      taskId: z.string(),
+      authorId: z.string(),
+    })
+  )
+  .query(async (opts) => {
+    const { input, ctx } = opts;
+    CheckUser.check(ctx.userId, input.authorId);
+    return await GetAllTasksUseCase.execute(input.taskId, "asc");
+  });

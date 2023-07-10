@@ -6,10 +6,15 @@ import DeleteTaskUseCase from "../useCases/delete";
 
 const authenticatedProcedure = publicProcedure.use(trpcEnsureAuthenticated);
 
-export const deleteTaskController = authenticatedProcedure
-.input(z.string())
-.mutation(async (opts) => {
-  const { input, ctx } = opts;
-  CheckUser.check(ctx.userId, input);
-  return await DeleteTaskUseCase.execute(input)
-});
+export const deleteTask = authenticatedProcedure
+  .input(
+    z.object({
+      authorId: z.string(),
+      taskId: z.string(),
+    })
+  )
+  .mutation(async (opts) => {
+    const { input, ctx } = opts;
+    CheckUser.check(ctx.userId, input.authorId);
+    return await DeleteTaskUseCase.execute(input.taskId);
+  });
