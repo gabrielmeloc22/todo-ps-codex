@@ -1,4 +1,3 @@
-import collectioRoutes from "../../trash/collection/routes";
 import express from "express";
 import cors from "cors";
 import * as trpcExpress from '@trpc/server/adapters/express'
@@ -13,7 +12,6 @@ const routes = (app: any) => {
     .use(express.json())
     .use("/trpc", trpcExpress.createExpressMiddleware({ router: appRouter, createContext }))
     .use(ensureAuthenticated)
-    .use("/collection", collectioRoutes)
 };
 
 export default routes;

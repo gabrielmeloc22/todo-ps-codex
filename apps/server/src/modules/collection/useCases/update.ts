@@ -1,10 +1,15 @@
-import { Collection, Prisma } from "@prisma/client";
-import UpdateCollectionRepository from "../repositories/update";
+import { Prisma } from "@prisma/client";
+import prisma from "../../../db";
 
 class UpdateCollectionUsecase {
   static async execute(id: string, data: Prisma.CollectionUpdateInput) {
-    const updateCollection: Collection = await UpdateCollectionRepository.upadate(id, data);
-    return updateCollection;
+    const updatedCollection = await prisma.collection.update({
+      where: {
+        id,
+      },
+      data,
+    });
+    return updatedCollection;
   }
 }
 
