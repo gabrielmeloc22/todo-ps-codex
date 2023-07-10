@@ -1,8 +1,12 @@
-import DeleteCollectionRepository from "../repositories/delete";
+import prisma from "../../../db";
 
 class DeleteCollectionUseCase {
   static async execute(id: string) {
-    const collection = await DeleteCollectionRepository.delete(id);
+    const collection = await prisma.collection.delete({
+      where: {
+        id,
+      },
+    });
     return collection;
   }
 }
