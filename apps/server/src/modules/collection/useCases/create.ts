@@ -1,16 +1,16 @@
-import { Collection } from "@prisma/client";
-import CreateCollectionRepository from "../repositories/create";
-
-type CollectionInput = Omit<Collection, "id" | "createdAt" | "updatedAt">;
+import { Prisma } from "@prisma/client";
+import prisma from "../../../db";
 
 class CreateCollectionUseCase {
-  static async execute({ title, color, authorId }: CollectionInput) {
-    const collection = await CreateCollectionRepository.create({
-      title,
-      color,
-      authorId,
+  static async execute({ title, color, authorId }: Prisma.CollectionUncheckedCreateInput) {
+    const newCollection = prisma.collection.create({
+      data: {
+        title,
+        color,
+        authorId,
+      },
     });
-    return collection;
+    return newCollection;
   }
 }
 
