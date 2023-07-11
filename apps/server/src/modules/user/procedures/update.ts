@@ -11,10 +11,10 @@ export const updateUserController = authenticatedProcedure
     password: z.string().optional(),
     name: z.string().optional(),
     lastName: z.string().optional(),
-    age: z.number().optional(),
-    gender: z.string().optional(),
-    id: z.string().optional(),
-    profilePic : z.string().optional(),
+    age: z.number().optional().nullable(),
+    gender: z.string().optional().nullable(),
+    id: z.string(),
+    profilePic : z.string().optional().nullable(),
 }))
 .mutation(async (opts) => {
     const { input } = opts;
