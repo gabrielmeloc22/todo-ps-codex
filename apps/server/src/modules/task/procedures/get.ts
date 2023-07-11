@@ -22,12 +22,11 @@ export const getTask = authenticatedProcedure
 export const getAllTasks = authenticatedProcedure
   .input(
     z.object({
-      taskId: z.string(),
       authorId: z.string(),
     })
   )
   .query(async (opts) => {
     const { input, ctx } = opts;
     CheckUser.check(ctx.userId, input.authorId);
-    return await GetAllTasksUseCase.execute(input.taskId, "asc");
+    return await GetAllTasksUseCase.execute(input.authorId, "asc");
   });
