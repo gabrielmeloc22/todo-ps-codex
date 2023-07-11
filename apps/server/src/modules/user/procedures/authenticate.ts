@@ -9,7 +9,7 @@ export const authenticateUserController = publicProcedure
       password: z.string(),
     })
   )
-  .query(async (opts) => {
+  .mutation(async (opts) => {
     const { input } = opts;
     return await AuthenticateUserUseCase.execute(input);
   });
