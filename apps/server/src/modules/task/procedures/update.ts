@@ -11,11 +11,11 @@ export const updateTask = authenticatedProcedure
   z.object({
     id: z.string(),
     title: z.string().optional(),
-    content: z.string().optional(),
-    completionDate: z.string().optional(),
+    content: z.string().optional().nullable(),
+    completionDate: z.string().optional().nullable(),
     authorId: z.string(),
     status: z.boolean().optional(),
-    collectionId: z.string().optional(),
+    collectionId: z.string().optional().nullable(),
   })
 ).mutation(async (opts) => {
   const { input, ctx } = opts;
