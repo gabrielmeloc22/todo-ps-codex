@@ -1,3 +1,4 @@
+import { supabase } from "@/services/supabase";
 import { Edit, Trash } from "lucide-react";
 import Image from "next/image";
 import { ComponentPropsWithoutRef } from "react";
@@ -8,6 +9,22 @@ interface ImageUploaderProps extends ComponentPropsWithoutRef<typeof Input> {
   value: string | undefined;
   alt: string;
 }
+
+export const updateProfilePic = async (profilePic: string | null, userId: string) => {
+  let profilePicPublicUrl = null;
+
+  if (profilePic) {
+    const file = await fetch(profilePic).then((r) => r.blob());
+    await supabase.storage.from("user-profile-pic").upload(userId, file, {
+      upsert: true,
+    });
+    profilePicPublicUrl = supabase.storage.from("user-profile-pic").getPublicUrl(userId).data.publicUrl;
+  } else {
+    await supabase.storage.from("user-profile-pic").remove([userId]);
+  }
+
+  return profilePicPublicUrl;
+};
 
 export function ImageUploader({ value: src, alt, onFileChange, type, ...props }: ImageUploaderProps) {
   return (
@@ -46,7 +63,7 @@ export function ImageUploader({ value: src, alt, onFileChange, type, ...props }:
       <Label htmlFor="profilePic">Foto de perfil</Label>
       <div className="relative w-40 h-40">
         {src ? (
-          <img className="absolute object-cover rounded-md aspect-square" src={src} alt={alt} />
+          <Image fill className="absolute object-cover rounded-md aspect-square" src={src} alt={alt} />
         ) : (
           <div className="flex items-center justify-center bg-muted h-full rounded-md" />
         )}

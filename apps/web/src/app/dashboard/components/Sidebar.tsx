@@ -1,22 +1,29 @@
 "use client";
 
-import { useCreateTaskMutation } from "@/hooks/useCreateTaskMutation";
-import { BookmarkIcon, HomeIcon, PlusIcon, UserIcon } from "lucide-react";
+import { useAuth } from "@/components/Auth";
+import { trpc } from "@/services/trpc";
+import { TaskRouterInputs } from "api";
+import { HomeIcon, PlusIcon, UserIcon } from "lucide-react";
 import Link from "next/link";
 import { Button, useToast } from "ui";
 import { Profile } from "./Profile";
-import { OnSubmitTask, TaskDialog } from "./Task/TaskDialog";
+import { TaskDialog } from "./Task/TaskDialog";
 
 export function Sidebar() {
-  const { mutateAsync } = useCreateTaskMutation();
+  const context = trpc.useContext();
+  const { mutateAsync } = trpc.task.createTask.useMutation({
+    onSuccess: (data) => {
+      context.task.getAllTasks.setData({ authorId: data.authorId }, (oldData) => oldData?.concat(data));
+    },
+  });
   const { toast } = useToast();
+  const user = useAuth();
 
-  const onSubmit: OnSubmitTask = async (data) => {
-    const { completionDate, ...rest } = data;
+  const onSubmit = async (data: Omit<TaskRouterInputs["createTask"], "authorId">) => {
     try {
       await mutateAsync({
-        completionDate: data.completionDate,
-        ...rest,
+        authorId: user.id,
+        ...data,
       });
       toast({
         description: "Tarefa criada com sucesso!",

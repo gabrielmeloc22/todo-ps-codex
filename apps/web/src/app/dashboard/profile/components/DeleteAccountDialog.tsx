@@ -1,5 +1,5 @@
-import { signOut } from "@/components/Auth";
-import { useDeleteUserMutation } from "@/hooks/useDeleteUserMutation";
+import { signOut, useAuth } from "@/components/Auth";
+import { trpc } from "@/services/trpc";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import {
@@ -15,8 +15,24 @@ import {
 
 export function DeleteAccountDialog() {
   const router = useRouter();
+  const { mutateAsync, isLoading } = trpc.user.deleteUser.useMutation({
+    onSuccess: () => {
+      signOut();
+      router.replace("login");
+      toast({
+        description: "Conta excluída com sucesso!",
+        variant: "success",
+      });
+    },
+    onError: () => {
+      toast({
+        description: "Algo de errado aconteceu, conta não excluída.",
+        variant: "destructive",
+      });
+    },
+  });
   const [open, setOpen] = useState(false);
-  const { mutateAsync, isLoading } = useDeleteUserMutation();
+  const user = useAuth();
   const { toast } = useToast();
 
   return (
@@ -34,21 +50,7 @@ export function DeleteAccountDialog() {
             variant="destructive"
             loading={isLoading}
             onClick={() => {
-              mutateAsync()
-                .then(() => {
-                  signOut();
-                  toast({
-                    description: "Conta excluída com sucesso!",
-                    variant: "success",
-                  });
-                  router.replace("login");
-                })
-                .catch(() => {
-                  toast({
-                    description: "Algo de errado aconteceu, conta não excluída.",
-                    variant: "destructive",
-                  });
-                });
+              mutateAsync(user.id);
             }}
           >
             Deletar conta
