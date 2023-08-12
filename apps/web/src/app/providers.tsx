@@ -5,6 +5,7 @@ import { ReactNode } from "react";
 import { Auth } from "@/components/Auth";
 import { queryClient } from "@/services/reactQuery";
 import { TooltipProvider } from "ui";
+import { trpc, trpcClient } from "@/services/trpc";
 
 interface ProvidersProps {
   children: ReactNode;
@@ -12,10 +13,12 @@ interface ProvidersProps {
 
 export function Providers({ children }: ProvidersProps) {
   return (
-    <QueryClientProvider client={queryClient}>
-      <Auth>
-        <TooltipProvider>{children}</TooltipProvider>
-      </Auth>
-    </QueryClientProvider>
+    <trpc.Provider client={trpcClient} queryClient={queryClient}>
+      <QueryClientProvider client={queryClient}>
+        <Auth>
+          <TooltipProvider>{children}</TooltipProvider>
+        </Auth>
+      </QueryClientProvider>
+    </trpc.Provider>
   );
 }
