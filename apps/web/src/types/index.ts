@@ -1,25 +1,10 @@
+import { TaskRouterOutputs, UserRouterOutputs } from "api";
+
 export type ReqErrorRes = {
   status: string;
   message: string;
 };
 
-export type Task = {
-  id: string;
-  authorId: string;
-  createdAt: string;
-  updatedAt: string;
-  completionDate: string | null;
-  title: string;
-  content: string | null;
-  status: boolean;
-};
+export type Task = NonNullable<TaskRouterOutputs["getTask"]>;
 
-export type User = {
-  id: string;
-  name: string;
-  lastName: string | null;
-  email: string;
-  age: number | null;
-  gender: string | null;
-  profilePic: string | null;
-};
+export type User = NonNullable<UserRouterOutputs["getUser"]>;

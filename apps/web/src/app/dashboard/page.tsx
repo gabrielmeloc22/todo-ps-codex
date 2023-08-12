@@ -1,22 +1,27 @@
 "use client";
 
-import { useGetTasksQuery } from "@/hooks/useGetTasksQuery";
-import { Task as TaskType } from "@/types";
+import { useAuth } from "@/components/Auth";
+import { trpc } from "@/services/trpc";
+import { Task } from "@/types";
 import { Header } from "./components/Header";
 import { Tasks } from "./components/Tasks";
 
-const aggregateTasksByCompletionDate = (tasks: TaskType[]) => {
+const aggregateTasksByCompletionDate = (tasks: Task[]) => {
   return tasks.reduce((acc, curr) => {
     const prevTasks = acc[curr?.completionDate || "sem data"];
     return {
       ...acc,
       [curr?.completionDate || "sem data"]: [...(prevTasks || []), curr],
     };
-  }, {} as Record<string, TaskType[] | null>);
+  }, {} as Record<string, Task[] | null>);
 };
 
 export default function DashboardPage() {
-  const { data, isLoading, isSuccess } = useGetTasksQuery();
+  const user = useAuth();
+
+  const { data, isSuccess, isLoading } = trpc.task.getAllTasks.useQuery({
+    authorId: user.id,
+  });
   const aggregatedTasks = aggregateTasksByCompletionDate(isSuccess ? data : []);
 
   return (

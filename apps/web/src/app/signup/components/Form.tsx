@@ -1,10 +1,11 @@
 "use client";
 
+import { trpc } from "@/services/trpc";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { FieldError, SubmitHandler, useForm } from "react-hook-form";
 import { Button, Input, Label } from "ui";
 import { string, z } from "zod";
-import { useCreateUserMutation } from "@/hooks/useCreateUserMutation";
 
 const createAccountValidation = z
   .object({
@@ -29,13 +30,18 @@ const createAccountValidation = z
 type CreateAccountValidation = z.infer<typeof createAccountValidation>;
 
 export function Form() {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<CreateAccountValidation>({ resolver: zodResolver(createAccountValidation) });
 
-  const { mutate, isLoading, isError, error } = useCreateUserMutation();
+  const { mutate, isLoading, isError, error } = trpc.user.createUser.useMutation({
+    onSuccess: () => {
+      router.push("login");
+    },
+  });
 
   const onSubmit: SubmitHandler<CreateAccountValidation> = (data, e) => {
     e?.preventDefault();
@@ -108,7 +114,7 @@ export function Form() {
             role="alert"
             className="absolute mt-4 text-sm text-red-400 duration-300 animate-in fade-in-10 slide-in-from-bottom-10 ease-[cubic-bezier(0.17,0.67,0.22,1.05)]"
           >
-            {error.response?.data.message}
+            {error.message}
           </p>
         )}
       </div>

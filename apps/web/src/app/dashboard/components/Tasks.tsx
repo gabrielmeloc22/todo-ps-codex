@@ -1,7 +1,8 @@
+import { useAuth } from "@/components/Auth";
+import { trpc } from "@/services/trpc";
+import type { Task as TaskType } from "@/types";
+import { TaskRouterInputs } from "api";
 import { Skeleton, useToast } from "ui";
-import { useDeleteTaskMutation } from "@/hooks/useDeleteTaskMutation";
-import { useUpdateTaskMutation } from "@/hooks/useUpdateTaskMutation";
-import type { Task as TaskModel } from "@/types";
 import { Task } from "./Task";
 import { OnSubmitTask } from "./Task/TaskDialog";
 
@@ -10,59 +11,73 @@ const isOldTask = (completionDate: Date) => {
 };
 
 interface TasksProps {
-  data: Record<string, TaskModel[] | null>;
+  data: Record<string, TaskType[] | null>;
   isLoading: boolean;
 }
 
 export function Tasks({ data, isLoading }: TasksProps) {
-  const { mutateAsync: updateTask } = useUpdateTaskMutation();
-  const { mutateAsync: deleteTask } = useDeleteTaskMutation();
+  const context = trpc.useContext();
   const { toast } = useToast();
 
-  const onUpdate: OnSubmitTask = async (data) => {
-    try {
-      await updateTask(data);
-      toast({
-        description: "Tarefa editada com sucesso!",
-        variant: "success",
+  const { id: userId } = useAuth();
+  const { mutateAsync: updateTask } = trpc.task.updateTask.useMutation({
+    onSuccess: (data) => {
+      context.task.getAllTasks.setData({ authorId: data.authorId }, (oldData: any) => {
+        const copy = [...(oldData || [])];
+        copy.splice(
+          copy.findIndex(({ id }) => data.id === id),
+          1,
+          data
+        );
+
+        return copy;
       });
-    } catch {
+    },
+    onError: () => {
       toast({
         description: "Algo de errado aconteceu!",
         variant: "destructive",
       });
-    }
+    },
+  });
+
+  const { mutateAsync: deleteTask } = trpc.task.deleteTask.useMutation({
+    onSuccess: (data) => {
+      context.task.getAllTasks.setData({ authorId: data.authorId }, (oldData) =>
+        oldData?.filter(({ id }) => data.id !== id)
+      );
+    },
+    onError: () => {
+      toast({
+        description: "Algo de errado aconteceu!",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const onUpdate: OnSubmitTask = async (data: Omit<TaskRouterInputs["updateTask"], "authorId">) => {
+    await updateTask({ authorId: userId, ...data });
+    toast({
+      description: "Tarefa editada com sucesso!",
+      variant: "success",
+    });
   };
 
   const onCheck: OnSubmitTask = async (data) => {
-    try {
-      await updateTask(data);
-      data.status &&
-        toast({
-          description: "Tarefa concluída!",
-          variant: "success",
-        });
-    } catch {
+    await updateTask({ authorId: userId, ...data });
+    data.status &&
       toast({
-        description: "Algo de errado aconteceu!",
-        variant: "destructive",
-      });
-    }
-  };
-
-  const onDelete: OnSubmitTask = async ({ id }) => {
-    try {
-      await deleteTask({ id: id! });
-      toast({
-        description: "Tarefa excluída com sucesso!",
+        description: "Tarefa concluída!",
         variant: "success",
       });
-    } catch (error) {
-      toast({
-        description: "Algo de errado aconteceu!",
-        variant: "destructive",
-      });
-    }
+  };
+
+  const onDelete: OnSubmitTask = async ({ id: taskId }) => {
+    await deleteTask({ taskId, authorId: userId });
+    toast({
+      description: "Tarefa excluída com sucesso!",
+      variant: "success",
+    });
   };
 
   return (

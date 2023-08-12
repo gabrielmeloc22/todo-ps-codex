@@ -1,6 +1,5 @@
 "use client";
 
-import { Task } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ReactNode, useState } from "react";
 import { Controller, FieldError, SubmitHandler, useForm } from "react-hook-form";
@@ -26,7 +25,7 @@ const taskFormValidationSchema = z.object({
 });
 
 type TaskValidationSchema = z.infer<typeof taskFormValidationSchema>;
-export type OnSubmitTask = (data: Partial<Task>) => Promise<void>;
+export type OnSubmitTask = (data: any) => Promise<void>;
 
 interface TaskDialogProps {
   trigger: ReactNode;
@@ -68,7 +67,7 @@ export function TaskDialog({
     await onSubmitFunc({
       id: defaultValues?.id,
       ...data,
-    } as Task);
+    });
     setOpen(false);
     setIsLoading(false);
   };
@@ -112,7 +111,7 @@ export function TaskDialog({
                 type="button"
                 className="mt-1 font-light"
                 onClick={() => {
-                  setValue("completionDate", undefined);
+                  setValue("completionDate", null);
                 }}
               >
                 Limpar
@@ -125,7 +124,7 @@ export function TaskDialog({
               id="content"
               placeholder="detalhes sobre minha tarefa legal :)"
               maxLength={140}
-              {...register("content")}
+              {...register("content", { setValueAs: (value) => value || undefined })}
             />
           </Label>
           <div className="mx-auto">

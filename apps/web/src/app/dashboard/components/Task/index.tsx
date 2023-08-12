@@ -1,6 +1,6 @@
 "use client";
 
-import { Task as TaskModel } from "@/types";
+import { Task as TaskType } from "@/types";
 import { cn } from "@ui/lib/utils";
 import { Edit } from "lucide-react";
 import { forwardRef } from "react";
@@ -9,7 +9,7 @@ import { RemoveTaskPopover } from "./RemoveTaskPopover";
 import { OnSubmitTask, TaskDialog } from "./TaskDialog";
 
 interface TaskProps extends React.HTMLAttributes<HTMLDivElement> {
-  data: TaskModel;
+  data: TaskType;
   onUpdate: OnSubmitTask;
   onDelete: OnSubmitTask;
   onCheck: OnSubmitTask;
@@ -19,7 +19,7 @@ export const Task = forwardRef<HTMLDivElement, TaskProps>(function Task(
   { data, onDelete, onUpdate, onCheck, className, ...props },
   ref
 ) {
-  const { id, status, title, completionDate } = data;
+  const { id, status, title, completionDate, content } = data!;
 
   return (
     <div
@@ -59,9 +59,9 @@ export const Task = forwardRef<HTMLDivElement, TaskProps>(function Task(
           }
           defaultValues={{
             id,
-            title: data.title,
-            completionDate: (data.completionDate && new Date(data.completionDate)) || undefined,
-            content: data.content,
+            title: title,
+            completionDate: (completionDate && new Date(completionDate)) || undefined,
+            content: content,
           }}
         />
         <RemoveTaskPopover onDelete={() => onDelete({ id })} />

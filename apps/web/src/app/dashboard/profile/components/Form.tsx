@@ -1,6 +1,6 @@
-import { ImageUploader } from "@/components/ImageUploader";
-import { useGetUserQuery } from "@/hooks/useGetUserQuery";
-import { useUpdateUserMutation } from "@/hooks/useUpdateUserMutation";
+import { useAuth } from "@/components/Auth";
+import { ImageUploader, updateProfilePic } from "@/components/ImageUploader";
+import { trpc } from "@/services/trpc";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, FieldError, SubmitHandler, useForm } from "react-hook-form";
 import { Button, Input, Label, useToast } from "ui";
@@ -23,8 +23,9 @@ const updateUserSchema = z.object({
 type UpdateUserSchema = z.infer<typeof updateUserSchema>;
 
 export function Form() {
-  const { data: user, isSuccess } = useGetUserQuery();
-  const { mutateAsync, isLoading } = useUpdateUserMutation();
+  const user = useAuth();
+  const { data: userProfile } = trpc.user.getUser.useQuery({ id: user?.id });
+  const { mutateAsync, isLoading } = trpc.user.updateUser.useMutation();
   const { toast } = useToast();
 
   const {
@@ -35,12 +36,12 @@ export function Form() {
   } = useForm<UpdateUserSchema>({
     resolver: zodResolver(updateUserSchema),
     values: {
-      name: user?.name || "",
-      lastName: user?.lastName || "",
-      email: user?.email || "",
-      age: user?.age || null,
-      gender: user?.gender || null,
-      profilePic: user?.profilePic || null,
+      name: userProfile?.name || "",
+      lastName: userProfile?.lastName || "",
+      email: userProfile?.email || "",
+      age: userProfile?.age || null,
+      gender: userProfile?.gender || null,
+      profilePic: userProfile?.profilePic || null,
     },
   });
 
@@ -49,9 +50,12 @@ export function Form() {
     variant: (error ? "error" : "default") as "error" | "default",
   });
 
-  const onSubmit: SubmitHandler<UpdateUserSchema> = (data, e) => {
+  const onSubmit: SubmitHandler<UpdateUserSchema> = async (data, e) => {
     e?.preventDefault();
-    mutateAsync(data)
+    const { profilePic, ...rest } = data;
+    const updatedProfilePic = profilePic ? await updateProfilePic(profilePic, user.id) : profilePic;
+
+    mutateAsync({ id: user.id, profilePic: updatedProfilePic, ...rest })
       .then(() => {
         toast({
           description:
@@ -78,7 +82,7 @@ export function Form() {
         render={({ field: { name, value, onChange } }) => (
           <ImageUploader
             value={value || undefined}
-            alt={`Foto de perfil de ${user?.name}`}
+            alt={`Foto de perfil de ${userProfile?.name}`}
             name={name}
             onFileChange={onChange}
           />

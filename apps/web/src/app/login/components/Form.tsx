@@ -1,11 +1,13 @@
 "use client";
 
-import { Label, Input, Button } from "ui";
-import { z } from "zod";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { trpc } from "@/services/trpc";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { setCookie } from "cookies-next";
 import NextLink from "next/link";
-import { userUserLoginMutation } from "@/hooks/useUserLoginMutation";
+import { useRouter } from "next/navigation";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { Button, Input, Label } from "ui";
+import { z } from "zod";
 
 const loginValidationSchema = z.object({
   email: z.string().min(1, { message: "Por favor, insira seu e-mail" }).email({ message: "E-mail inválido" }),
@@ -15,13 +17,19 @@ const loginValidationSchema = z.object({
 type LoginValidationSchema = z.infer<typeof loginValidationSchema>;
 
 export function Form() {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginValidationSchema>({ resolver: zodResolver(loginValidationSchema) });
-
-  const { mutate, isLoading, isError, error } = userUserLoginMutation();
+  const { mutate, isLoading, isError, error } = trpc.user.authenticateUser.useMutation({
+    onSuccess: ({ User, token }) => {
+      setCookie("auth_token", token);
+      setCookie("user_id", User.id);
+      router.push("dashboard");
+    },
+  });
 
   const onSubmit: SubmitHandler<LoginValidationSchema> = (data, e) => {
     e?.preventDefault();
@@ -65,7 +73,7 @@ export function Form() {
             role="alert"
             className="absolute mt-4 text-sm text-red-400 duration-300 animate-in fade-in-10 slide-in-from-bottom-10 ease-[cubic-bezier(0.17,0.67,0.22,1.05)]"
           >
-            {error.response?.data.message}
+            {error.message}
           </p>
         )}
       </div>

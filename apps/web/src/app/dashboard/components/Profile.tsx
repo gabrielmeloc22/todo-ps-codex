@@ -1,10 +1,10 @@
 "use client";
 
-import { Button } from "ui";
 import { signOut, useAuth } from "@/components/Auth";
+import Image from "next/image";
 import NextLink from "next/link";
-import NextImage from "next/image";
 import { useRouter } from "next/navigation";
+import { Button } from "ui";
 
 export function Profile() {
   const user = useAuth();
@@ -14,8 +14,9 @@ export function Profile() {
     <div className="flex gap-6 h-fit mt-6 bg-zinc-900/40 p-4 rounded-md">
       {user?.profilePic ? (
         <div className="relative aspect-square h-12">
-          <img
+          <Image
             className="absolute rounded-full aspect-square object-cover"
+            fill
             src={user.profilePic}
             alt={`${user?.name}`}
           />
@@ -40,7 +41,7 @@ export function Profile() {
             className="text-zinc-300 font-light p-0 w-fit h-fit"
             onClick={() => {
               signOut();
-              router.replace("login");
+              router.push("login");
             }}
           >
             Sair
