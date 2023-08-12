@@ -6,6 +6,7 @@
     "test": "jest",
     "dev": "prisma migrate dev && tsx watch src/server.ts",
     "build": "tsup src",
+    "prisma:generate": "prisma generate",
     "start": "node dist/server.js",
     "start:trpc": "concurrently \"wsrun --parallel start\""
   },
