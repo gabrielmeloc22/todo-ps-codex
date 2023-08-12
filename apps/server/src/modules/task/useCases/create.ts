@@ -1,28 +1,29 @@
-import { Task } from "@prisma/client";
-import CreateTaskRepository from "../repositories/create";
+import { Prisma } from "@prisma/client";
+import prisma from "../../../db";
 
-type TaskInput = Omit<Task, "id" | "createdAt" | "updatedAt"> & { completionDate: string };
+class CreateTaskUseCase {
 
-class createTaskUseCase {
-  static dateToString(stringDate: string): Date | null {
-    if (stringDate === "") {
+  static stringToDate(stringDate: string | undefined | null): Date | null {
+    if (stringDate === "" || stringDate === null || stringDate === undefined) {
       return null;
     }
     const date = new Date(stringDate);
     return date;
   }
 
-  static async execute({ title, content, completionDate, status, authorId, collectionId }: TaskInput) {
-    const task = await CreateTaskRepository.create({
-      title,
-      content,
-      status,
-      completionDate: this.dateToString(completionDate),
-      authorId,
-      collectionId,
+  static async execute({ title, content, completionDate, status, authorId, collectionId }: Prisma.TaskUncheckedCreateInput) {
+    const newTask = await prisma.task.create({
+      data: {
+        title,
+        content,
+        status,
+        authorId,
+        collectionId,
+        completionDate,
+      },
     });
-    return task;
+    return newTask;
   }
 }
 
-export default createTaskUseCase;
+export default CreateTaskUseCase ;

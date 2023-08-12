@@ -1,9 +1,16 @@
-import GetCollectionRepository from "../repositories/get";
+import prisma from "../../../db";
 
 class GetCollectionUseCase {
   static async execute(id: string, includeTasks: boolean) {
-    const collection = GetCollectionRepository.getCollectionById(id, includeTasks);
-    return collection;
+    const outputCollection = await prisma.collection.findUnique({
+      where: {
+        id: id,
+      },
+      include: {
+        tasks: includeTasks,
+      },
+    });
+    return outputCollection;
   }
 }
 

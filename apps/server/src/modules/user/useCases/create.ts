@@ -1,30 +1,31 @@
-import { User } from "@prisma/client";
+import { Prisma, User } from "@prisma/client";
 import { genSaltSync, hashSync } from "bcrypt";
 import InvalidEntries from "../../../utils/invalidEntries";
-import CreateUserRepository from "../repositories/create";
+import prisma from "../../../db";
 
 type UserInput = Omit<User, "id" | "profilePic">;
 
-class createUserUseCase {
-  constructor() {}
-
-  static async execute({ email, password, age, gender, name, lastName }: UserInput) {
+class CreateUserUseCase {
+  
+  static async execute({ email, password, age, gender, name, lastName }: Prisma.UserUncheckedCreateInput) {
     await InvalidEntries.userAlreadyExists(email);
 
     const salt = genSaltSync(10);
     const hashedPassword = hashSync(password, salt);
 
-    const result = await CreateUserRepository.create({
-      email,
-      password: hashedPassword,
-      name,
-      lastName,
-      age,
-      gender,
+    const newUser = await prisma.user.create({
+      data: {
+        email,
+        password: hashedPassword,
+        name,
+        lastName,
+        age,
+        gender,
+      },
     });
 
-    return result;
+    return newUser;
   }
 }
 
-export default createUserUseCase;
+export default CreateUserUseCase;

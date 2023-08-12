@@ -48,7 +48,7 @@ export function TaskDialog({
     handleSubmit,
     control,
     reset,
-    resetField,
+    setValue,
     formState: { errors },
   } = useForm<TaskValidationSchema>({
     resolver: zodResolver(taskFormValidationSchema),
@@ -109,9 +109,10 @@ export function TaskDialog({
               />
               <Button
                 variant="icon"
+                type="button"
                 className="mt-1 font-light"
                 onClick={() => {
-                  resetField("completionDate");
+                  setValue("completionDate", undefined);
                 }}
               >
                 Limpar
